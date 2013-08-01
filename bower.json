@@ -1,6 +1,20 @@
 {
   "name": "angular-bootstrap-switch",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
+  "author": {
+    "name": "Francesco Pontillo",
+    "email": "francescopontillo@gmail.com",
+    "url": "https://github.com/frapontillo"
+  },
+  "homepage": "https://github.com/frapontillo/angular-bootstrap-switch",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:frapontillo/angular-bootstrap-switch.git"
+  },
+  "licenses" : [
+    { "type":"Apache License 2.0", "url": "http://www.apache.org/licenses/LICENSE-2.0.html" }
+  ], 
+  "main": "./dist/angular-bootstrap-switch.min.js",
   "dependencies": {
     "angular": "~1.0.7",
     "json3": "~3.2.4",
@@ -9,7 +23,7 @@
     "angular-cookies": "~1.0.7",
     "angular-sanitize": "~1.0.7",
     "jquery": "~2.0.3",
-    "bootstrap-switch": "*"
+    "bootstrap-switch": "frapontillo/bootstrap-switch"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",

@@ -7,12 +7,12 @@ basePath = '';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
-  'app/bower_components/angular/angular.js',
-  'app/bower_components/angular-mocks/angular-mocks.js',
-  'src/*.js',
+  'bower_components/jquery/jquery.js',
+  'bower_components/angular/angular.js',
+  'bower_components/angular-mocks/angular-mocks.js',
+  'bower_components/bootstrap-switch/static/js/bootstrap-switch.js',
   'src/**/*.js',
-  'test/mock/**/*.js',
-  'test/spec/**/*.js'
+  'test/**/*.js'
 ];
 
 // list of files to exclude
@@ -49,7 +49,7 @@ autoWatch = false;
 browsers = ['Chrome'];
 
 // If browser does not capture in given timeout [ms], kill it
-captureTimeout = 5000;
+captureTimeout = 10000;
 
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit

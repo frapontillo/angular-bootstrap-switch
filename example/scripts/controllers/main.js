@@ -1,10 +1,6 @@
 'use strict';
 
-angular.module('angularBootstrapSwitchApp')
+angular.module('bsSwitchApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    
   });
