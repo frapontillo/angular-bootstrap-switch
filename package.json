@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-switch",
-  "version": "0.0.1-alpha",
+  "version": "0.1.0",
   "author": {
     "name": "Francesco Pontillo",
     "email": "francescopontillo@gmail.com",
@@ -11,8 +11,11 @@
     "type": "git",
     "url": "git@github.com:frapontillo/angular-bootstrap-switch.git"
   },
-  "licenses" : [
-    { "type":"Apache License 2.0", "url": "http://www.apache.org/licenses/LICENSE-2.0.html" }
+  "licenses": [
+    {
+      "type": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
   ],
   "dependencies": {},
   "devDependencies": {
