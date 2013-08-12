@@ -1,0 +1,37 @@
+{
+  "name": "angular-bootstrap-switch",
+  "version": "0.1.0",
+  "author": {
+    "name": "Francesco Pontillo",
+    "email": "francescopontillo@gmail.com",
+    "url": "https://github.com/frapontillo"
+  },
+  "homepage": "https://github.com/frapontillo/angular-bootstrap-switch",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:frapontillo/angular-bootstrap-switch.git"
+  },
+  "licenses": [
+    {
+      "type": "Apache License 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-karma": "~0.4.3",
+    "matchdep": "~0.1.2",
+    "grunt-ngmin": "~0.0.2"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  }
+}
