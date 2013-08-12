@@ -23,7 +23,6 @@ The directive can work on both element and attribute levels. The following examp
 	switch-label={{text}} switch-icon="{{icon}}"
 	switch-on-label="{{onLabel}}" switch-off-label="{{offLabel}}"
 	switch-on="{{on}}" switch-off="{{off}}">
-</input>
 ```
 
 Short doc for all of the attributes:
