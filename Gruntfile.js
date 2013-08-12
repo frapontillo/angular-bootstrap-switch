@@ -39,6 +39,11 @@ module.exports = function (grunt) {
       unit: {
         configFile: 'karma.conf.js',
         singleRun: true
+      },
+      travis: {
+        configFile: 'karma.conf.js',
+        browsers: ['PhantomJS'],
+        singleRun: true
       }
     },
     clean: {
@@ -81,7 +86,8 @@ module.exports = function (grunt) {
   });
 
   // Tests the directive
-  grunt.registerTask('test', ['karma']);
+  grunt.registerTask('test', ['jshint', 'karma']);
+  grunt.registerTask('test-travis', ['jshint', 'karma:travis']);
 
   // Build the directive
   //  - clean:dist: cleans the output directory
@@ -91,5 +97,5 @@ module.exports = function (grunt) {
   grunt.registerTask('build', ['clean:dist', 'ngmin', 'concat', 'uglify']);
 
   // Default task, do everything
-  grunt.registerTask('default', ['jshint', 'test', 'build']);
+  grunt.registerTask('default', ['test-travis', 'build']);
 };

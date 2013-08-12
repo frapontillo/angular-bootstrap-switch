@@ -57,8 +57,9 @@ angular.module('frapontillo.bootstrap-switch', [])
           });
 
           scope.$watch('switchType', function(newValue) {
-            if (!newValue)
+            if (!newValue) {
               scope.switchType = 'checkbox';
+            }
           });
 
           scope.$watch('switchOnLabel', function(newValue) {
@@ -101,7 +102,7 @@ angular.module('frapontillo.bootstrap-switch', [])
             scope.ngModel = value;
             scope.$apply();
           });
-        }
+        };
 
         // Return the appropriate size class
         scope.getSizeClass = function() {
