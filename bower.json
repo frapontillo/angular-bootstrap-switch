@@ -19,16 +19,17 @@
   ],
   "main": "./dist/angular-bootstrap-switch.min.js",
   "dependencies": {
-    "angular": "~1.0.7",
+    "angular": "~1.2.0-rc.1",
     "jquery": "~2.0.3",
     "bootstrap": "~2.3.2",
-    "bootstrap-switch": "frapontillo/bootstrap-switch"
+    "bootstrap-switch": "b85606b3e4389276ab7818184a22ff3dd87a3892"
   },
   "devDependencies": {
-    "angular-mocks": "~1.0.7",
-    "angular-scenario": "~1.0.7"
+    "angular-mocks": "~1.2.0-rc.1",
+    "angular-scenario": "~1.2.0-rc.1"
   },
   "resolutions": {
-    "jquery": "~2.0.3"
+    "jquery": "~2.0.3",
+    "angular": "1.2.0-rc.1"
   }
 }
