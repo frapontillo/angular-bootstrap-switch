@@ -8,6 +8,6 @@ describe('Directive: bsSwitch', function () {
   it('should create a switch', inject(function ($rootScope, $compile) {
     element = angular.element('<bs-switch></bs-switch>');
     element = $compile(element)($rootScope);
-    expect(element.hasClass('switch')).not.toBe(false);
+    expect(element.hasClass('make-switch')).not.toBe(false);
   }));
 });

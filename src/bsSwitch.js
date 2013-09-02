@@ -5,7 +5,6 @@ angular.module('frapontillo.bootstrap-switch', [])
     return {
       template:
         '<div class="make-switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' +
-          'data-on="{{switchOn}}" data-off="{{switchOff}}" ' +
           'data-text-label="{{switchLabel}}" data-icon-label="{{switchIcon}}" ' +
           'data-animated="{{switchAnimate}}" ng-class="switch {{getSizeClass()}}">' +
         '  <input type="{{switchType}}" ng-model="ngModel"/>' +
@@ -71,10 +70,12 @@ angular.module('frapontillo.bootstrap-switch', [])
           });
 
           scope.$watch('switchOn', function(newValue) {
+            attrs.dataOn = newValue;
             element.bootstrapSwitch('setOnClass', newValue || '');
           });
 
           scope.$watch('switchOff', function(newValue) {
+            attrs.dataOff = newValue;
             element.bootstrapSwitch('setOffClass', newValue || '');
           });
 
