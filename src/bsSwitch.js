@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('frapontillo.bootstrap-switch', [])
-  .directive('bsSwitch', function ($timeout) {
+  .directive('bsSwitch', function ($timeout, $rootScope) {
     return {
       template:
         '<div class="make-switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' +
@@ -14,8 +14,8 @@ angular.module('frapontillo.bootstrap-switch', [])
       transclude: true,
       scope: {
         ngModel: '=',
+        switchActive: '=',
         switchType: '@',
-        switchActive: '@',
         switchSize: '@',
         switchOn: '@',
         switchOff: '@',
@@ -52,7 +52,7 @@ angular.module('frapontillo.bootstrap-switch', [])
           });
 
           scope.$watch('switchActive', function(newValue) {
-            element.bootstrapSwitch('setActive', newValue || true);
+            element.bootstrapSwitch('setActive', newValue);
           });
 
           scope.$watch('switchType', function(newValue) {
@@ -101,6 +101,10 @@ angular.module('frapontillo.bootstrap-switch', [])
           element.on('switch-change', function (e, data) {
             var value = data.value;
             scope.ngModel = value;
+            if (!(scope.$$phase || $rootScope.$$phase))
+            {
+              scope.$apply();
+            }
           });
         };
 
