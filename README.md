@@ -42,6 +42,18 @@ Short doc for all of the attributes:
 ###Examples
 TODO
 
+## Building
+
+To build the directive yourself you need to have NodeJS. Then do the following:
+
+```shell
+$ npm install -g grunt-cli bower karma
+$ npm install
+$ bower install
+$ grunt test
+$ grunt build
+```
+
 ##Author
 
 Francesco Pontillo (<mailto:francescopontillo@gmail.com>)

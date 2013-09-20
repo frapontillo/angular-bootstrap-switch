@@ -85,8 +85,8 @@ module.exports = function (grunt) {
     }
   });
 
-  // Tests the directive
-  grunt.registerTask('test', ['jshint', 'karma']);
+  // Test the directive
+  grunt.registerTask('test', ['jshint', 'karma:unit']);
   grunt.registerTask('test-travis', ['jshint', 'karma:travis']);
 
   // Build the directive

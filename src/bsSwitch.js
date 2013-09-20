@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('frapontillo.bootstrap-switch', [])
-  .directive('bsSwitch', function ($timeout) {
+  .directive('bsSwitch', function () {
     return {
       template:
         '<div class="make-switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' +
@@ -47,8 +47,10 @@ angular.module('frapontillo.bootstrap-switch', [])
         };
 
         var listenToModel = function() {
-          scope.$watch('ngModel', function(newValue) {
-            element.bootstrapSwitch('setState', newValue || false);
+          scope.$watch('ngModel', function(newValue, oldValue) {
+            if (newValue !== oldValue && newValue !== undefined) {
+              element.bootstrapSwitch('setState', newValue || false);
+            }
           });
 
           scope.$watch('switchActive', function(newValue) {
@@ -100,7 +102,11 @@ angular.module('frapontillo.bootstrap-switch', [])
           // When the switch is clicked, copy the inner value in the scope
           element.on('switch-change', function (e, data) {
             var value = data.value;
-            scope.ngModel = value;
+            if (value !== scope.ngModel) {
+              scope.$apply(function() {
+                scope.ngModel = value;
+              });
+            }
           });
         };
 
@@ -109,19 +115,17 @@ angular.module('frapontillo.bootstrap-switch', [])
           return attrs.switchSize ? 'switch-' + attrs.switchSize : '';
         };
 
-        $timeout(function() {
-          // Sets the defaults
-          setDefaults();
+        // Sets the defaults
+        setDefaults();
 
-          // Init the switch
-          element.bootstrapSwitch();
+        // Init the switch
+        element.bootstrapSwitch();
 
-          // Listen and respond to model changes
-          listenToModel();
+        // Listen and respond to view changes
+        listenToView();
 
-          // Listen and respond to view changes
-          listenToView();
-        });
+        // Listen and respond to model changes
+        listenToModel();
 
         // Collect ya garbage
         scope.$on('$destroy', function() {
