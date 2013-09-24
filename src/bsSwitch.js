@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('frapontillo.bootstrap-switch', [])
-  .directive('bsSwitch', function () {
+  .directive('bsSwitch', function ($timeout) {
     return {
       template:
         '<div class="make-switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' +
@@ -47,8 +47,8 @@ angular.module('frapontillo.bootstrap-switch', [])
         };
 
         var listenToModel = function() {
-          scope.$watch('ngModel', function(newValue, oldValue) {
-            if (newValue !== oldValue && newValue !== undefined) {
+          scope.$watch('ngModel', function(newValue) {
+            if (newValue !== undefined) {
               element.bootstrapSwitch('setState', newValue || false);
             }
           });
@@ -115,21 +115,24 @@ angular.module('frapontillo.bootstrap-switch', [])
           return attrs.switchSize ? 'switch-' + attrs.switchSize : '';
         };
 
-        // Sets the defaults
-        setDefaults();
-
-        // Init the switch
-        element.bootstrapSwitch();
-
-        // Listen and respond to view changes
-        listenToView();
-
-        // Listen and respond to model changes
-        listenToModel();
-
         // Collect ya garbage
         scope.$on('$destroy', function() {
           element.bootstrapSwitch('destroy');
+        });
+        
+        // Do stuff as soon as possible
+        $timeout(function() {
+            // Sets the defaults
+          setDefaults();
+
+          // Init the switch
+          element.bootstrapSwitch();
+
+          // Listen and respond to view changes
+          listenToView();
+
+          // Listen and respond to model changes
+          listenToModel();
         });
       }
     };
