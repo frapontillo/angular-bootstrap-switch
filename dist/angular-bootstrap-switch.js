@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-switch
- * @version v0.1.0 - 2013-08-12
+ * @version v0.1.1 - 2013-09-24
  * @author Francesco Pontillo (francescopontillo@gmail.com)
  * @link https://github.com/frapontillo/angular-bootstrap-switch
  * @license Apache License 2.0
@@ -11,7 +11,7 @@ angular.module('frapontillo.bootstrap-switch', []).directive('bsSwitch', [
   '$timeout',
   function ($timeout) {
     return {
-      template: '<div class="switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' + 'data-on="{{switchOn}}" data-off="{{switchOff}}" ' + 'data-text-label="{{switchLabel}}" data-icon-label="{{switchIcon}}" ' + 'data-animated="{{switchAnimate}}" ng-class="switch {{getSizeClass()}}">' + '  <input type="{{switchType}}" ng-model="ngModel"/>' + '</div>',
+      template: '<div class="make-switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' + 'data-text-label="{{switchLabel}}" data-icon-label="{{switchIcon}}" ' + 'data-animated="{{switchAnimate}}" ng-class="switch {{getSizeClass()}}">' + '  <input type="{{switchType}}" ng-model="ngModel"/>' + '</div>',
       restrict: 'EA',
       replace: true,
       transclude: true,
@@ -48,7 +48,9 @@ angular.module('frapontillo.bootstrap-switch', []).directive('bsSwitch', [
         };
         var listenToModel = function () {
           scope.$watch('ngModel', function (newValue) {
-            element.bootstrapSwitch('setState', newValue || false);
+            if (newValue !== undefined) {
+              element.bootstrapSwitch('setState', newValue || false);
+            }
           });
           scope.$watch('switchActive', function (newValue) {
             element.bootstrapSwitch('setActive', newValue || true);
@@ -65,9 +67,11 @@ angular.module('frapontillo.bootstrap-switch', []).directive('bsSwitch', [
             element.bootstrapSwitch('setOffLabel', newValue || 'No');
           });
           scope.$watch('switchOn', function (newValue) {
+            attrs.dataOn = newValue;
             element.bootstrapSwitch('setOnClass', newValue || '');
           });
           scope.$watch('switchOff', function (newValue) {
+            attrs.dataOff = newValue;
             element.bootstrapSwitch('setOffClass', newValue || '');
           });
           scope.$watch('switchAnimate', function (newValue) {
@@ -86,21 +90,24 @@ angular.module('frapontillo.bootstrap-switch', []).directive('bsSwitch', [
         var listenToView = function () {
           element.on('switch-change', function (e, data) {
             var value = data.value;
-            scope.ngModel = value;
-            scope.$apply();
+            if (value !== scope.ngModel) {
+              scope.$apply(function () {
+                scope.ngModel = value;
+              });
+            }
           });
         };
         scope.getSizeClass = function () {
           return attrs.switchSize ? 'switch-' + attrs.switchSize : '';
         };
+        scope.$on('$destroy', function () {
+          element.bootstrapSwitch('destroy');
+        });
         $timeout(function () {
           setDefaults();
           element.bootstrapSwitch();
-          listenToModel();
           listenToView();
-        });
-        scope.$on('$destroy', function () {
-          element.bootstrapSwitch('destroy');
+          listenToModel();
         });
       }
     };

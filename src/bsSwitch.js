@@ -4,8 +4,7 @@ angular.module('frapontillo.bootstrap-switch', [])
   .directive('bsSwitch', function ($timeout) {
     return {
       template:
-        '<div class="switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' +
-          'data-on="{{switchOn}}" data-off="{{switchOff}}" ' +
+        '<div class="make-switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' +
           'data-text-label="{{switchLabel}}" data-icon-label="{{switchIcon}}" ' +
           'data-animated="{{switchAnimate}}" ng-class="switch {{getSizeClass()}}">' +
         '  <input type="{{switchType}}" ng-model="ngModel"/>' +
@@ -49,7 +48,9 @@ angular.module('frapontillo.bootstrap-switch', [])
 
         var listenToModel = function() {
           scope.$watch('ngModel', function(newValue) {
-            element.bootstrapSwitch('setState', newValue || false);
+            if (newValue !== undefined) {
+              element.bootstrapSwitch('setState', newValue || false);
+            }
           });
 
           scope.$watch('switchActive', function(newValue) {
@@ -71,10 +72,12 @@ angular.module('frapontillo.bootstrap-switch', [])
           });
 
           scope.$watch('switchOn', function(newValue) {
+            attrs.dataOn = newValue;
             element.bootstrapSwitch('setOnClass', newValue || '');
           });
 
           scope.$watch('switchOff', function(newValue) {
+            attrs.dataOff = newValue;
             element.bootstrapSwitch('setOffClass', newValue || '');
           });
 
@@ -99,8 +102,11 @@ angular.module('frapontillo.bootstrap-switch', [])
           // When the switch is clicked, copy the inner value in the scope
           element.on('switch-change', function (e, data) {
             var value = data.value;
-            scope.ngModel = value;
-            scope.$apply();
+            if (value !== scope.ngModel) {
+              scope.$apply(function() {
+                scope.ngModel = value;
+              });
+            }
           });
         };
 
@@ -109,23 +115,24 @@ angular.module('frapontillo.bootstrap-switch', [])
           return attrs.switchSize ? 'switch-' + attrs.switchSize : '';
         };
 
+        // Collect ya garbage
+        scope.$on('$destroy', function() {
+          element.bootstrapSwitch('destroy');
+        });
+        
+        // Do stuff as soon as possible
         $timeout(function() {
-          // Sets the defaults
+            // Sets the defaults
           setDefaults();
 
           // Init the switch
           element.bootstrapSwitch();
 
-          // Listen and respond to model changes
-          listenToModel();
-
           // Listen and respond to view changes
           listenToView();
-        });
 
-        // Collect ya garbage
-        scope.$on('$destroy', function() {
-          element.bootstrapSwitch('destroy');
+          // Listen and respond to model changes
+          listenToModel();
         });
       }
     };
