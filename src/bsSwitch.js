@@ -6,7 +6,7 @@ angular.module('frapontillo.bootstrap-switch', [])
       template:
         '<div class="make-switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' +
           'data-text-label="{{switchLabel}}" data-icon-label="{{switchIcon}}" ' +
-          'data-animated="{{switchAnimate}}" ng-class="switch {{getSizeClass()}}">' +
+          'data-animated="{{switchAnimate}}" ng-class="{{getSizeClass()}}">' +
         '  <input type="{{switchType}}" ng-model="ngModel"/>' +
         '</div>',
       restrict: 'EA',
