@@ -38,6 +38,7 @@ Short doc for all of the attributes:
 * `switch-off-label`, sets the negative (unchecked) text
 * `switch-on`, sets the positive (checked) class, can be `primary` (as default), `default`, `info`, `success`, `warning`, `danger`
 * `switch-off`, sets the positive (checked) class, can be `default` (as default), `primary`, `info`, `success`, `warning`, `danger`
+* `change-event`, sets a scope function to be called once the value of the model has changed (useful when you cannot use watches)
 
 ###Examples
 TODO
