@@ -14,6 +14,7 @@ angular.module('frapontillo.bootstrap-switch', [])
       transclude: true,
       scope: {
         ngModel: '=',
+        changeEvent: '&',
         switchType: '@',
         switchActive: '@',
         switchSize: '@',
@@ -44,6 +45,7 @@ angular.module('frapontillo.bootstrap-switch', [])
           if (!scope.switchOffLabel) {
             scope.switchOffLabel = 'No';
           }
+         
         };
 
         var listenToModel = function() {
@@ -105,6 +107,8 @@ angular.module('frapontillo.bootstrap-switch', [])
             if (value !== scope.ngModel) {
               scope.$apply(function() {
                 scope.ngModel = value;
+                //Call the change event function
+                scope.changeEvent(value);
               });
             }
           });
