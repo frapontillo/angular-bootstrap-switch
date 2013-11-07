@@ -1,10 +1,6 @@
 /**
  * angular-bootstrap-switch
-<<<<<<< HEAD
  * @version v0.1.1 - 2013-11-07
-=======
- * @version v0.1.1 - 2013-10-21
->>>>>>> upstream/master
  * @author Francesco Pontillo (francescopontillo@gmail.com)
  * @link https://github.com/frapontillo/angular-bootstrap-switch
  * @license Apache License 2.0
@@ -15,7 +11,7 @@ angular.module('frapontillo.bootstrap-switch', []).directive('bsSwitch', [
   '$timeout',
   function ($timeout) {
     return {
-      template: '<div class="make-switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' + 'data-text-label="{{switchLabel}}" data-icon-label="{{switchIcon}}" ' + 'data-animated="{{switchAnimate}}" ng-class="{{getSizeClass()}}">' + '  <input type="{{switchType}}" ng-model="ngModel"/>' + '</div>',
+      template: '<div class="make-switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' + 'data-text-label="{{switchLabel}}" data-icon-label="{{switchIcon}}" ' + 'data-animated="{{switchAnimate}}" ng-class="switch {{getSizeClass()}}">' + '  <input type="{{switchType}}" ng-model="ngModel"/>' + '</div>',
       restrict: 'EA',
       replace: true,
       transclude: true,
