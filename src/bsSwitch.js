@@ -6,7 +6,7 @@ angular.module('frapontillo.bootstrap-switch', [])
       template:
         '<div class="make-switch" data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' +
           'data-text-label="{{switchLabel}}" data-icon-label="{{switchIcon}}" ' +
-          'data-animated="{{switchAnimate}}" ng-class="{{getSizeClass()}}">' +
+          'data-animated="{{switchAnimate}}" ng-class="switch {{getSizeClass()}}">' +
         '  <input type="{{switchType}}" ng-model="ngModel"/>' +
         '</div>',
       restrict: 'EA',
@@ -14,6 +14,7 @@ angular.module('frapontillo.bootstrap-switch', [])
       transclude: true,
       scope: {
         ngModel: '=',
+        changeEvent: '&',
         switchType: '@',
         switchActive: '@',
         switchSize: '@',
@@ -44,6 +45,7 @@ angular.module('frapontillo.bootstrap-switch', [])
           if (!scope.switchOffLabel) {
             scope.switchOffLabel = 'No';
           }
+         
         };
 
         var listenToModel = function() {
@@ -105,6 +107,8 @@ angular.module('frapontillo.bootstrap-switch', [])
             if (value !== scope.ngModel) {
               scope.$apply(function() {
                 scope.ngModel = value;
+                //Call the change event function
+                scope.changeEvent(value);
               });
             }
           });
