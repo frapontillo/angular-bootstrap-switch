@@ -10,7 +10,7 @@ files = [
   'bower_components/jquery/jquery.js',
   'bower_components/angular/angular.js',
   'bower_components/angular-mocks/angular-mocks.js',
-  'bower_components/bootstrap-switch/static/js/bootstrap-switch.js',
+  'bower_components/bootstrap-switch/build/js/bootstrap-switch.js',
   'src/**/*.js',
   'test/**/*.js'
 ];
@@ -36,7 +36,7 @@ colors = true;
 logLevel = LOG_DEBUG;
 
 // enable / disable watching file and executing tests whenever any file changes
-autoWatch = false;
+autoWatch = true;
 
 // Start these browsers, currently available:
 // - Chrome

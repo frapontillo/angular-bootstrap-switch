@@ -33,12 +33,18 @@ module.exports = function (grunt) {
       all: [
         'Gruntfile.js',
         '<%= yeoman.src %>/{,*/}*.js'
-      ]
+      ],
+      test: {
+        src: ['test/spec/{,*/}*.js'],
+        options: {
+          jshintrc: 'test/.jshintrc'
+        }
+      }
     },
     karma: {
       unit: {
         configFile: 'karma.conf.js',
-        singleRun: true
+        singleRun: false
       },
       travis: {
         configFile: 'karma.conf.js',
