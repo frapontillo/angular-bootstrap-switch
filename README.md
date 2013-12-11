@@ -18,7 +18,7 @@ The directive can work on both element and attribute levels. The following examp
 
 ```html
 <input bs-switch ng-model="isSelected" 
-	switch-type="{{type}}" switch-active="{{active}}"
+	switch-type="checkbox" switch-active="{{active}}"
 	switch-size="{{size}}" switch-animate="{{animate}}"
 	switch-label={{text}} switch-icon="{{icon}}"
 	switch-on-label="{{onLabel}}" switch-off-label="{{offLabel}}"
@@ -28,7 +28,7 @@ The directive can work on both element and attribute levels. The following examp
 Short doc for all of the attributes:
 
 * `ng-model`, the value to bind the switch to
-* `switch-type`, can be `chechbox` (default) or `radio`
+* `switch-type`, can be `chechbox` (default) or `radio`. This value must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
 * `switch-active`, determines if the switch is enabled or not
 * `switch-size`, can be the empty string as default, `mini`, `small`, `large`
 * `switch-animate`, determines if the switch animates when toggled
@@ -40,7 +40,7 @@ Short doc for all of the attributes:
 * `switch-off`, sets the positive (checked) class, can be `default` (as default), `primary`, `info`, `success`, `warning`, `danger`
 
 ###Examples
-TODO
+The `example` folder shows a simple working demo of the switch.
 
 ## Building
 
