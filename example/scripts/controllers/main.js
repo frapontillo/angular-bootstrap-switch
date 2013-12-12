@@ -12,4 +12,8 @@ angular.module('bsSwitchApp')
     $scope.$watch('isSelected', function() {
       $log.info('Selection changed.');
     });
+
+    $scope.toggleActivation = function() {
+      $scope.isActive = !$scope.isActive;
+    }
   });

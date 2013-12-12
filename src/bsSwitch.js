@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('frapontillo.bootstrap-switch', [])
-  .directive('bsSwitch', function () {
+  .directive('bsSwitch', function ($timeout) {
     return {
       template:
         '<div data-on-label="{{switchOnLabel}}" data-off-label="{{switchOffLabel}}" ' +
@@ -31,26 +31,6 @@ angular.module('frapontillo.bootstrap-switch', [])
         element.find('input').attr('type', attrs.switchType);
 
         return function link(scope, element, attrs) {
-          /**
-           * Set the defaults for the switch.
-           */
-          var setDefaults = function() {
-            if (!scope.ngModel) {
-              scope.ngModel = false;
-            }
-            if (scope.switchActive === undefined) {
-              scope.switchActive = true;
-            }
-            if (!scope.switchLabel) {
-              scope.switchLabel = '';
-            }
-            if (!scope.switchOnLabel) {
-              scope.switchOnLabel = 'Yes';
-            }
-            if (!scope.switchOffLabel) {
-              scope.switchOffLabel = 'No';
-            }
-          };
 
           /**
            * Listen to model changes.
@@ -63,7 +43,7 @@ angular.module('frapontillo.bootstrap-switch', [])
             });
 
             scope.$watch('switchActive', function(newValue) {
-              var active = newValue === true || newValue === 'true';
+              var active = newValue === true || newValue === 'true' || !newValue;
               element.bootstrapSwitch('setActive', active);
             });
 
@@ -128,9 +108,6 @@ angular.module('frapontillo.bootstrap-switch', [])
             return attrs.switchSize ? 'switch-' + attrs.switchSize : '';
           };
 
-          // Sets the defaults
-          setDefaults();
-
           // Listen and respond to model changes
           listenToModel();
 
@@ -139,7 +116,9 @@ angular.module('frapontillo.bootstrap-switch', [])
 
           element.bootstrapSwitch();
           // Set the initial state
-          element.bootstrapSwitch('setState', scope.ngModel || false);
+          $timeout(function() {
+            element.bootstrapSwitch('setState', scope.ngModel || false);
+          });
 
           // On destroy, collect ya garbage
           scope.$on('$destroy', function() {
