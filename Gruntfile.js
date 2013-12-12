@@ -44,12 +44,16 @@ module.exports = function (grunt) {
     karma: {
       unit: {
         configFile: 'karma.conf.js',
-        singleRun: false
+        options: {
+          singleRun: false
+        }
       },
       travis: {
         configFile: 'karma.conf.js',
         browsers: ['PhantomJS'],
-        singleRun: true
+        options: {
+          singleRun: true
+        }
       }
     },
     clean: {

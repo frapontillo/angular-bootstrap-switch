@@ -5,12 +5,14 @@ describe('Directive: bsSwitch', function () {
 
   beforeEach(module('frapontillo.bootstrap-switch'));
 
+  /* jshint camelcase: false */
   beforeEach(inject(function ($injector, $rootScope, _$compile_, _$timeout_) {
     scope = $rootScope;
     $compile = _$compile_;
     $timeout = _$timeout_;
     $sandbox = angular.element('<div id="sandbox"></div>').appendTo(angular.element.find('body'));
   }));
+  /* jshint camelcase: true */
 
   afterEach(function() {
     $sandbox.remove();
