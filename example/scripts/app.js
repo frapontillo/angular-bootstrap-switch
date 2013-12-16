@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('bsSwitchApp', []);
+angular.module('bsSwitchApp', ['frapontillo.bootstrap-switch']);
