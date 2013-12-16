@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('frapontillo.bootstrap-switch', [])
+angular.module('frapontillo.bootstrap-switch')
   .directive('bsSwitch', function ($timeout) {
     return {
       template:

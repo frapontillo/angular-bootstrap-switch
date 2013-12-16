@@ -1,4 +1,3 @@
-
 angular-bootstrap-switch [![Build Status](https://travis-ci.org/frapontillo/angular-bootstrap-switch.png)](https://travis-ci.org/frapontillo/angular-bootstrap-switch)
 ========================
 
@@ -8,7 +7,7 @@ AngularJS directive for the [bootstrap-switch](https://github.com/nostalgiaz/boo
 
 ###Installation
 ```shell
-bower install angular-bootstrap-switch
+$ bower install angular-bootstrap-switch
 ```
 
 This will install AngularJS, jQuery, and the original bootstrap-switch.
@@ -42,7 +41,9 @@ Short doc for all of the attributes:
 ###Examples
 The `example` folder shows a simple working demo of the switch.
 
-## Building
+##Development
+
+###Test and build
 
 To build the directive yourself you need to have NodeJS. Then do the following:
 
@@ -53,6 +54,10 @@ $ bower install
 $ grunt test
 $ grunt build
 ```
+
+###Contribute
+
+To contribute, please follow the generic [AngularJS Contributing Guidelines](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md), with the only exception to send the PR to the `develop` branch instead of `master`.
 
 ##Author
 

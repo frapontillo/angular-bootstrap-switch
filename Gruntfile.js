@@ -1,4 +1,3 @@
-// Generated on 2013-07-30 using generator-angular 0.3.1
 'use strict';
 
 module.exports = function (grunt) {
@@ -9,7 +8,8 @@ module.exports = function (grunt) {
   var yeomanConfig = {
     src: 'src',
     dist: 'dist',
-    example: 'example'
+    test: 'test',
+    temp: '.temp'
   };
 
   try {
@@ -20,11 +20,14 @@ module.exports = function (grunt) {
     yeoman: yeomanConfig,
     pkg: grunt.file.readJSON('bower.json'),
     meta: {
-      banner: '/**\n' + ' * <%= pkg.name %>\n' +
-		' * @version v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-		' * @author <%= pkg.author.name %> (<%= pkg.author.email %>)\n' +
-		' * @link <%= pkg.homepage %>\n' +
-        ' * @license <%= _.pluck(pkg.licenses, "type").join(", ") %>\n**/\n\n'
+      banner:
+        '/**\n' +
+        ' * <%= pkg.name %>\n' +
+        ' * @version v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+        ' * @author <%= pkg.author.name %> (<%= pkg.author.email %>)\n' +
+		    ' * @link <%= pkg.homepage %>\n' +
+        ' * @license <%= _.pluck(pkg.licenses, "type").join(", ") %>\n' +
+        '**/\n\n'
     },
     jshint: {
       options: {
@@ -32,24 +35,25 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.src %>/{,*/}*.js'
+        '<%= yeoman.src %>/**/*.js'
       ],
       test: {
-        src: ['test/spec/{,*/}*.js'],
+        src: ['<%= yeoman.test %>/spec/**/*.js'],
         options: {
-          jshintrc: 'test/.jshintrc'
+          jshintrc: '<%= yeoman.test %>/.jshintrc'
         }
       }
     },
     karma: {
+      options: {
+        configFile: 'karma.conf.js'
+      },
       unit: {
-        configFile: 'karma.conf.js',
         options: {
           singleRun: false
         }
       },
       travis: {
-        configFile: 'karma.conf.js',
         browsers: ['PhantomJS'],
         options: {
           singleRun: true
@@ -65,22 +69,30 @@ module.exports = function (grunt) {
             '!<%= yeoman.dist %>/.git*'
           ]
         }]
+      },
+      temp: {
+        src: ['<%= yeoman.dist %>/<%= yeoman.temp %>']
       }
     },
     ngmin: {
       dist: {
-        src: ['src/**/*.js'],
-        dest: '<%= yeoman.dist %>/<%= pkg.name %>.js'
+        expand: true,
+        cwd: '<%= yeoman.src %>',
+        src: ['**/*.js'],
+        dest: '<%= yeoman.dist %>/<%= yeoman.temp %>'
       }
     },
     concat: {
       options: {
-        banner: '<%= meta.banner %>'
+        banner: '<%= meta.banner %>\'use strict\';\n',
+        process: function(src, filepath) {
+          return '// Source: ' + filepath + '\n' +
+            src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+        }
       },
-      // Prepends everything with a banner
       dist: {
-        src: '<%= ngmin.dist.dest %>',
-        dest: '<%= ngmin.dist.dest %>'
+        src: ['common/*.js', '<%= yeoman.dist %>/<%= yeoman.temp %>/**/*.js'],
+        dest: '<%= yeoman.dist %>/<%= pkg.name %>.js'
       }
     },
     uglify: {
@@ -89,7 +101,7 @@ module.exports = function (grunt) {
       },
       min: {
         files: {
-          '<%= yeoman.dist %>/<%= pkg.name %>.min.js': '<%= ngmin.dist.dest %>'
+          '<%= yeoman.dist %>/<%= pkg.name %>.min.js': '<%= concat.dist.dest %>'
         }
       }
     }
@@ -100,11 +112,12 @@ module.exports = function (grunt) {
   grunt.registerTask('test-travis', ['jshint', 'karma:travis']);
 
   // Build the directive
-  //  - clean:dist: cleans the output directory
-  //  - ngmin: prepares the angular files into a single one
-  //  - concat: adds a banner to the debug file
-  //  - uglify: adds a banner to the minified file
-  grunt.registerTask('build', ['clean:dist', 'ngmin', 'concat', 'uglify']);
+  //  - clean, cleans the output directory
+  //  - ngmin, prepares the angular files
+  //  - concat, concatenates and adds a banner to the debug file
+  //  - uglify, minifies and adds a banner to the minified file
+  //  - clean:temp, cleans the ngmin-ified directory
+  grunt.registerTask('build', ['clean', 'ngmin', 'concat', 'uglify', 'clean:temp']);
 
   // Default task, do everything
   grunt.registerTask('default', ['test-travis', 'build']);

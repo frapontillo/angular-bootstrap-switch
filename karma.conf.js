@@ -11,6 +11,7 @@ files = [
   'bower_components/angular/angular.js',
   'bower_components/angular-mocks/angular-mocks.js',
   'bower_components/bootstrap-switch/build/js/bootstrap-switch.js',
+  'common/module.js',
   'src/**/*.js',
   'test/**/*.js'
 ];
