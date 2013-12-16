@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-switch
- * @version v0.1.1 - 2013-12-16
+ * @version v0.2.0 - 2013-12-16
  * @author Francesco Pontillo (francescopontillo@gmail.com)
  * @link https://github.com/frapontillo/angular-bootstrap-switch
  * @license Apache License 2.0
