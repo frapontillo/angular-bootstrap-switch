@@ -1,5 +1,5 @@
-<a name="2.1.0"></a>
-# 2.1.0 (2013-12-31)
+<a name="0.2.1"></a>
+# 0.2.1 (2013-12-31)
 
 - Update to `angular` 1.2.6
 - Update to `bootstrap-switch` 2.0.0
@@ -7,8 +7,8 @@
 - **bsSwitchSpec**: fix tests
 - Add `CHANGELOG.md`
 
-<a name="2.0.0"></a>
-# 2.0.0 (2013-12-16)
+<a name="0.2.0"></a>
+# 0.2.0 (2013-12-16)
 
 - Improve build process
 - **bsSwitchSpec**: fix stop test-travis
