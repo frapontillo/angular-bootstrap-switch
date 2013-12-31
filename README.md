@@ -16,18 +16,25 @@ This will install AngularJS, jQuery, and the original bootstrap-switch.
 The directive can work on both element and attribute levels. The following example contains all of the supported attributes:
 
 ```html
-<input bs-switch ng-model="isSelected" 
-	switch-type="checkbox" switch-active="{{active}}"
-	switch-size="{{size}}" switch-animate="{{animate}}"
-	switch-label={{text}} switch-icon="{{icon}}"
-	switch-on-label="{{onLabel}}" switch-off-label="{{offLabel}}"
-	switch-on="{{on}}" switch-off="{{off}}">
+<input
+    bs-switch
+    ng-model="isSelected"
+    type="checkbox"
+    switch-active="{{ isActive }}"
+    switch-size="{{ size }}"
+    switch-animate="{{ animate }}"
+    switch-label="{{ label }}"
+    switch-icon="{{ icon }}"
+    switch-on-label="{{ onLabel }}"
+    switch-off-label="{{ offLabel }}"
+    switch-on="{{ on }}"
+    switch-off="{{ off }}" >
 ```
 
 Short doc for all of the attributes:
 
 * `ng-model`, the value to bind the switch to
-* `switch-type`, can be `chechbox` (default) or `radio`. This value must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
+* `type`, can be `chechbox` (default) or `radio`. This value must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
 * `switch-active`, determines if the switch is enabled or not
 * `switch-size`, can be the empty string as default, `mini`, `small`, `large`
 * `switch-animate`, determines if the switch animates when toggled
