@@ -22,11 +22,11 @@ describe('Directive: bsSwitch', function () {
   var templates = {
     'default': {
       scope: {model:true},
-      element: 'ng-model="model"'
+      element: 'ng-model="model" type="checkbox"'
     },
     'radio': {
       scope: {model:true},
-      element: 'ng-model="model" switch-type="radio"'
+      element: 'ng-model="model" type="radio"'
     },
     'active': {
       scope: {model:true, isActive:true},
@@ -82,8 +82,10 @@ describe('Directive: bsSwitch', function () {
   function compileDirective(template, input) {
     template = template ? templates[template] : templates['default'];
     angular.extend(scope, template.scope || templates['default'].scope);
-    var $element = angular.element(buildElement(template, input)).appendTo($sandbox);
-    $element = $compile($element)(scope);
+    var content = buildElement(template, input);
+    var $element = angular.element(content).appendTo($sandbox);
+    $compile($element)(scope);
+    $element = $sandbox.find('*:first-child');
     scope.$apply();
     return $element;
   }
@@ -124,6 +126,7 @@ describe('Directive: bsSwitch', function () {
       expect(element.find('div').hasClass('switch-on')).toBeTruthy();
       scope.model = false;
       scope.$apply();
+      $timeout.flush();
       expect(element.find('div').hasClass('switch-off')).toBeTruthy();
       expect(element.find('div').hasClass('switch-on')).toBeFalsy();
     };
@@ -139,7 +142,7 @@ describe('Directive: bsSwitch', function () {
       expect(scope.model).toBeTruthy();
       // The click on the element's label executes asynchronously,
       // so we skip that and rely on the fact that the click calls:
-      element.bootstrapSwitch('setState', false);
+      element.find('input').bootstrapSwitch('setState', false);
       scope.$apply();
       expect(scope.model).toBeFalsy();
     };
@@ -151,11 +154,12 @@ describe('Directive: bsSwitch', function () {
   function makeTestDeactivate(input) {
     return function () {
       var element = compileDirective('active', input);
-      expect(element.hasClass('deactivate')).toBeFalsy();
+      expect(element.hasClass('disabled')).toBeFalsy();
       expect(element.find('input').attr('disabled')).toBeFalsy();
       scope.isActive = false;
       scope.$apply();
-      expect(element.hasClass('deactivate')).toBeTruthy();
+      $timeout.flush();
+      expect(element.hasClass('disabled')).toBeTruthy();
       expect(element.find('input').attr('disabled')).toBeTruthy();
     };
   }
@@ -166,11 +170,11 @@ describe('Directive: bsSwitch', function () {
   function makeTestActivate(input) {
     return function () {
       var element = compileDirective('unactivated', input);
-      expect(element.hasClass('deactivate')).toBeTruthy();
+      expect(element.hasClass('disabled')).toBeTruthy();
       expect(element.find('input').attr('disabled')).toBeTruthy();
       scope.isActive = true;
       scope.$apply();
-      expect(element.hasClass('deactivate')).toBeFalsy();
+      expect(element.hasClass('disabled')).toBeFalsy();
       expect(element.find('input').attr('disabled')).toBeFalsy();
     };
   }
