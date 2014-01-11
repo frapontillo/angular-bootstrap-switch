@@ -58,7 +58,7 @@ To build the directive yourself you need to have NodeJS. Then do the following:
 $ npm install -g grunt-cli bower karma
 $ npm install
 $ bower install
-$ grunt test
+$ grunt test-travis
 $ grunt build
 ```
 
