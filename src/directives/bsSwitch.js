@@ -25,11 +25,9 @@ angular.module('frapontillo.bootstrap-switch')
         var listenToModel = function () {
           // When the model changes
           controller.$formatters.push(function (newValue) {
-            if (newValue !== undefined) {
               $timeout(function () {
                 element.bootstrapSwitch('setState', newValue || false, true);
               });
-            }
           });
 
           scope.$watch('switchActive', function (newValue) {
