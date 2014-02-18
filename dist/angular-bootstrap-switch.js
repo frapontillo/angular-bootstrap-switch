@@ -71,6 +71,10 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
         };
         var listenToView = function () {
           element.on('switch-change', function (e, data) {
+            if(!scope || scope.$$phase) {
+              // $apply() already in progress.
+              return;
+            }
             scope.$apply(function () {
               controller.$setViewValue(data.value);
             });

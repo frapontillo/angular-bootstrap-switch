@@ -78,6 +78,10 @@ angular.module('frapontillo.bootstrap-switch')
         var listenToView = function () {
           // When the switch is clicked, set its value into the ngModelController's $viewValue
           element.on('switch-change', function (e, data) {
+            if(!scope || scope.$$phase) {
+              // $apply() already in progress.
+              return;
+            }
             scope.$apply(function () {
               controller.$setViewValue(data.value);
             });
