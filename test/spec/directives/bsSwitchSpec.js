@@ -42,11 +42,11 @@ describe('Directive: bsSwitch', function () {
     },
     'color': {
       scope: {model:true, on:'info', off:'warning'},
-      element: 'ng-model="model" switch-on="{{ on }}" switch-off="{{ off }}"'
+      element: 'ng-model="model" switch-on-color="{{ on }}" switch-off-color="{{ off }}"'
     },
     'label': {
       scope: {model:true},
-      element: 'ng-model="model" switch-on-label="{{ on }}" switch-off-label="{{ off }}" switch-label="{{ label }}"'
+      element: 'ng-model="model" switch-on-text="{{ on }}" switch-off-text="{{ off }}" switch-label="{{ label }}"'
     },
     'icon': {
       scope: {model:true, icon:'icon-youtube'},
@@ -56,6 +56,26 @@ describe('Directive: bsSwitch', function () {
       scope: {model:true},
       element: 'ng-model="model" switch-animate="{{ animate }}"'
     }
+  };
+
+  var CONST = {
+    SWITCH_CLASS: 'bootstrap-switch',
+    SWITCH_ON_CLASS: 'bootstrap-switch-on',
+    SWITCH_OFF_CLASS: 'bootstrap-switch-off',
+    SWITCH_DISABLED_CLASS: 'bootstrap-switch-disabled',
+    SWITCH_MINI_CLASS: 'bootstrap-switch-mini',
+    SWITCH_INFO_CLASS: 'bootstrap-switch-info',
+    SWITCH_WARNING_CLASS: 'bootstrap-switch-warning',
+    SWITCH_SUCCESS_CLASS: 'bootstrap-switch-success',
+    SWITCH_ERROR_CLASS: 'bootstrap-switch-error',
+    SWITCH_ANIMATED_CLASS: 'bootstrap-switch-animate',
+    SWITCH_LEFT_SELECTOR: '.bootstrap-switch-handle-on',
+    SWITCH_RIGHT_SELECTOR: '.bootstrap-switch-handle-off',
+    LABEL_SELECTOR: 'label',
+    INPUT_SELECTOR: 'input',
+    ICON_SELECTOR: 'label span',
+    DEFAULT_TRUE_TEXT: 'ON',
+    DEFAULT_FALSE_TEXT: 'OFF'
   };
 
   /**
@@ -95,13 +115,14 @@ describe('Directive: bsSwitch', function () {
     return function() {
       var element = compileDirective(undefined, input);
       $timeout.flush();
-      expect(element.hasClass('has-switch')).toBe(true);
-      expect(element.find('span.switch-left').html()).toBe('Yes');
-      expect(element.find('span.switch-right').html()).toBe('No');
-      expect(element.find('label').html()).toBe('&nbsp;');
-      expect(element.find('div').hasClass('switch-on')).toBeTruthy();
-      expect(element.hasClass('deactivate')).toBeFalsy();
-      expect(element.find('input').attr('disabled')).toBeFalsy();
+      expect(element).not.toBe(undefined);
+      expect(element.hasClass(CONST.SWITCH_CLASS)).toBe(true);
+      expect(element.find(CONST.SWITCH_LEFT_SELECTOR).html()).toBe(CONST.DEFAULT_TRUE_TEXT);
+      expect(element.find(CONST.SWITCH_RIGHT_SELECTOR).html()).toBe(CONST.DEFAULT_FALSE_TEXT);
+      expect(element.find(CONST.LABEL_SELECTOR).html()).toBe('&nbsp;');
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeFalsy();
+      expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeFalsy();
     };
   }
   it('should create a switch', inject(makeTestCreateSwitch()));
@@ -111,7 +132,7 @@ describe('Directive: bsSwitch', function () {
   function makeTestRadio(input) {
     return function () {
       var element = compileDirective('radio', input);
-      expect(element.find('input').attr('type')).toBe('radio');
+      expect(element.find(CONST.INPUT_SELECTOR).attr('type')).toBe('radio');
     };
   }
   it('should create a radio switch', inject(makeTestRadio()));
@@ -122,13 +143,13 @@ describe('Directive: bsSwitch', function () {
     return function () {
       var element = compileDirective(undefined, input);
       $timeout.flush();
-      expect(element.find('div').hasClass('switch-off')).toBeFalsy();
-      expect(element.find('div').hasClass('switch-on')).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
       scope.model = false;
       scope.$apply();
       $timeout.flush();
-      expect(element.find('div').hasClass('switch-off')).toBeTruthy();
-      expect(element.find('div').hasClass('switch-on')).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
     };
   }
   it('should move the switch when the model changes', inject(makeTestChangeModel()));
@@ -142,7 +163,7 @@ describe('Directive: bsSwitch', function () {
       expect(scope.model).toBeTruthy();
       // The click on the element's label executes asynchronously,
       // so we skip that and rely on the fact that the click calls:
-      element.find('input').bootstrapSwitch('setState', false);
+      element.find(CONST.INPUT_SELECTOR).bootstrapSwitch('state', false);
       scope.$apply();
       expect(scope.model).toBeFalsy();
     };
@@ -154,13 +175,13 @@ describe('Directive: bsSwitch', function () {
   function makeTestDeactivate(input) {
     return function () {
       var element = compileDirective('active', input);
-      expect(element.hasClass('disabled')).toBeFalsy();
-      expect(element.find('input').attr('disabled')).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeFalsy();
+      expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeFalsy();
       scope.isActive = false;
       scope.$apply();
       $timeout.flush();
-      expect(element.hasClass('disabled')).toBeTruthy();
-      expect(element.find('input').attr('disabled')).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeTruthy();
+      expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeTruthy();
     };
   }
   it('should deactivate the switch', inject(makeTestDeactivate()));
@@ -170,12 +191,12 @@ describe('Directive: bsSwitch', function () {
   function makeTestActivate(input) {
     return function () {
       var element = compileDirective('unactivated', input);
-      expect(element.hasClass('disabled')).toBeTruthy();
-      expect(element.find('input').attr('disabled')).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeTruthy();
+      expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeTruthy();
       scope.isActive = true;
       scope.$apply();
-      expect(element.hasClass('disabled')).toBeFalsy();
-      expect(element.find('input').attr('disabled')).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeFalsy();
+      expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeFalsy();
     };
   }
   it('should activate the switch', inject(makeTestActivate()));
@@ -185,10 +206,10 @@ describe('Directive: bsSwitch', function () {
   function makeTestChangeSize(input) {
     return function () {
       var element = compileDirective('size', input);
-      expect(element.find('span').hasClass('switch-mini')).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_MINI_CLASS)).toBeFalsy();
       scope.size = 'mini';
       scope.$apply();
-      expect(element.find('span').hasClass('switch-mini')).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_MINI_CLASS)).toBeTruthy();
     };
   }
   it('should change the switch size', inject(makeTestChangeSize()));
@@ -198,13 +219,13 @@ describe('Directive: bsSwitch', function () {
   function makeTestChangeColor(input) {
     return function () {
       var element = compileDirective('color', input);
-      expect(element.find('span.switch-left').hasClass('switch-info')).toBeTruthy();
-      expect(element.find('span.switch-right').hasClass('switch-warning')).toBeTruthy();
+      expect(element.find(CONST.SWITCH_LEFT_SELECTOR).hasClass(CONST.SWITCH_INFO_CLASS)).toBeTruthy();
+      expect(element.find(CONST.SWITCH_RIGHT_SELECTOR).hasClass(CONST.SWITCH_WARNING_CLASS)).toBeTruthy();
       scope.on = 'success';
       scope.off = 'error';
       scope.$apply();
-      expect(element.find('span.switch-left').hasClass('switch-success')).toBeTruthy();
-      expect(element.find('span.switch-right').hasClass('switch-error')).toBeTruthy();
+      expect(element.find(CONST.SWITCH_LEFT_SELECTOR).hasClass(CONST.SWITCH_SUCCESS_CLASS)).toBeTruthy();
+      expect(element.find(CONST.SWITCH_RIGHT_SELECTOR).hasClass(CONST.SWITCH_ERROR_CLASS)).toBeTruthy();
     };
   }
   it('should change the switch colors', inject(makeTestChangeColor()));
@@ -214,13 +235,13 @@ describe('Directive: bsSwitch', function () {
   function makeTestChangeLabel(input) {
     return function () {
       var element = compileDirective('label', input);
-      expect(element.find('span.switch-left').html()).toBe('Yes');
-      expect(element.find('span.switch-right').html()).toBe('No');
+      expect(element.find(CONST.SWITCH_LEFT_SELECTOR).html()).toBe(CONST.DEFAULT_TRUE_TEXT);
+      expect(element.find(CONST.SWITCH_RIGHT_SELECTOR).html()).toBe(CONST.DEFAULT_FALSE_TEXT);
       scope.on = 'Yay';
       scope.off = 'Nay';
       scope.$apply();
-      expect(element.find('span.switch-left').html()).toBe('Yay');
-      expect(element.find('span.switch-right').html()).toBe('Nay');
+      expect(element.find(CONST.SWITCH_LEFT_SELECTOR).html()).toBe('Yay');
+      expect(element.find(CONST.SWITCH_RIGHT_SELECTOR).html()).toBe('Nay');
     };
   }
   it('should change the switch labels', inject(makeTestChangeLabel()));
@@ -230,10 +251,10 @@ describe('Directive: bsSwitch', function () {
   function makeTestChangeMiddleLabel(input) {
     return function () {
       var element = compileDirective('label', input);
-      expect(element.find('label').html()).toBe('&nbsp;');
+      expect(element.find(CONST.LABEL_SELECTOR).html()).toBe('&nbsp;');
       scope.label = 'XYZ';
       scope.$apply();
-      expect(element.find('label').html()).toBe('XYZ');
+      expect(element.find(CONST.LABEL_SELECTOR).html()).toBe('XYZ');
     };
   }
   it('should change the switch middle label', inject(makeTestChangeMiddleLabel()));
@@ -243,11 +264,11 @@ describe('Directive: bsSwitch', function () {
   function makeTestChangeMiddleIcon(input) {
     return function () {
       var element = compileDirective('icon', input);
-      expect(element.find('label i').hasClass('icon-youtube')).toBeTruthy();
+      expect(element.find(CONST.ICON_SELECTOR).hasClass('icon-youtube')).toBeTruthy();
       scope.icon = 'icon-fullscreen';
       scope.$apply();
-      expect(element.find('label i').hasClass('icon-youtube')).toBeFalsy();
-      expect(element.find('label i').hasClass('icon-fullscreen')).toBe(true);
+      expect(element.find(CONST.ICON_SELECTOR).hasClass('icon-youtube')).toBeFalsy();
+      expect(element.find(CONST.ICON_SELECTOR).hasClass('icon-fullscreen')).toBe(true);
     };
   }
   it('should change the switch middle icon', inject(makeTestChangeMiddleIcon()));
@@ -257,13 +278,13 @@ describe('Directive: bsSwitch', function () {
   function makeTestAnimation(input) {
     return function () {
       var element = compileDirective('animation', input);
-      expect(element.find('div').attr('data-animated')).toBe('true');
+      expect(element.hasClass(CONST.SWITCH_ANIMATED_CLASS)).toBeTruthy();
       scope.animate = false;
       scope.$apply();
-      expect(element.find('div').attr('data-animated')).toBe('false');
+      expect(element.hasClass(CONST.SWITCH_ANIMATED_CLASS)).toBeFalsy();
       scope.animate = true;
       scope.$apply();
-      expect(element.find('div').attr('data-animated')).toBe('true');
+      expect(element.hasClass(CONST.SWITCH_ANIMATED_CLASS)).toBeTruthy();
     };
   }
   it('should change the switch animation mode', inject(makeTestAnimation()));
