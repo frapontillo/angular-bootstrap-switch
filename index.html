@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Angular Bootstrap Switch by frapontillo</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Angular Bootstrap Switch</h1>
+        <p>Angular directive for the bootstrap-switch jQuery plugin.</p>
+
+        <p class="view"><a href="https://github.com/frapontillo/angular-bootstrap-switch">View the Project on GitHub <small>frapontillo/angular-bootstrap-switch</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/frapontillo/angular-bootstrap-switch/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/frapontillo/angular-bootstrap-switch/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/frapontillo/angular-bootstrap-switch">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>Angular directive for the <a href="https://github.com/nostalgiaz/bootstrap-switch">bootstrap-switch</a> jQuery plugin.</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<pre lang="shell"><code>$ bower install angular-bootstrap-switch
+</code></pre>
+
+<p>This will install AngularJS, jQuery, and the original bootstrap-switch.</p>
+
+<h3>
+<a name="directive" class="anchor" href="#directive"><span class="octicon octicon-link"></span></a>Directive</h3>
+
+<p>The directive can work on both element and attribute levels. The following example contains all of the supported attributes:</p>
+
+<div class="highlight highlight-html"><pre><span class="nt">&lt;input</span>
+    <span class="na">bs-switch</span>
+    <span class="na">ng-model=</span><span class="s">"isSelected"</span>
+    <span class="na">type=</span><span class="s">"checkbox"</span>
+    <span class="na">switch-active=</span><span class="s">"{{ isActive }}"</span>
+    <span class="na">switch-size=</span><span class="s">"{{ size }}"</span>
+    <span class="na">switch-animate=</span><span class="s">"{{ animate }}"</span>
+    <span class="na">switch-label=</span><span class="s">"{{ label }}"</span>
+    <span class="na">switch-icon=</span><span class="s">"{{ icon }}"</span>
+    <span class="na">switch-on-label=</span><span class="s">"{{ onLabel }}"</span>
+    <span class="na">switch-off-label=</span><span class="s">"{{ offLabel }}"</span>
+    <span class="na">switch-on=</span><span class="s">"{{ on }}"</span>
+    <span class="na">switch-off=</span><span class="s">"{{ off }}"</span> <span class="nt">&gt;</span>
+</pre></div>
+
+<p>Short doc for all of the attributes:</p>
+
+<ul>
+<li>
+<code>ng-model</code>, the value to bind the switch to</li>
+<li>
+<code>type</code>, can be <code>chechbox</code> (default) or <code>radio</code>. This value must be a string, as it cannot be changed once set (see <a href="http://stackoverflow.com/a/15155407/801065">this answer on StackOverflow</a>).</li>
+<li>
+<code>switch-active</code>, determines if the switch is enabled or not</li>
+<li>
+<code>switch-size</code>, can be the empty string as default, <code>mini</code>, <code>small</code>, <code>large</code>
+</li>
+<li>
+<code>switch-animate</code>, determines if the switch animates when toggled</li>
+<li>
+<code>switch-label</code>, sets the toggle label</li>
+<li>
+<code>switch-icon</code>, sets the toggle icon (e.g. <code>icon-save</code>)</li>
+<li>
+<code>switch-on-label</code>, sets the positive (checked) text</li>
+<li>
+<code>switch-off-label</code>, sets the negative (unchecked) text</li>
+<li>
+<code>switch-on</code>, sets the positive (checked) class, can be <code>primary</code> (as default), <code>default</code>, <code>info</code>, <code>success</code>, <code>warning</code>, <code>danger</code>
+</li>
+<li>
+<code>switch-off</code>, sets the positive (checked) class, can be <code>default</code> (as default), <code>primary</code>, <code>info</code>, <code>success</code>, <code>warning</code>, <code>danger</code>
+</li>
+</ul><h3>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h3>
+
+<p>The <code>example</code> folder shows a simple working demo of the switch.</p>
+
+<h2>
+<a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h2>
+
+<h3>
+<a name="test-and-build" class="anchor" href="#test-and-build"><span class="octicon octicon-link"></span></a>Test and build</h3>
+
+<p>To build the directive yourself you need to have NodeJS. Then do the following:</p>
+
+<pre lang="shell"><code>$ npm install -g grunt-cli bower karma
+$ npm install
+$ bower install
+$ grunt test-travis
+$ grunt build
+</code></pre>
+
+<h3>
+<a name="contribute" class="anchor" href="#contribute"><span class="octicon octicon-link"></span></a>Contribute</h3>
+
+<p>To contribute, please follow the generic <a href="https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md">AngularJS Contributing Guidelines</a>, with the only exception to send the PR to the <code>develop</code> branch instead of <code>master</code>.</p>
+
+<h2>
+<a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h2>
+
+<p>Francesco Pontillo (<a href="mailto:francescopontillo@gmail.com">francescopontillo@gmail.com</a>)</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<pre><code>   Copyright 2013 Francesco Pontillo
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/frapontillo">frapontillo</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-49037569-3");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
