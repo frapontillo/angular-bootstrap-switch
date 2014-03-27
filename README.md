@@ -48,6 +48,9 @@ Short doc for all of the attributes:
 ###Examples
 The `example` folder shows a simple working demo of the switch.
 
+###Compatibility
+IE8+ and the common modern browsers.
+
 ##Development
 
 ###Test and build
@@ -61,9 +64,6 @@ $ bower install
 $ grunt test-travis
 $ grunt build
 ```
-
-###Compatibility
-IE8+ and the common modern browsers.
 
 ###Contribute
 
