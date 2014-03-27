@@ -5,8 +5,6 @@ angular.module('frapontillo.bootstrap-switch')
     return {
       restrict: 'EA',
       require: 'ngModel',
-      template: '<input>',
-      replace: true,
       scope: {
         switchActive: '@',
         switchSize: '@',
