@@ -13,7 +13,7 @@ $ bower install angular-bootstrap-switch
 This will install AngularJS, jQuery, and the original bootstrap-switch.
 
 ###Directive
-The directive can work on both element and attribute levels. The following example contains all of the supported attributes:
+The directive can work on both element and attribute levels. As the jquery bootstrap-switch used requires an input element the directive requires this as well (not using angularjs template/replace mechanism for IE8 compatibility). The following example contains all of the supported attributes:
 
 ```html
 <input
@@ -61,6 +61,9 @@ $ bower install
 $ grunt test-travis
 $ grunt build
 ```
+
+###Compatibility
+IE8+ and the common modern browsers.
 
 ###Contribute
 
