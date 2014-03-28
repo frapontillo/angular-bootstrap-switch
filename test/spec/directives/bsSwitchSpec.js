@@ -55,11 +55,16 @@ describe('Directive: bsSwitch', function () {
     'animation': {
       scope: {model:true},
       element: 'ng-model="model" switch-animate="{{ animate }}"'
+    },
+    'modifier': {
+      scope: {model:true},
+      element: 'ng-model="model" switch-wrapper="{{ modifier }}"'
     }
   };
 
   var CONST = {
     SWITCH_CLASS: 'bootstrap-switch',
+    SWITCH_WRAPPER_CLASS: 'bootstrap-switch-wrapper',
     SWITCH_ON_CLASS: 'bootstrap-switch-on',
     SWITCH_OFF_CLASS: 'bootstrap-switch-off',
     SWITCH_DISABLED_CLASS: 'bootstrap-switch-disabled',
@@ -105,7 +110,7 @@ describe('Directive: bsSwitch', function () {
     var content = buildElement(template, input);
     var $element = angular.element(content).appendTo($sandbox);
     $compile($element)(scope);
-    $element = $sandbox.find('*:first-child');
+    $element = $sandbox.find('> *:first-child');
     scope.$apply();
     return $element;
   }
@@ -163,9 +168,12 @@ describe('Directive: bsSwitch', function () {
       expect(scope.model).toBeTruthy();
       // The click on the element's label executes asynchronously,
       // so we skip that and rely on the fact that the click calls:
-      element.find(CONST.INPUT_SELECTOR).bootstrapSwitch('state', false);
+      element.find(CONST.SWITCH_LEFT_SELECTOR).trigger('click.bootstrapSwitch');
       scope.$apply();
       expect(scope.model).toBeFalsy();
+      element.find(CONST.SWITCH_RIGHT_SELECTOR).trigger('click.bootstrapSwitch');
+      scope.$apply();
+      expect(scope.model).toBeTruthy();
     };
   }
   it('should change the model when the switch is clicked', inject(makeTestChangeView()));
@@ -289,5 +297,25 @@ describe('Directive: bsSwitch', function () {
   }
   it('should change the switch animation mode', inject(makeTestAnimation()));
   it('should change the switch animation mode (input)', inject(makeTestAnimation(true)));
+
+  // Test the custom class modifiers
+  function makeTestClassModifiers(input) {
+    return function () {
+      var element = compileDirective('modifier', input);
+      expect(element.hasClass(CONST.SWITCH_WRAPPER_CLASS)).toBeTruthy();
+      scope.modifier = 'flat-switch';
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_WRAPPER_CLASS)).toBeFalsy();
+      expect(element.hasClass('bootstrap-switch-flat-switch')).toBeTruthy();
+      scope.modifier = '';
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_WRAPPER_CLASS)).toBeTruthy();
+      scope.modifier = undefined;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_WRAPPER_CLASS)).toBeTruthy();
+    };
+  }
+  it('should change the custom wrapper class', inject(makeTestClassModifiers()));
+  it('should change the custom wrapper class (input)', inject(makeTestClassModifiers(true)));
 
 });

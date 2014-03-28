@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-switch
- * @version v0.3.0-alpha.1 - 2014-02-22
+ * @version v0.3.0-alpha.1 - 2014-03-27
  * @author Francesco Pontillo (francescopontillo@gmail.com)
  * @link https://github.com/frapontillo/angular-bootstrap-switch
  * @license Apache License 2.0
@@ -27,7 +27,8 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
         switchAnimate: '@',
         switchSize: '@',
         switchLabel: '@',
-        switchIcon: '@'
+        switchIcon: '@',
+        switchWrapper: '@'
       },
       link: function link(scope, element, attrs, controller) {
         /**
@@ -69,7 +70,6 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
           scope.$watch('switchLabel', function (newValue) {
             element.bootstrapSwitch('labelText', newValue ? newValue : '&nbsp;');
           });
-          // TODO: changed behaviour, don't rely on "icon" class being present anymore
           scope.$watch('switchIcon', function (newValue) {
             if (newValue) {
               // build and set the new span
@@ -77,15 +77,22 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
               element.bootstrapSwitch('labelText', spanClass);
             }
           });
+          scope.$watch('switchWrapper', function (newValue) {
+            // Make sure that newValue is not empty, otherwise default to undefined
+            if (!newValue) {
+              newValue = undefined;
+            }
+            element.bootstrapSwitch('setWrapperClass', newValue);
+          });
         };
         /**
          * Listen to view changes.
          */
         var listenToView = function () {
           // When the switch is clicked, set its value into the ngModelController's $viewValue
-          element.on('switchChange', function (e, data) {
+          element.on('switchChange.bootstrapSwitch', function (e, data) {
             scope.$apply(function () {
-              controller.$setViewValue(data.value);
+              controller.$setViewValue(data);
             });
           });
         };
@@ -100,10 +107,10 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
         };
         // Listen and respond to model changes
         listenToModel();
-        // Listen and respond to view changes
-        listenToView();
         // Bootstrap the switch plugin
         element.bootstrapSwitch();
+        // Listen and respond to view changes
+        listenToView();
         // Delay the setting of the state
         $timeout(function () {
           element.bootstrapSwitch('state', controller.$modelValue || false, true);

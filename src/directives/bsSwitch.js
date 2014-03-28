@@ -16,7 +16,8 @@ angular.module('frapontillo.bootstrap-switch')
         switchAnimate: '@',
         switchSize: '@',
         switchLabel: '@',
-        switchIcon: '@'       // changed behaviour
+        switchIcon: '@',      // changed behaviour
+        switchWrapper: '@'    // container class modifier
       },
       link: function link(scope, element, attrs, controller) {
 
@@ -68,13 +69,20 @@ angular.module('frapontillo.bootstrap-switch')
             element.bootstrapSwitch('labelText', newValue ? newValue : '&nbsp;');
           });
 
-          // TODO: changed behaviour, don't rely on "icon" class being present anymore
           scope.$watch('switchIcon', function (newValue) {
             if (newValue) {
               // build and set the new span
               var spanClass = '<span class=\'' + newValue + '\'></span>';
               element.bootstrapSwitch('labelText', spanClass);
             }
+          });
+
+          scope.$watch('switchWrapper', function(newValue) {
+            // Make sure that newValue is not empty, otherwise default to undefined
+            if (!newValue) {
+              newValue = undefined;
+            }
+            element.bootstrapSwitch('setWrapperClass', newValue);
           });
         };
 
@@ -83,9 +91,9 @@ angular.module('frapontillo.bootstrap-switch')
          */
         var listenToView = function () {
           // When the switch is clicked, set its value into the ngModelController's $viewValue
-          element.on('switchChange', function (e, data) {
+          element.on('switchChange.bootstrapSwitch', function (e, data) {
             scope.$apply(function () {
-              controller.$setViewValue(data.value);
+              controller.$setViewValue(data);
             });
           });
         };
@@ -103,11 +111,11 @@ angular.module('frapontillo.bootstrap-switch')
         // Listen and respond to model changes
         listenToModel();
 
-        // Listen and respond to view changes
-        listenToView();
-
         // Bootstrap the switch plugin
         element.bootstrapSwitch();
+
+        // Listen and respond to view changes
+        listenToView();
 
         // Delay the setting of the state
         $timeout(function() {

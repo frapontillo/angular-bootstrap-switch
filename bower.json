@@ -19,17 +19,13 @@
   ],
   "main": "./dist/angular-bootstrap-switch.min.js",
   "dependencies": {
-    "angular": "1.2.13",
+    "angular": "~1.2.15",
     "jquery": "2.1.0",
     "bootstrap": ">=2.3.2",
-    "bootstrap-switch": "3.0"
+    "bootstrap-switch": "frapontillo/bootstrap-switch#feature/3.0-temp"
   },
   "devDependencies": {
-    "angular-mocks": "1.2.13",
-    "angular-scenario": "1.2.13"
-  },
-  "resolutions": {
-    "jquery": "2.1.0",
-    "bootstrap": "2.3.2"
+    "angular-mocks": "~1.2.15",
+    "angular-scenario": "~1.2.15"
   }
 }
