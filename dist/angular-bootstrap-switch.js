@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-switch
- * @version v0.2.1 - 2013-12-31
+ * @version v0.2.2 - 2014-03-28
  * @author Francesco Pontillo (francescopontillo@gmail.com)
  * @link https://github.com/frapontillo/angular-bootstrap-switch
  * @license Apache License 2.0
@@ -16,8 +16,6 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
     return {
       restrict: 'EA',
       require: 'ngModel',
-      template: '<input>',
-      replace: true,
       scope: {
         switchActive: '@',
         switchSize: '@',
@@ -29,8 +27,16 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
         switchIcon: '@',
         switchAnimate: '@'
       },
+      template: function (tElement) {
+        return ('' + tElement.nodeName).toLowerCase() === 'input' ? undefined : '<input>';
+      },
+      replace: true,
       link: function link(scope, element, attrs, controller) {
+        /**
+         * Listen to model changes.
+         */
         var listenToModel = function () {
+          // When the model changes
           controller.$formatters.push(function (newValue) {
             if (newValue !== undefined) {
               $timeout(function () {
@@ -69,22 +75,32 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
             element.bootstrapSwitch('setTextIcon', newValue);
           });
         };
+        /**
+         * Listen to view changes.
+         */
         var listenToView = function () {
+          // When the switch is clicked, set its value into the ngModelController's $viewValue
           element.on('switch-change', function (e, data) {
             scope.$apply(function () {
               controller.$setViewValue(data.value);
             });
           });
         };
+        /**
+         * Return the appropriate size class.
+         */
         scope.getSizeClass = function () {
           return attrs.switchSize ? 'switch-' + attrs.switchSize : '';
         };
+        // Listen and respond to model changes
         listenToModel();
+        // Listen and respond to view changes
         listenToView();
         element.bootstrapSwitch();
         $timeout(function () {
           element.bootstrapSwitch('setState', controller.$modelValue || false, true);
         });
+        // On destroy, collect ya garbage
         scope.$on('$destroy', function () {
           element.bootstrapSwitch('destroy');
         });

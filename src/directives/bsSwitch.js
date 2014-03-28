@@ -16,6 +16,10 @@ angular.module('frapontillo.bootstrap-switch')
         switchIcon: '@',
         switchAnimate: '@'
       },
+      template: function(tElement) {
+        return ('' + tElement.nodeName).toLowerCase() === 'input' ? undefined : '<input>';
+      },
+      replace: true,
       link: function link(scope, element, attrs, controller) {
         /**
          * Listen to model changes.

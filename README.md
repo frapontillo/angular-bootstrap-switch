@@ -13,7 +13,7 @@ $ bower install angular-bootstrap-switch
 This will install AngularJS, jQuery, and the original bootstrap-switch.
 
 ###Directive
-The directive can work on both element and attribute levels. As the jquery bootstrap-switch used requires an input element the directive requires this as well (not using angularjs template/replace mechanism for IE8 compatibility). The following example contains all of the supported attributes:
+The directive can work on both element and attribute levels. The following example contains all of the supported attributes:
 
 ```html
 <input
@@ -49,7 +49,8 @@ Short doc for all of the attributes:
 The `example` folder shows a simple working demo of the switch.
 
 ###Compatibility
-IE8+ and the common modern browsers.
+
+IE8 compatible with 0.2.2. IE requires you to attach the directive to an <input> of type "checkbox" or "radio". Due to angularjs incompatibilities it is not possible to use a custom tag or div instead.
 
 ##Development
 
