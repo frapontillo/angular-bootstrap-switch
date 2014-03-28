@@ -269,4 +269,30 @@ describe('Directive: bsSwitch', function () {
   it('should change the switch animation mode', inject(makeTestAnimation()));
   it('should change the switch animation mode (input)', inject(makeTestAnimation(true)));
 
+  // Test the non-replacement if already an input element given
+  // to ensure IE8 compatibility
+  function makeTestReplacement(useInputElement) {
+      return function () {
+          var beforeCompile,
+              afterCompile,
+              content,
+              template = templates['default'];
+
+          angular.extend(scope, template.scope);
+          content = buildElement(template, useInputElement);
+          beforeCompile = angular.element(content).appendTo($sandbox);
+
+          $compile(beforeCompile)(scope);
+          afterCompile = $sandbox.find('input');
+          scope.$apply();
+
+          expect(beforeCompile.length).toBe(1);
+          expect(afterCompile.length).toBe(1);
+          expect(beforeCompile[0] === afterCompile[0]).toBe(true);
+        };
+    }
+
+  it('should replace non-input elements', inject(makeTestReplacement()));
+  it('should not replace input elements', inject(makeTestReplacement(true)));
+
 });
