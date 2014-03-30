@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+## 0.3.0-alpha.2 (2014-03-30)
+
+- Update to `bootstrap-switch` 3.0.0 stable
+- Update to `angular` 1.2.15
+- **bsSwitch**: add `switch-wrapper` property
+
 ## 0.3.0-alpha.1 (2014-02-22)
 
 ### Breaking changes
