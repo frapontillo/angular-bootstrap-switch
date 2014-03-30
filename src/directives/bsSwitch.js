@@ -78,11 +78,11 @@ angular.module('frapontillo.bootstrap-switch')
           });
 
           scope.$watch('switchWrapper', function(newValue) {
-            // Make sure that newValue is not empty, otherwise default to undefined
+            // Make sure that newValue is not empty, otherwise default to null
             if (!newValue) {
-              newValue = undefined;
+              newValue = null;
             }
-            element.bootstrapSwitch('setWrapperClass', newValue);
+            element.bootstrapSwitch('wrapperClass', newValue);
           });
         };
 

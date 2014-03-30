@@ -44,6 +44,7 @@ Short doc for all of the attributes:
 * `switch-off-color`, sets the negative (unchecked) class, can be `default` (as default), `primary`, `info`, `success`, `warning`, `danger`
 * `switch-label`, sets the toggle label
 * `switch-icon`, sets the toggle icon (e.g. `icon-save`)
+* `switch-wrapper`, sets the main container class, use a falsy value to fall back to the default one
 
 ###Migrating from bootstrap-switch~2
 

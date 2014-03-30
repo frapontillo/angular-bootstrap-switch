@@ -27,9 +27,10 @@
     "grunt-karma": "~0.8.2",
     "matchdep": "~0.3.0",
     "grunt-ngmin": "~0.0.3",
-    "karma-jasmine": "^0.1.5",
-    "karma-chrome-launcher": "^0.1.2",
-    "karma-phantomjs-launcher": "^0.1.2"
+    "karma-jasmine": "~0.2.2",
+    "karma-chrome-launcher": "~0.1.2",
+    "karma-firefox-launcher": "~0.1.2",
+    "karma-phantomjs-launcher": "~0.1.2"
   },
   "engines": {
     "node": ">=0.10.0"
