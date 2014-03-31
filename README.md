@@ -54,6 +54,10 @@ Read the [CHANGELOG](CHANGELOG.md#030-alpha1-2014-02-22) information to learn wh
 
 The `example` folder shows a simple working demo of the switch.
 
+###Compatibility
+
+IE8 compatible with 0.2.2. IE requires you to attach the directive to an <input> of type "checkbox" or "radio". Due to angularjs incompatibilities it is not possible to use a custom tag or div instead.
+
 ##Development
 
 ###Test and build
