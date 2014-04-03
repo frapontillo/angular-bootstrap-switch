@@ -17,7 +17,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   ],
-  "main": "./dist/angular-bootstrap-switch.min.js",
+  "main": "./dist/angular-bootstrap-switch.js",
   "dependencies": {
     "angular": "1.2.8",
     "jquery": "2.0.3",
