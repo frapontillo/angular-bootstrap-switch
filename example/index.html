@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="../bower_components/bootstrap-switch/build/css/bootstrap2/bootstrap-switch.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-switch/dist/css/bootstrap2/bootstrap-switch.css">
 </head>
   <body ng-app="bsSwitchApp">
 
@@ -25,10 +25,10 @@
             ng-model="isSelected"
             type="checkbox"
             switch-active="{{ isActive }}"
-            switch-on-label="{{ onLabel }}"
-            switch-off-label="{{ offLabel }}"
-            switch-on="{{ on }}"
-            switch-off="{{ off }}"
+            switch-on-text="{{ onText }}"
+            switch-off-text="{{ offText }}"
+            switch-on-color="{{ onColor }}"
+            switch-off-color="{{ offColor }}"
             switch-animate="{{ animate }}"
             switch-size="{{ size }}"
             switch-label="{{ label }}"
@@ -38,10 +38,10 @@
             ng-model="isSelected"
             type="radio"
             switch-active="{{ isActive }}"
-            switch-on-label="{{ onLabel }}"
-            switch-off-label="{{ offLabel }}"
-            switch-on="{{ on }}"
-            switch-off="{{ off }}"
+            switch-on-text="{{ onText }}"
+            switch-off-text="{{ offText }}"
+            switch-on-color="{{ onColor }}"
+            switch-off-color="{{ offColor }}"
             switch-animate="{{ animate }}"
             switch-size="{{ size }}"
             switch-label="{{ label }}"
@@ -52,9 +52,9 @@
       </div>
     </div>
 
-    <script src="../bower_components/jquery/jquery.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/bootstrap-switch/build/js/bootstrap-switch.js"></script>
+    <script src="../bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
     <script src="../common/module.js"></script>
     <script src="../src/directives/bsSwitch.js"></script>
 

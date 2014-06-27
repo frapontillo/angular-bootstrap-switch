@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-switch
- * @version v0.2.1 - 2013-12-31
+ * @version v0.3.0-alpha.2 - 2014-03-30
  * @author Francesco Pontillo (francescopontillo@gmail.com)
  * @link https://github.com/frapontillo/angular-bootstrap-switch
  * @license Apache License 2.0
@@ -20,70 +20,80 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
       replace: true,
       scope: {
         switchActive: '@',
+        switchOnText: '@',
+        switchOffText: '@',
+        switchOnColor: '@',
+        switchOffColor: '@',
+        switchAnimate: '@',
         switchSize: '@',
-        switchOn: '@',
-        switchOff: '@',
-        switchOnLabel: '@',
-        switchOffLabel: '@',
         switchLabel: '@',
         switchIcon: '@',
-        switchAnimate: '@'
+        switchWrapper: '@'
       },
       link: function link(scope, element, attrs, controller) {
         var listenToModel = function () {
           controller.$formatters.push(function (newValue) {
             if (newValue !== undefined) {
               $timeout(function () {
-                element.bootstrapSwitch('setState', newValue || false, true);
+                element.bootstrapSwitch('state', newValue || false, true);
               });
             }
           });
           scope.$watch('switchActive', function (newValue) {
             var active = newValue === true || newValue === 'true' || !newValue;
-            element.bootstrapSwitch('setDisabled', !active);
+            element.bootstrapSwitch('disabled', !active);
           });
-          scope.$watch('switchOnLabel', function (newValue) {
-            element.bootstrapSwitch('setOnLabel', newValue || 'Yes');
+          scope.$watch('switchOnText', function (newValue) {
+            element.bootstrapSwitch('onText', getValueOrUndefined(newValue));
           });
-          scope.$watch('switchOffLabel', function (newValue) {
-            element.bootstrapSwitch('setOffLabel', newValue || 'No');
+          scope.$watch('switchOffText', function (newValue) {
+            element.bootstrapSwitch('offText', getValueOrUndefined(newValue));
           });
-          scope.$watch('switchOn', function (newValue) {
+          scope.$watch('switchOnColor', function (newValue) {
             attrs.dataOn = newValue;
-            element.bootstrapSwitch('setOnClass', newValue || '');
+            element.bootstrapSwitch('onColor', getValueOrUndefined(newValue));
           });
-          scope.$watch('switchOff', function (newValue) {
+          scope.$watch('switchOffColor', function (newValue) {
             attrs.dataOff = newValue;
-            element.bootstrapSwitch('setOffClass', newValue || '');
+            element.bootstrapSwitch('offColor', getValueOrUndefined(newValue));
           });
           scope.$watch('switchAnimate', function (newValue) {
-            element.bootstrapSwitch('setAnimated', scope.$eval(newValue || 'true'));
+            element.bootstrapSwitch('animate', scope.$eval(newValue || 'true'));
           });
           scope.$watch('switchSize', function (newValue) {
-            element.bootstrapSwitch('setSizeClass', scope.getSizeClass(newValue));
+            element.bootstrapSwitch('size', newValue);
           });
           scope.$watch('switchLabel', function (newValue) {
-            element.bootstrapSwitch('setTextLabel', newValue);
+            element.bootstrapSwitch('labelText', newValue ? newValue : '&nbsp;');
           });
           scope.$watch('switchIcon', function (newValue) {
-            element.bootstrapSwitch('setTextIcon', newValue);
+            if (newValue) {
+              var spanClass = '<span class=\'' + newValue + '\'></span>';
+              element.bootstrapSwitch('labelText', spanClass);
+            }
+          });
+          scope.$watch('switchWrapper', function (newValue) {
+            if (!newValue) {
+              newValue = null;
+            }
+            element.bootstrapSwitch('wrapperClass', newValue);
           });
         };
         var listenToView = function () {
-          element.on('switch-change', function (e, data) {
+          element.on('switchChange.bootstrapSwitch', function (e, data) {
             scope.$apply(function () {
-              controller.$setViewValue(data.value);
+              controller.$setViewValue(data);
             });
           });
         };
-        scope.getSizeClass = function () {
-          return attrs.switchSize ? 'switch-' + attrs.switchSize : '';
+        var getValueOrUndefined = function (value) {
+          return value ? value : undefined;
         };
         listenToModel();
-        listenToView();
         element.bootstrapSwitch();
+        listenToView();
         $timeout(function () {
-          element.bootstrapSwitch('setState', controller.$modelValue || false, true);
+          element.bootstrapSwitch('state', controller.$modelValue || false, true);
         });
         scope.$on('$destroy', function () {
           element.bootstrapSwitch('destroy');

@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-switch",
-  "version": "0.2.1",
+  "version": "0.3.0-alpha.2",
   "author": {
     "name": "Francesco Pontillo",
     "email": "francescopontillo@gmail.com",
@@ -21,15 +21,19 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-uglify": "~0.2.0",
-    "grunt-contrib-jshint": "~0.6.0",
-    "grunt-contrib-clean": "~0.4.1",
-    "grunt-karma": "~0.4.3",
-    "matchdep": "~0.1.2",
-    "grunt-ngmin": "~0.0.2"
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-jshint": "~0.9.2",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-karma": "~0.8.2",
+    "matchdep": "~0.3.0",
+    "grunt-ngmin": "~0.0.3",
+    "karma-jasmine": "~0.2.2",
+    "karma-chrome-launcher": "~0.1.2",
+    "karma-firefox-launcher": "~0.1.2",
+    "karma-phantomjs-launcher": "~0.1.2"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   },
   "scripts": {
     "test": "grunt test"

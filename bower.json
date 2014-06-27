@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-switch",
-  "version": "0.2.1",
+  "version": "0.3.0-alpha.2",
   "author": {
     "name": "Francesco Pontillo",
     "email": "francescopontillo@gmail.com",
@@ -19,16 +19,13 @@
   ],
   "main": "./dist/angular-bootstrap-switch.js",
   "dependencies": {
-    "angular": "1.2.8",
-    "jquery": "2.0.3",
-    "bootstrap": "2.3.2",
-    "bootstrap-switch": "2.0.0"
+    "angular": "~1.2.18",
+    "jquery": ">=1.9.0",
+    "bootstrap": ">=2.3.2",
+    "bootstrap-switch": "~3.0.2"
   },
   "devDependencies": {
-    "angular-mocks": "1.2.8",
-    "angular-scenario": "1.2.8"
-  },
-  "resolutions": {
-    "angular": "1.2.8"
+    "angular-mocks": "~1.2.18",
+    "angular-scenario": "~1.2.18"
   }
 }

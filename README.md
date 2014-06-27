@@ -25,10 +25,10 @@ The directive can work on both element and attribute levels. The following examp
     switch-animate="{{ animate }}"
     switch-label="{{ label }}"
     switch-icon="{{ icon }}"
-    switch-on-label="{{ onLabel }}"
-    switch-off-label="{{ offLabel }}"
-    switch-on="{{ on }}"
-    switch-off="{{ off }}" >
+    switch-on-text="{{ onLabel }}"
+    switch-off-text="{{ offLabel }}"
+    switch-on-color="{{ on }}"
+    switch-off-color="{{ off }}" >
 ```
 
 Short doc for all of the attributes:
@@ -38,15 +38,25 @@ Short doc for all of the attributes:
 * `switch-active`, determines if the switch is enabled or not
 * `switch-size`, can be the empty string as default, `mini`, `small`, `large`
 * `switch-animate`, determines if the switch animates when toggled
+* `switch-on-text`, sets the positive (checked) text
+* `switch-off-text`, sets the negative (unchecked) text
+* `switch-on-color`, sets the positive (checked) class, can be `primary` (as default), `default`, `info`, `success`, `warning`, `danger`
+* `switch-off-color`, sets the negative (unchecked) class, can be `default` (as default), `primary`, `info`, `success`, `warning`, `danger`
 * `switch-label`, sets the toggle label
 * `switch-icon`, sets the toggle icon (e.g. `icon-save`)
-* `switch-on-label`, sets the positive (checked) text
-* `switch-off-label`, sets the negative (unchecked) text
-* `switch-on`, sets the positive (checked) class, can be `primary` (as default), `default`, `info`, `success`, `warning`, `danger`
-* `switch-off`, sets the positive (checked) class, can be `default` (as default), `primary`, `info`, `success`, `warning`, `danger`
+* `switch-wrapper`, sets the main container class, use a falsy value to fall back to the default one
+
+###Migrating from bootstrap-switch~2
+
+Read the [CHANGELOG](CHANGELOG.md#030-alpha1-2014-02-22) information to learn what's different in `0.3.0`.
 
 ###Examples
+
 The `example` folder shows a simple working demo of the switch.
+
+###Compatibility
+
+IE8 requires you to attach the directive to an `<input type="checkbox">` or `<input type="radio">`. Due to some incompatibilities it is not possible to use a custom tag or `div` instead.
 
 ##Development
 
@@ -73,7 +83,7 @@ Francesco Pontillo (<mailto:francescopontillo@gmail.com>)
 ##License
 
 ```
-   Copyright 2013 Francesco Pontillo
+   Copyright 2014 Francesco Pontillo
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
