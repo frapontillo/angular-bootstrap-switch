@@ -56,7 +56,7 @@ The `example` folder shows a simple working demo of the switch.
 
 ###Compatibility
 
-IE8 compatible with 0.2.2. IE requires you to attach the directive to an <input> of type "checkbox" or "radio". Due to angularjs incompatibilities it is not possible to use a custom tag or div instead.
+IE8 requires you to attach the directive to an `<input type="checkbox">` or `<input type="radio">`. Due to some incompatibilities it is not possible to use a custom tag or `div` instead.
 
 ##Development
 
