@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+## 0.3.0 (2014-06-27)
+
+- Update to `bootstrap-switch` 3.0.2
+- Update to `angular` 1.2.18
+- Support for `jquery` > 1.9.0
+- Promotion to stable
+
 ## 0.3.0-alpha.2 (2014-03-30)
 
 - Update to `bootstrap-switch` 3.0.0 stable
