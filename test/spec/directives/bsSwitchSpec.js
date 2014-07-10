@@ -110,6 +110,7 @@ describe('Directive: bsSwitch', function () {
     var content = buildElement(template, input);
     var $element = angular.element(content).appendTo($sandbox);
     $compile($element)(scope);
+    $timeout.flush();
     $element = $sandbox.find('> *:first-child');
     scope.$apply();
     return $element;
@@ -119,7 +120,6 @@ describe('Directive: bsSwitch', function () {
   function makeTestCreateSwitch(input) {
     return function() {
       var element = compileDirective(undefined, input);
-      $timeout.flush();
       expect(element).not.toBe(undefined);
       expect(element.hasClass(CONST.SWITCH_CLASS)).toBe(true);
       expect(element.find(CONST.SWITCH_LEFT_SELECTOR).html()).toBe(CONST.DEFAULT_TRUE_TEXT);
@@ -147,7 +147,6 @@ describe('Directive: bsSwitch', function () {
   function makeTestChangeModel(input) {
     return function () {
       var element = compileDirective(undefined, input);
-      $timeout.flush();
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
       scope.model = false;
@@ -164,7 +163,6 @@ describe('Directive: bsSwitch', function () {
   function makeTestChangeView(input) {
     return function () {
       var element = compileDirective(undefined, input);
-      $timeout.flush();
       expect(scope.model).toBeTruthy();
       // The click on the element's label executes asynchronously,
       // so we skip that and rely on the fact that the click calls:
@@ -187,7 +185,6 @@ describe('Directive: bsSwitch', function () {
       expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeFalsy();
       scope.isActive = false;
       scope.$apply();
-      $timeout.flush();
       expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeTruthy();
       expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeTruthy();
     };
