@@ -23,6 +23,13 @@ angular.module('frapontillo.bootstrap-switch')
       replace: true,
       link: function link(scope, element, attrs, controller) {
 
+        // We are unable to access the jquery plugin unless we wrap the element here.
+        if (jQuery) {
+          element = jQuery(element);
+        } else {
+          return;
+        }
+
         /**
          * Listen to model changes.
          */

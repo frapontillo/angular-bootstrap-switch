@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-switch
- * @version v0.3.0 - 2014-06-27
+ * @version v0.3.0 - 2014-08-12
  * @author Francesco Pontillo (francescopontillo@gmail.com)
  * @link https://github.com/frapontillo/angular-bootstrap-switch
  * @license Apache License 2.0
@@ -33,6 +33,12 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
       },
       replace: true,
       link: function link(scope, element, attrs, controller) {
+        // We are unable to access the jquery plugin unless we wrap the element here.
+        if (jQuery) {
+          element = jQuery(element);
+        } else {
+          return;
+        }
         /**
          * Listen to model changes.
          */
@@ -107,19 +113,19 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
         var getValueOrUndefined = function (value) {
           return value ? value : undefined;
         };
-        // Listen and respond to model changes
-        listenToModel();
-        // Bootstrap the switch plugin
-        element.bootstrapSwitch();
-        // Listen and respond to view changes
-        listenToView();
-        // Delay the setting of the state
+        // Wrap in a $timeout to give the ngModelController
+        // enough time to resolve the $modelValue
         $timeout(function () {
-          element.bootstrapSwitch('state', controller.$modelValue || false, true);
-        });
-        // On destroy, collect ya garbage
-        scope.$on('$destroy', function () {
-          element.bootstrapSwitch('destroy');
+          // Bootstrap the switch plugin
+          element.bootstrapSwitch({ state: controller.$modelValue || false });
+          // Listen and respond to model changes
+          listenToModel();
+          // Listen and respond to view changes
+          listenToView();
+          // On destroy, collect ya garbage
+          scope.$on('$destroy', function () {
+            element.bootstrapSwitch('destroy');
+          });
         });
       }
     };
