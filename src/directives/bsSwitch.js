@@ -19,27 +19,17 @@ angular.module('frapontillo.bootstrap-switch')
         switchRadioOff: '@'
       },
       link: function link(scope, element, attrs, controller) {
-        /**
-         * Return the true value for this specific checkbox.
-         * @returns {Object} representing the true view value; if undefined, returns true.
-         */
-        var getTrueValue = function() {
-          var trueValue = attrs.ngTrueValue;
-          if (!angular.isString(trueValue)) {
-            trueValue = true;
-          }
-          return trueValue;
-        };
 
         /**
          * Listen to model changes.
          */
         var listenToModel = function () {
           // When the model changes
-          controller.$formatters.push(function (newValue) {
+          controller.$viewChangeListeners.push(function () {
+            var newValue = controller.$viewValue;
             if (newValue !== undefined) {
               $timeout(function () {
-                element.bootstrapSwitch('state', (newValue === getTrueValue()), true);
+                element.bootstrapSwitch('state', newValue || false, true);
               });
             }
           });
@@ -125,11 +115,9 @@ angular.module('frapontillo.bootstrap-switch')
         // Wrap in a $timeout to give the ngModelController
         // enough time to resolve the $modelValue
         $timeout(function () {
-          var isInitiallyActive = controller.$modelValue === getTrueValue();
-
           // Bootstrap the switch plugin
           element.bootstrapSwitch({
-            state: isInitiallyActive
+            state: controller.$viewValue
           });
 
           // Listen and respond to model changes
@@ -137,9 +125,6 @@ angular.module('frapontillo.bootstrap-switch')
 
           // Listen and respond to view changes
           listenToView();
-
-          // Set the initial view value (may differ from the model value)
-          controller.$setViewValue(isInitiallyActive);
 
           // On destroy, collect ya garbage
           scope.$on('$destroy', function () {
