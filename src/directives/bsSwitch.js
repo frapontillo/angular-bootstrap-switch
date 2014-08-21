@@ -3,25 +3,33 @@
 angular.module('frapontillo.bootstrap-switch')
   .directive('bsSwitch', function ($timeout) {
     return {
-      restrict: 'EA',
+      restrict: 'A',
       require: 'ngModel',
       scope: {
         switchActive: '@',
-        switchOnText: '@',    // changed name
-        switchOffText: '@',   // changed name
-        switchOnColor: '@',   // changed name
-        switchOffColor: '@',  // changed name
+        switchOnText: '@',
+        switchOffText: '@',
+        switchOnColor: '@',
+        switchOffColor: '@',
         switchAnimate: '@',
         switchSize: '@',
         switchLabel: '@',
-        switchIcon: '@',      // changed behaviour
-        switchWrapper: '@'    // container class modifier
+        switchIcon: '@',
+        switchWrapper: '@',
+        switchRadioOff: '@'
       },
-      template: function (tElement) {
-        return ('' + tElement.nodeName).toLowerCase() === 'input' ? undefined : '<input>';
-      },
-      replace: true,
       link: function link(scope, element, attrs, controller) {
+        /**
+         * Return the true value for this specific checkbox.
+         * @returns {Object} representing the true view value; if undefined, returns true.
+         */
+        var getTrueValue = function() {
+          var trueValue = attrs.ngTrueValue;
+          if (!angular.isString(trueValue)) {
+            trueValue = true;
+          }
+          return trueValue;
+        };
 
         /**
          * Listen to model changes.
@@ -31,7 +39,7 @@ angular.module('frapontillo.bootstrap-switch')
           controller.$formatters.push(function (newValue) {
             if (newValue !== undefined) {
               $timeout(function () {
-                element.bootstrapSwitch('state', newValue || false, true);
+                element.bootstrapSwitch('state', (newValue === getTrueValue()), true);
               });
             }
           });
@@ -86,6 +94,10 @@ angular.module('frapontillo.bootstrap-switch')
             }
             element.bootstrapSwitch('wrapperClass', newValue);
           });
+
+          scope.$watch('switchRadioOff', function (newValue) {
+            element.bootstrapSwitch('radioAllOff', newValue === true || newValue === 'true');
+          });
         };
 
         /**
@@ -113,9 +125,11 @@ angular.module('frapontillo.bootstrap-switch')
         // Wrap in a $timeout to give the ngModelController
         // enough time to resolve the $modelValue
         $timeout(function () {
+          var isInitiallyActive = controller.$modelValue === getTrueValue();
+
           // Bootstrap the switch plugin
           element.bootstrapSwitch({
-            state: controller.$modelValue || false
+            state: isInitiallyActive
           });
 
           // Listen and respond to model changes
@@ -124,11 +138,22 @@ angular.module('frapontillo.bootstrap-switch')
           // Listen and respond to view changes
           listenToView();
 
+          // Set the initial view value (may differ from the model value)
+          controller.$setViewValue(isInitiallyActive);
+
           // On destroy, collect ya garbage
           scope.$on('$destroy', function () {
             element.bootstrapSwitch('destroy');
           });
         });
       }
+    };
+  })
+  .directive('bsSwitch', function () {
+    return {
+      restrict: 'E',
+      require: 'ngModel',
+      template: '<input bs-switch>',
+      replace: true
     };
   });

@@ -28,37 +28,45 @@ describe('Directive: bsSwitch', function () {
       scope: {model:true},
       element: 'ng-model="model" type="radio"'
     },
+    'radioOff': {
+      scope: {model:true, radioOff:false},
+      element: 'ng-model="model" type="radio" switch-radio-off="{{ radioOff }}"'
+    },
     'active': {
       scope: {model:true, isActive:true},
-      element: 'ng-model="model" switch-active="{{ isActive }}"'
+      element: 'ng-model="model" type="checkbox" switch-active="{{ isActive }}"'
     },
     'unactivated': {
       scope: {model:true, isActive:false},
-      element: 'ng-model="model" switch-active="{{ isActive }}"'
+      element: 'ng-model="model" type="checkbox" switch-active="{{ isActive }}"'
     },
     'size': {
       scope: {model:true, size:'large'},
-      element: 'ng-model="model" switch-size="{{ size }}"'
+      element: 'ng-model="model" type="checkbox" switch-size="{{ size }}"'
     },
     'color': {
       scope: {model:true, on:'info', off:'warning'},
-      element: 'ng-model="model" switch-on-color="{{ on }}" switch-off-color="{{ off }}"'
+      element: 'ng-model="model" type="checkbox" switch-on-color="{{ on }}" switch-off-color="{{ off }}"'
     },
     'label': {
       scope: {model:true},
-      element: 'ng-model="model" switch-on-text="{{ on }}" switch-off-text="{{ off }}" switch-label="{{ label }}"'
+      element: 'ng-model="model" type="checkbox" switch-on-text="{{ on }}" switch-off-text="{{ off }}" switch-label="{{ label }}"'
     },
     'icon': {
       scope: {model:true, icon:'icon-youtube'},
-      element: 'ng-model="model" switch-icon="{{ icon }}"'
+      element: 'ng-model="model" type="checkbox" switch-icon="{{ icon }}"'
     },
     'animation': {
       scope: {model:true},
-      element: 'ng-model="model" switch-animate="{{ animate }}"'
+      element: 'ng-model="model" type="checkbox" switch-animate="{{ animate }}"'
     },
     'modifier': {
       scope: {model:true},
-      element: 'ng-model="model" switch-wrapper="{{ modifier }}"'
+      element: 'ng-model="model" type="checkbox" switch-wrapper="{{ modifier }}"'
+    },
+    'customValues': {
+      scope: {model:'something'},
+      element: 'ng-model="model" type="checkbox" ng-true-value="yep" ng-false-value="nope"'
     }
   };
 
@@ -142,6 +150,39 @@ describe('Directive: bsSwitch', function () {
   }
   it('should create a radio switch', inject(makeTestRadio()));
   it('should create a radio switch (input)', inject(makeTestRadio(true)));
+
+  // Test the change of a radio switch from true to false
+  function makeTestRadioOffFalse(input) {
+    return function () {
+      var element = compileDirective('radioOff', input);
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      scope.model = false;
+      scope.$apply();
+      $timeout.flush();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+    };
+  }
+  it('should not change a radio from true to false', inject(makeTestRadioOffFalse()));
+  it('should not change a radio from true to false (input)', inject(makeTestRadioOffFalse(true)));
+
+  // Test the change of a radio switch from true to false
+  function makeTestRadioOffTrue(input) {
+    return function () {
+      var element = compileDirective('radioOff', input);
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      scope.model = false;
+      scope.radioOff = true;
+      scope.$apply();
+      $timeout.flush();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+    };
+  }
+  it('should change a radio from true to false', inject(makeTestRadioOffTrue()));
+  it('should change a radio from true to false (input)', inject(makeTestRadioOffTrue(true)));
 
   // Test the model change
   function makeTestChangeModel(input) {
@@ -318,27 +359,42 @@ describe('Directive: bsSwitch', function () {
   // Test the non-replacement if already an input element given
   // to ensure IE8 compatibility
   function makeTestReplacement(useInputElement) {
-      return function () {
-          var beforeCompile,
-              afterCompile,
-              content,
-              template = templates['default'];
+    return function () {
+      var beforeCompile,
+          afterCompile,
+          content,
+          template = templates['default'];
 
-          angular.extend(scope, template.scope);
-          content = buildElement(template, useInputElement);
-          beforeCompile = angular.element(content).appendTo($sandbox);
+      angular.extend(scope, template.scope);
+      content = buildElement(template, useInputElement);
+      beforeCompile = angular.element(content).appendTo($sandbox);
 
-          $compile(beforeCompile)(scope);
-          afterCompile = $sandbox.find('input');
-          scope.$apply();
+      $compile(beforeCompile)(scope);
+      afterCompile = $sandbox.find('input');
+      scope.$apply();
 
-          expect(beforeCompile.length).toBe(1);
-          expect(afterCompile.length).toBe(1);
-          expect(beforeCompile[0] === afterCompile[0]).toBe(true);
-        };
-    }
-
+      expect(beforeCompile.length).toBe(1);
+      expect(afterCompile.length).toBe(1);
+      expect(beforeCompile[0] === afterCompile[0]).toBe(true);
+    };
+  }
   it('should replace non-input elements', inject(makeTestReplacement()));
   it('should not replace input elements', inject(makeTestReplacement(true)));
+
+  // Test the custom true/false values
+  function makeTestCustomValues(input) {
+    return function () {
+      var element = compileDirective('customValues', input);
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+      scope.model = 'yep';
+      scope.$apply();
+      $timeout.flush();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+    };
+  }
+  it('should use "yep" and "nope" instead of true and false', inject(makeTestCustomValues()));
+  it('should use "yep" and "nope" instead of true and false (input)', inject(makeTestCustomValues(true)));
 
 });

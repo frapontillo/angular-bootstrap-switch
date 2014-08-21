@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="../bower_components/bootstrap-switch/dist/css/bootstrap2/bootstrap-switch.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
 </head>
   <body ng-app="bsSwitchApp">
 
@@ -20,6 +20,11 @@
     <![endif]-->
 
     <div class="container" ng-controller="MainCtrl">
+        <!--
+          TODO: when migrating to angular-1.3.0, turn ngTrueValue and ngFalseValue from strings to expressions.
+          See https://github.com/angular/angular.js/blob/master/CHANGELOG.md#breaking-changes-3
+        -->
+
         <input
             bs-switch
             ng-model="isSelected"
@@ -32,11 +37,14 @@
             switch-animate="{{ animate }}"
             switch-size="{{ size }}"
             switch-label="{{ label }}"
-            switch-icon="{{ icon }}" >
+            switch-icon="{{ icon }}"
+            switch-radio-off="{{ radioOff }}"
+            ng-true-value="yep"
+            ng-false-value="nope">
 
         <bs-switch
             ng-model="isSelected"
-            type="radio"
+            type="checkbox"
             switch-active="{{ isActive }}"
             switch-on-text="{{ onText }}"
             switch-off-text="{{ offText }}"
@@ -45,10 +53,12 @@
             switch-animate="{{ animate }}"
             switch-size="{{ size }}"
             switch-label="{{ label }}"
-            switch-icon="{{ icon }}"></bs-switch>
+            switch-icon="{{ icon }}"
+            switch-radio-off="{{ radioOff }}"
+            ng-true-value="yep"
+            ng-false-value="nope"></bs-switch>
 
         {{ isSelected }}
-        <input type="button" ng-click="toggleActivation()" value="Toggle activation">
       </div>
     </div>
 

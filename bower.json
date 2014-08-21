@@ -19,13 +19,13 @@
   ],
   "main": "./dist/angular-bootstrap-switch.js",
   "dependencies": {
-    "angular": "~1.2.20",
+    "angular": "~1.2.22",
     "jquery": ">=1.9.0",
     "bootstrap": ">=2.3.2",
-    "bootstrap-switch": "~3.0.2"
+    "bootstrap-switch": "frapontillo/bootstrap-switch#fix/trigger-change"
   },
   "devDependencies": {
-    "angular-mocks": "~1.2.20",
-    "angular-scenario": "~1.2.20"
+    "angular-mocks": "~1.2.22",
+    "angular-scenario": "~1.2.22"
   }
 }

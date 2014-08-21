@@ -28,7 +28,10 @@ The directive can work on both element and attribute levels. The following examp
     switch-on-text="{{ onLabel }}"
     switch-off-text="{{ offLabel }}"
     switch-on-color="{{ on }}"
-    switch-off-color="{{ off }}" >
+    switch-off-color="{{ off }}"
+    switch-radio-off="{{ radioOff }}"
+    ng-true-value="yep"
+    ng-false-value="nope" >
 ```
 
 Short doc for all of the attributes:
@@ -45,6 +48,7 @@ Short doc for all of the attributes:
 * `switch-label`, sets the toggle label
 * `switch-icon`, sets the toggle icon (e.g. `icon-save`)
 * `switch-wrapper`, sets the main container class, use a falsy value to fall back to the default one
+* `switch-radio-off`, allows a radio button to be unchecked by the user (from `true` to `false`)
 
 ###Migrating from bootstrap-switch~2
 
