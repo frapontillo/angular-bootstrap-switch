@@ -37,7 +37,7 @@ The directive can work on both element and attribute levels. The following examp
 Short doc for all of the attributes:
 
 * `ng-model`, the value to bind the switch to
-* `type`, can be `chechbox` (default) or `radio`. This value must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
+* `type`, has to be one of `checkbox` and `radio`. This value is mandatory and must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
 * `switch-active`, determines if the switch is enabled or not
 * `switch-size`, can be the empty string as default, `mini`, `small`, `large`
 * `switch-animate`, determines if the switch animates when toggled
