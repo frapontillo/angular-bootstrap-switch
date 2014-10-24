@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('frapontillo.bootstrap-switch')
-  .directive('bsSwitch', function ($timeout) {
+  .directive('bsSwitch', ['$timeout',function ($timeout) {
     return {
       restrict: 'EA',
       require: 'ngModel',
@@ -131,4 +131,4 @@ angular.module('frapontillo.bootstrap-switch')
 
       }
     };
-  });
+  }]);
