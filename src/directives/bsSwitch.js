@@ -40,6 +40,7 @@ angular.module('frapontillo.bootstrap-switch')
             if (newValue !== undefined) {
               $timeout(function () {
                 element.bootstrapSwitch('state', (newValue === getTrueValue()), true);
+                element.bootstrapSwitch('indeterminate', (newValue == 0.5) ? true : false);
               });
             }
           });
