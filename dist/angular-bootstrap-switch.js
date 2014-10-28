@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-switch
- * @version v0.3.0 - 2014-10-25
+ * @version v0.3.0 - 2014-10-27
  * @author Francesco Pontillo (francescopontillo@gmail.com)
  * @link https://github.com/frapontillo/angular-bootstrap-switch
  * @license Apache License 2.0(http://www.apache.org/licenses/LICENSE-2.0.html)
@@ -26,6 +26,7 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
         switchSize: '@',
         switchLabel: '@',
         switchIcon: '@',
+        switchIndeterminate: '@',
         switchWrapper: '@',
         switchRadioOff: '@'
       },
@@ -50,7 +51,7 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
             if (newValue !== undefined) {
               $timeout(function () {
                 element.bootstrapSwitch('state', newValue === getTrueValue(), true);
-                element.bootstrapSwitch('indeterminate', newValue == 0.5 ? true : false);
+                element.bootstrapSwitch('indeterminate', newValue === undefined);
               });
             }
           });
@@ -77,6 +78,9 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
           });
           scope.$watch('switchSize', function (newValue) {
             element.bootstrapSwitch('size', newValue);
+          });
+          scope.$watch('switchIndeterminate', function (newValue) {
+            element.bootstrapSwitch('indeterminate', newValue);
           });
           scope.$watch('switchLabel', function (newValue) {
             element.bootstrapSwitch('labelText', newValue ? newValue : '&nbsp;');
