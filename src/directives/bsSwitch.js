@@ -15,6 +15,7 @@ angular.module('frapontillo.bootstrap-switch')
         switchSize: '@',
         switchLabel: '@',
         switchIcon: '@',
+        switchIndeterminate: '@',
         switchWrapper: '@',
         switchRadioOff: '@'
       },
@@ -40,6 +41,7 @@ angular.module('frapontillo.bootstrap-switch')
             if (newValue !== undefined) {
               $timeout(function () {
                 element.bootstrapSwitch('state', (newValue === getTrueValue()), true);
+                element.bootstrapSwitch('indeterminate', (newValue === undefined));
               });
             }
           });
@@ -73,6 +75,10 @@ angular.module('frapontillo.bootstrap-switch')
 
           scope.$watch('switchSize', function (newValue) {
             element.bootstrapSwitch('size', newValue);
+          });
+
+          scope.$watch('switchIndeterminate', function (newValue) {
+            element.bootstrapSwitch('indeterminate', newValue);
           });
 
           scope.$watch('switchLabel', function (newValue) {

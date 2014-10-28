@@ -1,9 +1,9 @@
 /**
  * angular-bootstrap-switch
- * @version v0.3.0 - 2014-06-27
+ * @version v0.3.0 - 2014-10-27
  * @author Francesco Pontillo (francescopontillo@gmail.com)
  * @link https://github.com/frapontillo/angular-bootstrap-switch
- * @license Apache License 2.0
+ * @license Apache License 2.0(http://www.apache.org/licenses/LICENSE-2.0.html)
 **/
 
 'use strict';
@@ -14,7 +14,7 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
   '$timeout',
   function ($timeout) {
     return {
-      restrict: 'EA',
+      restrict: 'A',
       require: 'ngModel',
       scope: {
         switchActive: '@',
@@ -26,13 +26,22 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
         switchSize: '@',
         switchLabel: '@',
         switchIcon: '@',
-        switchWrapper: '@'
+        switchIndeterminate: '@',
+        switchWrapper: '@',
+        switchRadioOff: '@'
       },
-      template: function (tElement) {
-        return ('' + tElement.nodeName).toLowerCase() === 'input' ? undefined : '<input>';
-      },
-      replace: true,
       link: function link(scope, element, attrs, controller) {
+        /**
+         * Return the true value for this specific checkbox.
+         * @returns {Object} representing the true view value; if undefined, returns true.
+         */
+        var getTrueValue = function () {
+          var trueValue = attrs.ngTrueValue;
+          if (!angular.isString(trueValue)) {
+            trueValue = true;
+          }
+          return trueValue;
+        };
         /**
          * Listen to model changes.
          */
@@ -41,7 +50,8 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
           controller.$formatters.push(function (newValue) {
             if (newValue !== undefined) {
               $timeout(function () {
-                element.bootstrapSwitch('state', newValue || false, true);
+                element.bootstrapSwitch('state', newValue === getTrueValue(), true);
+                element.bootstrapSwitch('indeterminate', newValue === undefined);
               });
             }
           });
@@ -69,6 +79,9 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
           scope.$watch('switchSize', function (newValue) {
             element.bootstrapSwitch('size', newValue);
           });
+          scope.$watch('switchIndeterminate', function (newValue) {
+            element.bootstrapSwitch('indeterminate', newValue);
+          });
           scope.$watch('switchLabel', function (newValue) {
             element.bootstrapSwitch('labelText', newValue ? newValue : '&nbsp;');
           });
@@ -85,6 +98,9 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
               newValue = null;
             }
             element.bootstrapSwitch('wrapperClass', newValue);
+          });
+          scope.$watch('switchRadioOff', function (newValue) {
+            element.bootstrapSwitch('radioAllOff', newValue === true || newValue === 'true');
           });
         };
         /**
@@ -107,21 +123,31 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
         var getValueOrUndefined = function (value) {
           return value ? value : undefined;
         };
-        // Listen and respond to model changes
-        listenToModel();
-        // Bootstrap the switch plugin
-        element.bootstrapSwitch();
-        // Listen and respond to view changes
-        listenToView();
-        // Delay the setting of the state
+        // Wrap in a $timeout to give the ngModelController
+        // enough time to resolve the $modelValue
         $timeout(function () {
-          element.bootstrapSwitch('state', controller.$modelValue || false, true);
-        });
-        // On destroy, collect ya garbage
-        scope.$on('$destroy', function () {
-          element.bootstrapSwitch('destroy');
+          var isInitiallyActive = controller.$modelValue === getTrueValue();
+          // Bootstrap the switch plugin
+          element.bootstrapSwitch({ state: isInitiallyActive });
+          // Listen and respond to model changes
+          listenToModel();
+          // Listen and respond to view changes
+          listenToView();
+          // Set the initial view value (may differ from the model value)
+          controller.$setViewValue(isInitiallyActive);
+          // On destroy, collect ya garbage
+          scope.$on('$destroy', function () {
+            element.bootstrapSwitch('destroy');
+          });
         });
       }
     };
   }
-]);
+]).directive('bsSwitch', function () {
+  return {
+    restrict: 'E',
+    require: 'ngModel',
+    template: '<input bs-switch>',
+    replace: true
+  };
+});
