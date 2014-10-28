@@ -40,6 +40,10 @@ describe('Directive: bsSwitch', function () {
       scope: {model:true, isActive:false},
       element: 'ng-model="model" type="checkbox" switch-active="{{ isActive }}"'
     },
+    'indeterminate': {
+      scope: {model:true},
+      element: 'ng-model="model" type="checkbox" switch-indeterminate="{{ isIndeterminate }}"'
+    },
     'size': {
       scope: {model:true, size:'large'},
       element: 'ng-model="model" type="checkbox" switch-size="{{ size }}"'
@@ -76,6 +80,7 @@ describe('Directive: bsSwitch', function () {
     SWITCH_ON_CLASS: 'bootstrap-switch-on',
     SWITCH_OFF_CLASS: 'bootstrap-switch-off',
     SWITCH_DISABLED_CLASS: 'bootstrap-switch-disabled',
+    SWITCH_INDETERMINATE_CLASS: 'bootstrap-switch-indeterminate',
     SWITCH_MINI_CLASS: 'bootstrap-switch-mini',
     SWITCH_INFO_CLASS: 'bootstrap-switch-info',
     SWITCH_WARNING_CLASS: 'bootstrap-switch-warning',
@@ -247,6 +252,19 @@ describe('Directive: bsSwitch', function () {
   }
   it('should activate the switch', inject(makeTestActivate()));
   it('should activate the switch (input)', inject(makeTestActivate(true)));
+
+  // Test the indeterminate
+  function makeTestIndeterminate(input) {
+    return function() {
+      var element = compileDirective('indeterminate', input);
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeFalsy();
+      scope.isIndeterminate = true;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeTruthy();
+    };
+  }
+  it('should set the switch to indeterminate state', inject(makeTestIndeterminate()));
+  it('should set the switch to indeterminate state (input)', inject(makeTestIndeterminate(true)));
 
   // Test the size change
   function makeTestChangeSize(input) {
