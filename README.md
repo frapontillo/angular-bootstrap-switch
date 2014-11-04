@@ -12,6 +12,16 @@ $ bower install angular-bootstrap-switch
 
 This will install AngularJS, jQuery, and the original bootstrap-switch.
 
+###Registration
+
+To be able to use the directive, you need to register the `angular-bootstrap-switch` module as a dependency:
+
+```javascript
+angular.module('yourModule', ['frapontillo.bootstrap-switch'
+    // other dependencies
+]);
+```
+
 ###Directive
 The directive can work on both element and attribute levels. The following example contains all of the supported attributes:
 
