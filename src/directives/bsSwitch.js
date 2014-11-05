@@ -35,13 +35,18 @@ angular.module('frapontillo.bootstrap-switch')
          * Listen to model changes.
          */
         var listenToModel = function () {
+
+          scope.$watch('switchRadioOff', function (newValue) {
+            element.bootstrapSwitch('radioAllOff', (newValue === true || newValue === 'true'));
+          });
+
           // When the model changes
           controller.$formatters.push(function (newValue) {
-            if (newValue !== undefined) {
-              $timeout(function () {
+            $timeout(function() {
+              if (newValue !== undefined) {
                 element.bootstrapSwitch('state', (newValue === getTrueValue()), true);
-              });
-            }
+              }
+            });
           });
 
           scope.$watch('switchActive', function (newValue) {
@@ -94,17 +99,13 @@ angular.module('frapontillo.bootstrap-switch')
             }
             element.bootstrapSwitch('wrapperClass', newValue);
           });
-
-          scope.$watch('switchRadioOff', function (newValue) {
-            element.bootstrapSwitch('radioAllOff', newValue === true || newValue === 'true');
-          });
         };
 
         /**
          * Listen to view changes.
          */
         var listenToView = function () {
-          // When the switch is clicked, set its value into the ngModelController's $viewValue
+          // When the switch is clicked, set its value into the ngModel
           element.on('switchChange.bootstrapSwitch', function (e, data) {
             scope.$apply(function () {
               controller.$setViewValue(data);
@@ -122,29 +123,20 @@ angular.module('frapontillo.bootstrap-switch')
           return (value ? value : undefined);
         };
 
-        // Wrap in a $timeout to give the ngModelController
-        // enough time to resolve the $modelValue
-        $timeout(function () {
-          var isInitiallyActive = controller.$modelValue === getTrueValue();
+        // Bootstrap the switch plugin
+        element.bootstrapSwitch({
+          state: controller.$modelValue === getTrueValue()
+        });
 
-          // Bootstrap the switch plugin
-          element.bootstrapSwitch({
-            state: isInitiallyActive
-          });
+        // Listen and respond to model changes
+        listenToModel();
 
-          // Listen and respond to model changes
-          listenToModel();
+        // Listen and respond to view changes
+        listenToView();
 
-          // Listen and respond to view changes
-          listenToView();
-
-          // Set the initial view value (may differ from the model value)
-          controller.$setViewValue(isInitiallyActive);
-
-          // On destroy, collect ya garbage
-          scope.$on('$destroy', function () {
-            element.bootstrapSwitch('destroy');
-          });
+        // On destroy, collect ya garbage
+        scope.$on('$destroy', function () {
+          element.bootstrapSwitch('destroy');
         });
       }
     };

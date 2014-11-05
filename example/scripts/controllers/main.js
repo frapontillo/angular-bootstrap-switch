@@ -2,7 +2,7 @@
 
 angular.module('bsSwitchApp')
   .controller('MainCtrl', function ($scope, $log) {
-    $scope.isSelected = 'something';
+    $scope.isSelected = 'yep';
     $scope.onText = 'Y';
     $scope.offText = 'N';
     $scope.isActive = true;
