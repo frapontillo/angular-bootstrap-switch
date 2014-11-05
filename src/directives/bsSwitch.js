@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('frapontillo.bootstrap-switch')
-  .directive('bsSwitch', function ($timeout) {
+  .directive('bsSwitch', function ($timeout, $parse) {
     return {
       restrict: 'A',
       require: 'ngModel',
@@ -24,11 +24,21 @@ angular.module('frapontillo.bootstrap-switch')
          * @returns {Object} representing the true view value; if undefined, returns true.
          */
         var getTrueValue = function() {
-          var trueValue = attrs.ngTrueValue;
+          var trueValue = $parse(attrs.ngTrueValue)(scope);
           if (!angular.isString(trueValue)) {
             trueValue = true;
           }
           return trueValue;
+        };
+
+        var getModelValueFor = function(viewValue) {
+          var value;
+          if (viewValue === true) {
+            value = attrs.ngTrueValue;
+          } else if (viewValue === false) {
+            value = attrs.ngFalseValue;
+          }
+          return $parse(value)(scope);
         };
 
         /**
@@ -108,7 +118,7 @@ angular.module('frapontillo.bootstrap-switch')
           // When the switch is clicked, set its value into the ngModel
           element.on('switchChange.bootstrapSwitch', function (e, data) {
             scope.$apply(function () {
-              controller.$setViewValue(data);
+              controller.$modelValue = getModelValueFor(data);
             });
           });
         };
