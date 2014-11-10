@@ -9,6 +9,8 @@ angular.module('bsSwitchApp')
     $scope.size = 'large';
     $scope.animate = true;
     $scope.radioOff = false;
+    $scope.handleWidth = "auto";
+    $scope.labelWidth = "auto";
 
     $scope.$watch('isSelected', function() {
       $log.info('Selection changed.');

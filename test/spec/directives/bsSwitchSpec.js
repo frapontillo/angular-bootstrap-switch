@@ -42,7 +42,7 @@ describe('Directive: bsSwitch', function () {
     },
     'size': {
       scope: {model:true, size:'large'},
-      element: 'ng-model="model" type="checkbox" switch-size="{{ size }}"'
+      element: 'ng-model="model" type="checkbox" switch-size="{{ size }}" switch-label-width="{{ labelWidth }}" switch-handle-width="{{ handleWidth }}"'
     },
     'color': {
       scope: {model:true, on:'info', off:'warning'},
@@ -84,9 +84,9 @@ describe('Directive: bsSwitch', function () {
     SWITCH_ANIMATED_CLASS: 'bootstrap-switch-animate',
     SWITCH_LEFT_SELECTOR: '.bootstrap-switch-handle-on',
     SWITCH_RIGHT_SELECTOR: '.bootstrap-switch-handle-off',
-    LABEL_SELECTOR: 'label',
+    LABEL_SELECTOR: '.bootstrap-switch-label',
     INPUT_SELECTOR: 'input',
-    ICON_SELECTOR: 'label span',
+    ICON_SELECTOR: '.bootstrap-switch-label span',
     DEFAULT_TRUE_TEXT: 'ON',
     DEFAULT_FALSE_TEXT: 'OFF'
   };
@@ -285,6 +285,30 @@ describe('Directive: bsSwitch', function () {
   }
   it('should change the switch size', inject(makeTestChangeSize()));
   it('should change the switch size (input)', inject(makeTestChangeSize(true)));
+
+  // Test the label width change
+  function makeTestChangeLabelWidth(input) {
+    return function () {
+      var element = compileDirective('size', input);
+      scope.labelWidth = "600";
+      scope.$apply();
+      expect(element.find(CONST.INPUT_SELECTOR).bootstrapSwitch('labelWidth')).toEqual('600');
+    };
+  }
+  it('should change the label width', inject(makeTestChangeLabelWidth()));
+  it('should change the label width (input)', inject(makeTestChangeLabelWidth(true)));
+
+  // Test the handle width change
+  function makeTestChangeHandleWidth(input) {
+    return function () {
+      var element = compileDirective('size', input);
+      scope.handleWidth = "600";
+      scope.$apply();
+      expect(element.find(CONST.INPUT_SELECTOR).bootstrapSwitch('handleWidth')).toEqual('600');
+    };
+  }
+  it('should change the handle width', inject(makeTestChangeHandleWidth()));
+  it('should change the handle width (input)', inject(makeTestChangeHandleWidth(true)));
 
   // Test the "on" and "off" color change
   function makeTestChangeColor(input) {

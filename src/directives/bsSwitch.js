@@ -20,17 +20,9 @@ angular.module('frapontillo.bootstrap-switch')
           return trueValue;
         };
 
-        /*
-        var getModelValueFor = function(viewValue) {
-          var value;
-          if (viewValue === true) {
-            value = attrs.ngTrueValue;
-          } else if (viewValue === false) {
-            value = attrs.ngFalseValue;
-          }
-          return $parse(value)(scope);
+        var getBooleanFromString = function(value) {
+          return (value === true || value === 'true' || !value);
         };
-        */
 
         /**
          * If the directive has not been initialized yet, do so.
@@ -62,7 +54,7 @@ angular.module('frapontillo.bootstrap-switch')
           });
 
           attrs.$observe('switchActive', function (newValue) {
-            var active = newValue === true || newValue === 'true' || !newValue;
+            var active = getBooleanFromString(newValue);
             // if we are disabling the switch, delay the deactivation so that the toggle can be switched
             if (!active) {
               $timeout(function() {
@@ -126,6 +118,14 @@ angular.module('frapontillo.bootstrap-switch')
               newValue = null;
             }
             element.bootstrapSwitch('wrapperClass', newValue);
+          });
+
+          attrs.$observe('switchHandleWidth', function (newValue) {
+            element.bootstrapSwitch('handleWidth', getValueOrUndefined(newValue));
+          });
+
+          attrs.$observe('switchLabelWidth', function (newValue) {
+            element.bootstrapSwitch('labelWidth', getValueOrUndefined(newValue));
           });
         };
 
