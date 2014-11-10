@@ -290,7 +290,7 @@ describe('Directive: bsSwitch', function () {
   function makeTestChangeLabelWidth(input) {
     return function () {
       var element = compileDirective('size', input);
-      scope.labelWidth = "600";
+      scope.labelWidth = '600';
       scope.$apply();
       expect(element.find(CONST.INPUT_SELECTOR).bootstrapSwitch('labelWidth')).toEqual('600');
     };
@@ -302,7 +302,7 @@ describe('Directive: bsSwitch', function () {
   function makeTestChangeHandleWidth(input) {
     return function () {
       var element = compileDirective('size', input);
-      scope.handleWidth = "600";
+      scope.handleWidth = '600';
       scope.$apply();
       expect(element.find(CONST.INPUT_SELECTOR).bootstrapSwitch('handleWidth')).toEqual('600');
     };
