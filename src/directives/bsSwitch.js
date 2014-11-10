@@ -1,24 +1,13 @@
 'use strict';
 
 angular.module('frapontillo.bootstrap-switch')
-  .directive('bsSwitch', function ($timeout, $parse) {
+  .directive('bsSwitch', function ($parse, $timeout) {
     return {
       restrict: 'A',
       require: 'ngModel',
-      scope: {
-        switchActive: '@',
-        switchOnText: '@',
-        switchOffText: '@',
-        switchOnColor: '@',
-        switchOffColor: '@',
-        switchAnimate: '@',
-        switchSize: '@',
-        switchLabel: '@',
-        switchIcon: '@',
-        switchWrapper: '@',
-        switchRadioOff: '@'
-      },
       link: function link(scope, element, attrs, controller) {
+        var isInit = false;
+
         /**
          * Return the true value for this specific checkbox.
          * @returns {Object} representing the true view value; if undefined, returns true.
@@ -31,6 +20,7 @@ angular.module('frapontillo.bootstrap-switch')
           return trueValue;
         };
 
+        /*
         var getModelValueFor = function(viewValue) {
           var value;
           if (viewValue === true) {
@@ -40,61 +30,89 @@ angular.module('frapontillo.bootstrap-switch')
           }
           return $parse(value)(scope);
         };
+        */
+
+        /**
+         * If the directive has not been initialized yet, do so.
+         */
+        var initMaybe = function() {
+          // if it's the first initialization
+          if (!isInit) {
+            var viewValue = (controller.$modelValue === getTrueValue());
+            isInit = !isInit;
+            // Bootstrap the switch plugin
+            element.bootstrapSwitch({
+              state: viewValue
+            });
+            controller.$setViewValue(viewValue);
+          }
+        };
+
+        var setActive = function(active) {
+          element.bootstrapSwitch('disabled', !active);
+        };
 
         /**
          * Listen to model changes.
          */
         var listenToModel = function () {
 
-          scope.$watch('switchRadioOff', function (newValue) {
+          attrs.$observe('switchRadioOff', function (newValue) {
             element.bootstrapSwitch('radioAllOff', (newValue === true || newValue === 'true'));
           });
 
-          // When the model changes
-          controller.$formatters.push(function (newValue) {
-            $timeout(function() {
-              if (newValue !== undefined) {
-                element.bootstrapSwitch('state', (newValue === getTrueValue()), true);
-              }
-            });
-          });
-
-          scope.$watch('switchActive', function (newValue) {
+          attrs.$observe('switchActive', function (newValue) {
             var active = newValue === true || newValue === 'true' || !newValue;
-            element.bootstrapSwitch('disabled', !active);
+            // if we are disabling the switch, delay the deactivation so that the toggle can be switched
+            if (!active) {
+              $timeout(function() {
+                setActive(active);
+              });
+            } else {
+              // if we are enabling the switch, set active right away
+              setActive(active);
+            }
           });
 
-          scope.$watch('switchOnText', function (newValue) {
+          // When the model changes
+          scope.$watch(attrs.ngModel, function(newValue) {
+            initMaybe();
+            if (newValue !== undefined) {
+              element.bootstrapSwitch('state', newValue === getTrueValue(), true);
+            }
+          }, true);
+
+          attrs.$observe('switchOnText', function (newValue) {
             element.bootstrapSwitch('onText', getValueOrUndefined(newValue));
           });
 
-          scope.$watch('switchOffText', function (newValue) {
+          attrs.$observe('switchOffText', function (newValue) {
             element.bootstrapSwitch('offText', getValueOrUndefined(newValue));
           });
 
-          scope.$watch('switchOnColor', function (newValue) {
+          attrs.$observe('switchOnColor', function (newValue) {
             attrs.dataOn = newValue;
             element.bootstrapSwitch('onColor', getValueOrUndefined(newValue));
           });
 
-          scope.$watch('switchOffColor', function (newValue) {
+          attrs.$observe('switchOffColor', function (newValue) {
             attrs.dataOff = newValue;
             element.bootstrapSwitch('offColor', getValueOrUndefined(newValue));
           });
 
-          scope.$watch('switchAnimate', function (newValue) {
+          attrs.$observe('switchAnimate', function (newValue) {
             element.bootstrapSwitch('animate', scope.$eval(newValue || 'true'));
           });
 
-          scope.$watch('switchSize', function (newValue) {
+          attrs.$observe('switchSize', function (newValue) {
             element.bootstrapSwitch('size', newValue);
           });
 
-          scope.$watch('switchLabel', function (newValue) {
+          attrs.$observe('switchLabel', function (newValue) {
             element.bootstrapSwitch('labelText', newValue ? newValue : '&nbsp;');
           });
 
-          scope.$watch('switchIcon', function (newValue) {
+          attrs.$observe('switchIcon', function (newValue) {
             if (newValue) {
               // build and set the new span
               var spanClass = '<span class=\'' + newValue + '\'></span>';
@@ -102,7 +120,7 @@ angular.module('frapontillo.bootstrap-switch')
             }
           });
 
-          scope.$watch('switchWrapper', function (newValue) {
+          attrs.$observe('switchWrapper', function (newValue) {
             // Make sure that newValue is not empty, otherwise default to null
             if (!newValue) {
               newValue = null;
@@ -117,9 +135,8 @@ angular.module('frapontillo.bootstrap-switch')
         var listenToView = function () {
           // When the switch is clicked, set its value into the ngModel
           element.on('switchChange.bootstrapSwitch', function (e, data) {
-            scope.$apply(function () {
-              controller.$modelValue = getModelValueFor(data);
-            });
+            // $setViewValue --> $viewValue --> $parsers --> $modelValue
+            controller.$setViewValue(data);
           });
         };
 
@@ -133,16 +150,11 @@ angular.module('frapontillo.bootstrap-switch')
           return (value ? value : undefined);
         };
 
-        // Bootstrap the switch plugin
-        element.bootstrapSwitch({
-          state: controller.$modelValue === getTrueValue()
-        });
+        // Listen and respond to view changes
+        listenToView();
 
         // Listen and respond to model changes
         listenToModel();
-
-        // Listen and respond to view changes
-        listenToView();
 
         // On destroy, collect ya garbage
         scope.$on('$destroy', function () {

@@ -66,7 +66,7 @@ describe('Directive: bsSwitch', function () {
     },
     'customValues': {
       scope: {model:'something'},
-      element: 'ng-model="model" type="checkbox" ng-true-value="yep" ng-false-value="nope"'
+      element: 'ng-model="model" type="checkbox" ng-true-value="\'yep\'" ng-false-value="\'nope\'"'
     }
   };
 
@@ -119,7 +119,6 @@ describe('Directive: bsSwitch', function () {
     var $element = angular.element(content).appendTo($sandbox);
     $compile($element)(scope);
     scope.$apply();
-    $timeout.flush();
     $element = $sandbox.find('> *:first-child');
     return $element;
   }
@@ -175,7 +174,6 @@ describe('Directive: bsSwitch', function () {
       scope.radioOff = true;
       scope.model = false;
       scope.$apply();
-      $timeout.flush();
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
     };
@@ -191,7 +189,6 @@ describe('Directive: bsSwitch', function () {
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
       scope.model = false;
       scope.$apply();
-      $timeout.flush();
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
     };
@@ -225,6 +222,7 @@ describe('Directive: bsSwitch', function () {
       expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeFalsy();
       scope.isActive = false;
       scope.$apply();
+      $timeout.flush();
       expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeTruthy();
       expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeTruthy();
     };
@@ -232,7 +230,6 @@ describe('Directive: bsSwitch', function () {
   it('should deactivate the switch', inject(makeTestDeactivate()));
   it('should deactivate the switch (input)', inject(makeTestDeactivate(true)));
 
-  // TODO: fix this behaviour, eventually
   // Test a model change followed by a deactivation
   function makeTestChangeModelThenDeactivate(input) {
     return function () {
@@ -243,9 +240,10 @@ describe('Directive: bsSwitch', function () {
       // test the model, should be false
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
-      scope.ngModel = false;
+      scope.model = false;
       scope.isActive = false;
       scope.$apply();
+      $timeout.flush();
       // test the active state, should be false
       expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeTruthy();
       expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeTruthy();
@@ -254,17 +252,20 @@ describe('Directive: bsSwitch', function () {
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
     };
   }
-  // it('should change the model, then deactivate the switch', inject(makeTestChangeModelThenDeactivate()));
-  // it('should change the model, deactivate the switch (input)', inject(makeTestChangeModelThenDeactivate(true)));
+  it('should change the model, then deactivate the switch', inject(makeTestChangeModelThenDeactivate()));
+  it('should change the model, deactivate the switch (input)', inject(makeTestChangeModelThenDeactivate(true)));
 
   // Test the activation
   function makeTestActivate(input) {
     return function () {
       var element = compileDirective('unactivated', input);
+      // need to flush since the element starts as deactivated
+      $timeout.flush();
       expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeTruthy();
       expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeTruthy();
       scope.isActive = true;
       scope.$apply();
+      // no need to flush here since we are activating the switch
       expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeFalsy();
       expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeFalsy();
     };
@@ -413,7 +414,6 @@ describe('Directive: bsSwitch', function () {
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
       scope.model = 'yep';
       scope.$apply();
-      $timeout.flush();
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
     };
