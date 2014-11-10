@@ -1,6 +1,7 @@
 {
   "name": "angular-bootstrap-switch",
   "version": "0.3.0",
+  "main": "dist/angular-bootstrap-switch.js",
   "author": {
     "name": "Francesco Pontillo",
     "email": "francescopontillo@gmail.com",
