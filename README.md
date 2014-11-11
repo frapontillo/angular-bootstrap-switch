@@ -42,8 +42,8 @@ The directive can work on both element and attribute levels. The following examp
     switch-radio-off="{{ radioOff }}"
     switch-label-width="{{ labelWidth }}"
     switch-handle-width="{{ handleWidth }}"
-    ng-true-value="yep"
-    ng-false-value="nope" >
+    ng-true-value="'yep'"
+    ng-false-value="'nope'" >
 ```
 
 Short doc for all of the attributes:
