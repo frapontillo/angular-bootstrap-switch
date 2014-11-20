@@ -262,12 +262,10 @@ describe('Directive: bsSwitch', function () {
       // need to flush since the element starts as deactivated
       $timeout.flush();
       expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeTruthy();
-      expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeTruthy();
       scope.isActive = true;
       scope.$apply();
       // no need to flush here since we are activating the switch
       expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeFalsy();
-      expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeFalsy();
     };
   }
   it('should activate the switch', inject(makeTestActivate()));

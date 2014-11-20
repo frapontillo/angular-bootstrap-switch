@@ -2,13 +2,14 @@
 
 angular.module('bsSwitchApp')
   .controller('MainCtrl', function ($scope, $log) {
-    $scope.isSelected = 'yep';
+    $scope.isSelected = 'nope';
     $scope.onText = 'Y';
     $scope.offText = 'N';
     $scope.isActive = true;
-    $scope.size = 'large';
+    $scope.size = 'normal';
     $scope.animate = true;
     $scope.radioOff = false;
+    $scope.icon = 'icon-youtube';
     $scope.handleWidth = "auto";
     $scope.labelWidth = "auto";
 
