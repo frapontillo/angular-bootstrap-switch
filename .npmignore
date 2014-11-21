@@ -1,0 +1,12 @@
+.git/
+.idea/
+.tmp/
+bower_components/
+common/
+src/
+node_modules/
+.editorconfig
+.gitattributes
+.gitignore
+.jshintrc
+.travis.yml
