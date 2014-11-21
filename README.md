@@ -12,6 +12,16 @@ $ bower install angular-bootstrap-switch
 
 This will install AngularJS, jQuery, and the original bootstrap-switch.
 
+###Registration
+
+To be able to use the directive, you need to register the `angular-bootstrap-switch` module as a dependency:
+
+```javascript
+angular.module('yourModule', ['frapontillo.bootstrap-switch'
+    // other dependencies
+]);
+```
+
 ###Directive
 The directive can work on both element and attribute levels. The following example contains all of the supported attributes:
 
@@ -28,13 +38,18 @@ The directive can work on both element and attribute levels. The following examp
     switch-on-text="{{ onLabel }}"
     switch-off-text="{{ offLabel }}"
     switch-on-color="{{ on }}"
-    switch-off-color="{{ off }}" >
+    switch-off-color="{{ off }}"
+    switch-radio-off="{{ radioOff }}"
+    switch-label-width="{{ labelWidth }}"
+    switch-handle-width="{{ handleWidth }}"
+    ng-true-value="'yep'"
+    ng-false-value="'nope'" >
 ```
 
 Short doc for all of the attributes:
 
 * `ng-model`, the value to bind the switch to
-* `type`, can be `chechbox` (default) or `radio`. This value must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
+* `type`, has to be one of `checkbox` and `radio`. This value is mandatory and must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
 * `switch-active`, determines if the switch is enabled or not
 * `switch-size`, can be the empty string as default, `mini`, `small`, `large`
 * `switch-animate`, determines if the switch animates when toggled
@@ -45,6 +60,9 @@ Short doc for all of the attributes:
 * `switch-label`, sets the toggle label
 * `switch-icon`, sets the toggle icon (e.g. `icon-save`)
 * `switch-wrapper`, sets the main container class, use a falsy value to fall back to the default one
+* `switch-radio-off`, allows a radio button to be unchecked by the user (from `true` to `false`)
+* `switch-label-width`, sets the width of the middle label
+* `switch-handle-width`, sets the width of both handles
 
 ###Migrating from bootstrap-switch~2
 

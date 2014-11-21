@@ -26,7 +26,7 @@ module.exports = function (grunt) {
         ' * @version v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
         ' * @author <%= pkg.author.name %> (<%= pkg.author.email %>)\n' +
 		    ' * @link <%= pkg.homepage %>\n' +
-        ' * @license <%= _.pluck(pkg.licenses, "type").join(", ") %>\n' +
+        ' * @license <%= _.map(pkg.licenses, function(l) { return l.type + "(" + l.url + ")"; }).join(", ") %>\n' +
         '**/\n\n'
     },
     jshint: {
@@ -51,6 +51,11 @@ module.exports = function (grunt) {
       unit: {
         options: {
           singleRun: false
+        }
+      },
+      final: {
+        options: {
+          singleRun: true
         }
       },
       travis: {

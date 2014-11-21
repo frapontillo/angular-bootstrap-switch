@@ -1,103 +1,32 @@
 'use strict';
 
 angular.module('frapontillo.bootstrap-switch')
-  .directive('bsSwitch', function ($timeout) {
+  .directive('bsSwitch', function ($parse, $timeout) {
     return {
-      restrict: 'EA',
+      restrict: 'A',
       require: 'ngModel',
-      scope: {
-        switchActive: '@',
-        switchOnText: '@',    // changed name
-        switchOffText: '@',   // changed name
-        switchOnColor: '@',   // changed name
-        switchOffColor: '@',  // changed name
-        switchAnimate: '@',
-        switchSize: '@',
-        switchLabel: '@',
-        switchIcon: '@',      // changed behaviour
-        switchWrapper: '@'    // container class modifier
-      },
-      template: function(tElement) {
-        return ('' + tElement.nodeName).toLowerCase() === 'input' ? undefined : '<input>';
-      },
-      replace: true,
       link: function link(scope, element, attrs, controller) {
+        var isInit = false;
 
         /**
-         * Listen to model changes.
+         * Return the true value for this specific checkbox.
+         * @returns {Object} representing the true view value; if undefined, returns true.
          */
-        var listenToModel = function () {
-          // When the model changes
-          controller.$formatters.push(function (newValue) {
-            if (newValue !== undefined) {
-              $timeout(function () {
-                element.bootstrapSwitch('state', newValue || false, true);
-              });
-            }
-          });
-
-          scope.$watch('switchActive', function (newValue) {
-            var active = newValue === true || newValue === 'true' || !newValue;
-            element.bootstrapSwitch('disabled', !active);
-          });
-
-          scope.$watch('switchOnText', function (newValue) {
-            element.bootstrapSwitch('onText', getValueOrUndefined(newValue));
-          });
-
-          scope.$watch('switchOffText', function (newValue) {
-            element.bootstrapSwitch('offText', getValueOrUndefined(newValue));
-          });
-
-          scope.$watch('switchOnColor', function (newValue) {
-            attrs.dataOn = newValue;
-            element.bootstrapSwitch('onColor', getValueOrUndefined(newValue));
-          });
-
-          scope.$watch('switchOffColor', function (newValue) {
-            attrs.dataOff = newValue;
-            element.bootstrapSwitch('offColor', getValueOrUndefined(newValue));
-          });
-
-          scope.$watch('switchAnimate', function (newValue) {
-            element.bootstrapSwitch('animate', scope.$eval(newValue || 'true'));
-          });
-
-          scope.$watch('switchSize', function (newValue) {
-            element.bootstrapSwitch('size', newValue);
-          });
-
-          scope.$watch('switchLabel', function (newValue) {
-            element.bootstrapSwitch('labelText', newValue ? newValue : '&nbsp;');
-          });
-
-          scope.$watch('switchIcon', function (newValue) {
-            if (newValue) {
-              // build and set the new span
-              var spanClass = '<span class=\'' + newValue + '\'></span>';
-              element.bootstrapSwitch('labelText', spanClass);
-            }
-          });
-
-          scope.$watch('switchWrapper', function(newValue) {
-            // Make sure that newValue is not empty, otherwise default to null
-            if (!newValue) {
-              newValue = null;
-            }
-            element.bootstrapSwitch('wrapperClass', newValue);
-          });
+        var getTrueValue = function() {
+          var trueValue = $parse(attrs.ngTrueValue)(scope);
+          if (!angular.isString(trueValue)) {
+            trueValue = true;
+          }
+          return trueValue;
         };
 
         /**
-         * Listen to view changes.
+         * Get a boolean value from a boolean-like string.
+         * @param value The input object
+         * @returns {boolean} A boolean value
          */
-        var listenToView = function () {
-          // When the switch is clicked, set its value into the ngModelController's $viewValue
-          element.on('switchChange.bootstrapSwitch', function (e, data) {
-            scope.$apply(function () {
-              controller.$setViewValue(data);
-            });
-          });
+        var getBooleanFromString = function(value) {
+          return (value === true || value === 'true' || !value);
         };
 
         /**
@@ -106,29 +35,178 @@ angular.module('frapontillo.bootstrap-switch')
          * @param value The value to check.
          * @returns the original value if it is truthy, {@link undefined} otherwise.
          */
-        var getValueOrUndefined = function(value) {
+        var getValueOrUndefined = function (value) {
           return (value ? value : undefined);
         };
 
-        // Listen and respond to model changes
-        listenToModel();
+        /**
+         * Get the value of the angular-bound attribute, given its name.
+         * The returned value may or may not equal the attribute value, as it may be transformed by a function.
+         *
+         * @param attrName  The angular-bound attribute name to get the value for
+         * @returns {*}     The attribute value
+         */
+        var getSwitchAttrValue = function(attrName) {
+          var map = {
+            'switchRadioOff': function(value) {
+              return (value === true || value === 'true');
+            },
+            'switchActive': function(value) {
+              return !getBooleanFromString(value);
+            },
+            'switchAnimate': function(value) {
+              return scope.$eval(value || 'true');
+            },
+            'switchLabel': function(value) {
+              return value ? value : '&nbsp;';
+            },
+            'switchIcon': function(value) {
+              if (value) {
+                return '<span class=\'' + value + '\'></span>';
+              }
+            },
+            'switchWrapper': function(value) {
+              return value || 'wrapper';
+            }
+          };
+          var transFn = map[attrName] || getValueOrUndefined;
+          return transFn(attrs[attrName]);
+        };
 
-        // Bootstrap the switch plugin
-        element.bootstrapSwitch();
+        /**
+         * Set a bootstrapSwitch parameter according to the angular-bound attribute.
+         * The parameter will be changed only if the switch has already been initialized
+         * (to avoid creating it before the model is ready).
+         *
+         * @param element   The switch to apply the parameter modification to
+         * @param attr      The name of the switch parameter
+         * @param modelAttr The name of the angular-bound parameter
+         */
+        var setSwitchParamMaybe = function(element, attr, modelAttr) {
+          if (!isInit) {
+            return;
+          }
+          var newValue = getSwitchAttrValue(modelAttr);
+          element.bootstrapSwitch(attr, newValue);
+        };
+
+        var setActive = function() {
+          setSwitchParamMaybe(element, 'disabled', 'switchActive');
+        };
+
+        /**
+         * If the directive has not been initialized yet, do so.
+         */
+        var initMaybe = function() {
+          // if it's the first initialization
+          if (!isInit) {
+            var viewValue = (controller.$modelValue === getTrueValue());
+            isInit = !isInit;
+            // Bootstrap the switch plugin
+            element.bootstrapSwitch({
+              radioAllOff: getSwitchAttrValue('switchRadioOff'),
+              disabled: getSwitchAttrValue('switchActive'),
+              state: viewValue,
+              onText: getSwitchAttrValue('switchOnText'),
+              offText: getSwitchAttrValue('switchOffText'),
+              onColor: getSwitchAttrValue('switchOnColor'),
+              offColor: getSwitchAttrValue('switchOffColor'),
+              animate: getSwitchAttrValue('switchAnimate'),
+              size: getSwitchAttrValue('switchSize'),
+              labelText: attrs.switchLabel ? getSwitchAttrValue('switchLabel') : getSwitchAttrValue('switchIcon'),
+              wrapperClass: getSwitchAttrValue('switchWrapper'),
+              handleWidth: getSwitchAttrValue('switchHandleWidth'),
+              labelWidth: getSwitchAttrValue('switchLabelWidth')
+            });
+            controller.$setViewValue(viewValue);
+          }
+        };
+
+        /**
+         * Listen to model changes.
+         */
+        var listenToModel = function () {
+
+          attrs.$observe('switchActive', function (newValue) {
+            var active = getBooleanFromString(newValue);
+            // if we are disabling the switch, delay the deactivation so that the toggle can be switched
+            if (!active) {
+              $timeout(function() {
+                setActive(active);
+              });
+            } else {
+              // if we are enabling the switch, set active right away
+              setActive(active);
+            }
+          });
+
+          // When the model changes
+          scope.$watch(attrs.ngModel, function(newValue) {
+            initMaybe();
+            if (newValue !== undefined) {
+              element.bootstrapSwitch('state', newValue === getTrueValue(), true);
+            }
+          }, true);
+
+          // angular attribute to switch property bindings
+          var bindings = {
+            'switchRadioOff': 'radioAllOff',
+            'switchOnText': 'onText',
+            'switchOffText': 'offText',
+            'switchOnColor': 'onColor',
+            'switchOffColor': 'offColor',
+            'switchAnimate': 'animate',
+            'switchSize': 'size',
+            'switchLabel': 'labelText',
+            'switchIcon': 'labelText',
+            'switchWrapper': 'wrapperClass',
+            'switchHandleWidth': 'handleWidth',
+            'switchLabelWidth': 'labelWidth'
+          };
+
+          var observeProp = function(prop, bindings) {
+            return function() {
+              attrs.$observe(prop, function () {
+                setSwitchParamMaybe(element, bindings[prop], prop);
+              });
+            };
+          };
+
+          // for every angular-bound attribute, observe it and trigger the appropriate switch function
+          for (var prop in bindings) {
+            attrs.$observe(prop, observeProp(prop, bindings));
+          }
+        };
+
+        /**
+         * Listen to view changes.
+         */
+        var listenToView = function () {
+          // When the switch is clicked, set its value into the ngModel
+          element.on('switchChange.bootstrapSwitch', function (e, data) {
+            // $setViewValue --> $viewValue --> $parsers --> $modelValue
+            controller.$setViewValue(data);
+          });
+        };
 
         // Listen and respond to view changes
         listenToView();
 
-        // Delay the setting of the state
-        $timeout(function() {
-          element.bootstrapSwitch('state', controller.$modelValue || false, true);
-        });
+        // Listen and respond to model changes
+        listenToModel();
 
         // On destroy, collect ya garbage
         scope.$on('$destroy', function () {
           element.bootstrapSwitch('destroy');
         });
-
       }
+    };
+  })
+  .directive('bsSwitch', function () {
+    return {
+      restrict: 'E',
+      require: 'ngModel',
+      template: '<input bs-switch>',
+      replace: true
     };
   });
