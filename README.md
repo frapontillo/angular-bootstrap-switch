@@ -1,5 +1,10 @@
-angular-bootstrap-switch [![Build Status](https://travis-ci.org/frapontillo/angular-bootstrap-switch.png)](https://travis-ci.org/frapontillo/angular-bootstrap-switch)
+angular-bootstrap-switch
 ========================
+
+[![Bower version][bower-version-image]][bower-url]
+[![NPM version][npm-version-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
+[![Apache License][license-image]][license-url]
 
 AngularJS directive for the [bootstrap-switch](https://github.com/nostalgiaz/bootstrap-switch) jQuery plugin.
 
@@ -8,6 +13,12 @@ AngularJS directive for the [bootstrap-switch](https://github.com/nostalgiaz/boo
 ###Installation
 ```shell
 $ bower install angular-bootstrap-switch
+```
+
+or
+
+```shell
+$ npm install angular-bootstrap-switch
 ```
 
 This will install AngularJS, jQuery, and the original bootstrap-switch.
@@ -116,3 +127,15 @@ Francesco Pontillo (<mailto:francescopontillo@gmail.com>)
    limitations under the License.
 
 ```
+
+[license-image]: http://img.shields.io/badge/license-Apache_2.0-blue.svg?style=flat
+[license-url]: LICENSE
+
+[bower-version-image]: http://img.shields.io/bower/v/angular-bootstrap-switch.svg?style=flat
+[bower-url]: http://bower.io/search/?q=angular-bootstrap-switch
+
+[npm-url]: https://npmjs.org/package/angular-bootstrap-switch
+[npm-version-image]: http://img.shields.io/npm/v/angular-bootstrap-switch.svg?style=flat
+
+[travis-image]: http://img.shields.io/travis/frapontillo/angular-bootstrap-switch/develop.svg?style=flat
+[travis-url]: https://travis-ci.org/frapontillo/angular-bootstrap-switch
