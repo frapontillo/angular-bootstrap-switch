@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+## 0.4.0-alpha.1 (2014-11-21)
+
+- Update to `bootstrap-switch` 3.2.2
+- Update to `angular` 1.3.3
+- Add new parameters
+  - `switch-label-width`
+  - `switch-handle-width`
+- Multiple bug fixes
+- Code optimization improvements
+
 ## 0.3.0 (2014-06-27)
 
 - Update to `bootstrap-switch` 3.0.2
