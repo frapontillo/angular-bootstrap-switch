@@ -42,6 +42,7 @@ The directive can work on both element and attribute levels. The following examp
     ng-model="isSelected"
     type="checkbox"
     switch-active="{{ isActive }}"
+    switch-readonly="{{ isReadonly }}"
     switch-size="{{ size }}"
     switch-animate="{{ animate }}"
     switch-label="{{ label }}"
@@ -53,15 +54,17 @@ The directive can work on both element and attribute levels. The following examp
     switch-radio-off="{{ radioOff }}"
     switch-label-width="{{ labelWidth }}"
     switch-handle-width="{{ handleWidth }}"
+    switch-inverse="{{ inverse }}"
     ng-true-value="'yep'"
-    ng-false-value="'nope'" >
+    ng-false-value="'nope'">
 ```
 
 Short doc for all of the attributes:
 
 * `ng-model`, the value to bind the switch to
 * `type`, has to be one of `checkbox` and `radio`. This value is mandatory and must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
-* `switch-active`, determines if the switch is enabled or not
+* `switch-active`, determines if the switch is enabled or not (changes the inner input's `disabled` attribute)
+* `switch-readonly`, determines if the switch is read-only or not (changes the inner input's `readonly` attribute)
 * `switch-size`, can be the empty string as default, `mini`, `small`, `large`
 * `switch-animate`, determines if the switch animates when toggled
 * `switch-on-text`, sets the positive (checked) text
@@ -74,6 +77,7 @@ Short doc for all of the attributes:
 * `switch-radio-off`, allows a radio button to be unchecked by the user (from `true` to `false`)
 * `switch-label-width`, sets the width of the middle label
 * `switch-handle-width`, sets the width of both handles
+* `switch-inverse`, inverts the on/off handles
 
 ###Migrating from bootstrap-switch~2
 

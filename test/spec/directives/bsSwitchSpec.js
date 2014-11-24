@@ -40,6 +40,10 @@ describe('Directive: bsSwitch', function () {
       scope: {model:true, isActive:false},
       element: 'ng-model="model" type="checkbox" switch-active="{{ isActive }}"'
     },
+    'readonly': {
+      scope: {model:true},
+      element: 'ng-model="model" type="checkbox" switch-readonly="{{ isReadonly }}"'
+    },
     'size': {
       scope: {model:true, size:'large'},
       element: 'ng-model="model" type="checkbox" switch-size="{{ size }}" switch-label-width="{{ labelWidth }}" switch-handle-width="{{ handleWidth }}"'
@@ -67,15 +71,22 @@ describe('Directive: bsSwitch', function () {
     'customValues': {
       scope: {model:'something'},
       element: 'ng-model="model" type="checkbox" ng-true-value="\'yep\'" ng-false-value="\'nope\'"'
+    },
+    'inverse': {
+      scope: {model:true},
+      element: 'ng-model="model" type="checkbox" switch-inverse="{{ inverse }}"'
     }
   };
 
   var CONST = {
     SWITCH_CLASS: 'bootstrap-switch',
     SWITCH_WRAPPER_CLASS: 'bootstrap-switch-wrapper',
+    SWITCH_CONTAINER_CLASS: 'bootstrap-switch-container',
+    SWITCH_INVERSE_CLASS: 'bootstrap-switch-inverse',
     SWITCH_ON_CLASS: 'bootstrap-switch-on',
     SWITCH_OFF_CLASS: 'bootstrap-switch-off',
     SWITCH_DISABLED_CLASS: 'bootstrap-switch-disabled',
+    SWITCH_READONLY_CLASS: 'bootstrap-switch-readonly',
     SWITCH_MINI_CLASS: 'bootstrap-switch-mini',
     SWITCH_INFO_CLASS: 'bootstrap-switch-info',
     SWITCH_WARNING_CLASS: 'bootstrap-switch-warning',
@@ -271,6 +282,21 @@ describe('Directive: bsSwitch', function () {
   it('should activate the switch', inject(makeTestActivate()));
   it('should activate the switch (input)', inject(makeTestActivate(true)));
 
+  // Test the readonly
+  function makeTestReadonly(input) {
+    return function () {
+      var element = compileDirective('readonly', input);
+      expect(element.hasClass(CONST.SWITCH_READONLY_CLASS)).toBeFalsy();
+      expect(element.find(CONST.INPUT_SELECTOR).attr('readonly')).toBeFalsy();
+      scope.isReadonly = true;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_READONLY_CLASS)).toBeTruthy();
+      expect(element.find(CONST.INPUT_SELECTOR).attr('readonly')).toBeTruthy();
+    };
+  }
+  it('should set the switch as read only', inject(makeTestReadonly()));
+  it('should set the switch as read only (input)', inject(makeTestReadonly(true)));
+
   // Test the size change
   function makeTestChangeSize(input) {
     return function () {
@@ -442,5 +468,45 @@ describe('Directive: bsSwitch', function () {
   }
   it('should use "yep" and "nope" instead of true and false', inject(makeTestCustomValues()));
   it('should use "yep" and "nope" instead of true and false (input)', inject(makeTestCustomValues(true)));
+
+  // Test the inverse default option
+  function makeTestInverseUndefined(input) {
+    return function () {
+      var element = compileDirective('inverse', input);
+      expect(element.hasClass(CONST.SWITCH_INVERSE_CLASS)).toBeFalsy();
+      var children = element.find('.' + CONST.SWITCH_CONTAINER_CLASS).find('*[class^=\'bootstrap-switch-handle-\']');
+      expect(children.length).toBe(2);
+      expect(angular.element(children[0]).hasClass(CONST.SWITCH_LEFT_SELECTOR.substr(1))).toBeTruthy();
+      expect(angular.element(children[1]).hasClass(CONST.SWITCH_RIGHT_SELECTOR.substr(1))).toBeTruthy();
+    };
+  }
+  it('should default to inverse false when not defined', inject(makeTestInverseUndefined()));
+  it('should default to inverse false when not defined (input)', inject(makeTestInverseUndefined(true)));
+
+  // Test the inverse option
+  function makeTestInverse(input) {
+    return function () {
+      var element = compileDirective('inverse', input);
+      expect(element.hasClass(CONST.SWITCH_INVERSE_CLASS)).toBeFalsy();
+      // invert
+      scope.inverse = true;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INVERSE_CLASS)).toBeTruthy();
+      var children = element.find('.' + CONST.SWITCH_CONTAINER_CLASS).find('*[class^=\'bootstrap-switch-handle-\']');
+      expect(children.length).toBe(2);
+      expect(angular.element(children[1]).hasClass(CONST.SWITCH_LEFT_SELECTOR.substr(1))).toBeTruthy();
+      expect(angular.element(children[0]).hasClass(CONST.SWITCH_RIGHT_SELECTOR.substr(1))).toBeTruthy();
+      // reset
+      scope.inverse = false;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INVERSE_CLASS)).toBeFalsy();
+      children = element.find('.' + CONST.SWITCH_CONTAINER_CLASS).find('*[class^=\'bootstrap-switch-handle-\']');
+      expect(children.length).toBe(2);
+      expect(angular.element(children[0]).hasClass(CONST.SWITCH_LEFT_SELECTOR.substr(1))).toBeTruthy();
+      expect(angular.element(children[1]).hasClass(CONST.SWITCH_RIGHT_SELECTOR.substr(1))).toBeTruthy();
+    };
+  }
+  it('should invert the on and off switches and then reset them', inject(makeTestInverse()));
+  it('should invert the on and off switches and then reset them (input)', inject(makeTestInverse(true)));
 
 });

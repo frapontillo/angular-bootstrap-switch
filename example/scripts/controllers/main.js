@@ -12,6 +12,7 @@ angular.module('bsSwitchApp')
     $scope.icon = 'icon-youtube';
     $scope.handleWidth = "auto";
     $scope.labelWidth = "auto";
+    $scope.inverse = true;
 
     $scope.$watch('isSelected', function() {
       $log.info('Selection changed.');

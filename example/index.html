@@ -19,7 +19,7 @@
       <script src="../bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
 
-    <div class="container" ng-controller="MainCtrl" ng-hide="!isHidden">
+    <div class="container" ng-controller="MainCtrl">
 
         <input
             bs-switch
@@ -39,7 +39,9 @@
             switch-handle-width="{{ handleWidth }}"
             switch-wrapper="{{ wrapper }}"
             ng-true-value="'yep'"
-            ng-false-value="'nope'">
+            ng-false-value="'nope'"
+            switch-inverse="{{ !inverse }}"
+            switch-readonly="{{ readonly }}">
 
         <bs-switch
             ng-model="isSelected"
@@ -58,7 +60,8 @@
             switch-handle-width="{{ handleWidth }}"
             switch-wrapper="{{ wrapper }}"
             ng-true-value="'yep'"
-            ng-false-value="'nope'"></bs-switch>
+            ng-false-value="'nope'"
+            switch-inverse="{{ inverse }}"></bs-switch>
 
         {{ isSelected }}
 
