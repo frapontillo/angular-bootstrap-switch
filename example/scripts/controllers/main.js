@@ -9,7 +9,6 @@ angular.module('bsSwitchApp')
     $scope.size = 'normal';
     $scope.animate = true;
     $scope.radioOff = false;
-    $scope.icon = 'icon-youtube';
     $scope.handleWidth = "auto";
     $scope.labelWidth = "auto";
     $scope.inverse = true;

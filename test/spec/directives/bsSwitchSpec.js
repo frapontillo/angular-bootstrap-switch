@@ -396,14 +396,19 @@ describe('Directive: bsSwitch', function () {
   // Test the animation deactivation and reactivation
   function makeTestAnimation(input) {
     return function () {
+      jasmine.clock().install();
       var element = compileDirective('animation', input);
+      jasmine.clock().tick(50);
       expect(element.hasClass(CONST.SWITCH_ANIMATED_CLASS)).toBeTruthy();
       scope.animate = false;
       scope.$apply();
+      jasmine.clock().tick(50);
       expect(element.hasClass(CONST.SWITCH_ANIMATED_CLASS)).toBeFalsy();
       scope.animate = true;
       scope.$apply();
+      jasmine.clock().tick(50);
       expect(element.hasClass(CONST.SWITCH_ANIMATED_CLASS)).toBeTruthy();
+      jasmine.clock().uninstall();
     };
   }
   it('should change the switch animation mode', inject(makeTestAnimation()));
