@@ -149,8 +149,12 @@ angular.module('frapontillo.bootstrap-switch')
             }
           });
 
+          function modelValue() {
+            return controller.$modelValue;
+          }
+
           // When the model changes
-          scope.$watch(attrs.ngModel, function(newValue) {
+          scope.$watch(modelValue, function(newValue) {
             initMaybe();
             if (newValue !== undefined) {
               element.bootstrapSwitch('state', newValue === getTrueValue(), true);
