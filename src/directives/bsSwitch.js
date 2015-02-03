@@ -127,14 +127,32 @@ angular.module('frapontillo.bootstrap-switch')
               inverse: getSwitchAttrValue('switchInverse'),
               readonly: getSwitchAttrValue('switchReadonly')
             });
+            if (attrs.ngHide || !attrs.ngShow)
+              hide(true);
             controller.$setViewValue(viewValue);
           }
         };
+
+        /** 
+        * hide/show the switch
+        */
+        var hide = function (newValue) {
+          if (!isInit)
+            return;
+          var cont = element.data('bootstrapSwitch').$container;
+          if (newValue)
+            cont.hide();
+          else
+            cont.show();
+        }
 
         /**
          * Listen to model changes.
          */
         var listenToModel = function () {
+
+          attrs.$observe('ngHide', hide);
+          attrs.$observe('ngShow', function (v) { hide(!v); });
 
           attrs.$observe('switchActive', function (newValue) {
             var active = getBooleanFromStringDefTrue(newValue);
