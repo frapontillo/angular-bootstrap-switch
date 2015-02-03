@@ -127,7 +127,7 @@ angular.module('frapontillo.bootstrap-switch')
               inverse: getSwitchAttrValue('switchInverse'),
               readonly: getSwitchAttrValue('switchReadonly')
             });
-            if (attrs.ngHide || !attrs.ngShow)
+            if (attrs.ngHide || attrs.ngShow === false)
               hide(true);
             controller.$setViewValue(viewValue);
           }
