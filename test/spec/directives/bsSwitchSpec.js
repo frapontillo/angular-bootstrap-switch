@@ -75,6 +75,10 @@ describe('Directive: bsSwitch', function () {
     'inverse': {
       scope: {model:true},
       element: 'ng-model="model" type="checkbox" switch-inverse="{{ inverse }}"'
+    },
+    'getterSetter': {
+      scope: {},
+      element: 'ng-model="modelGetterSetter" ng-model-options="{getterSetter: true}" type="checkbox"'
     }
   };
 
@@ -513,5 +517,28 @@ describe('Directive: bsSwitch', function () {
   }
   it('should invert the on and off switches and then reset them', inject(makeTestInverse()));
   it('should invert the on and off switches and then reset them (input)', inject(makeTestInverse(true)));
+
+  // Test the getterSetter ng-model option
+  function makeTestGetterSetter(input) {
+    return function () {
+      var element = compileDirective('getterSetter', input);
+      var localValue = false;
+
+      scope.modelGetterSetter = function() {
+        return localValue;
+      };
+      scope.$apply();
+
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+
+      localValue = true;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+    };
+  }
+  it('should watch updates in getterSetter', inject(makeTestGetterSetter()));
+  it('should watch updates in getterSetter', inject(makeTestGetterSetter(true)));
 
 });
