@@ -8,7 +8,7 @@ angular.module('bsSwitchApp')
     $scope.isActive = true;
     $scope.size = 'normal';
     $scope.animate = true;
-    $scope.radioOff = false;
+    $scope.radioOff = true;
     $scope.handleWidth = "auto";
     $scope.labelWidth = "auto";
     $scope.inverse = true;

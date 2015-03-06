@@ -13,7 +13,10 @@ angular.module('frapontillo.bootstrap-switch')
          * @returns {Object} representing the true view value; if undefined, returns true.
          */
         var getTrueValue = function() {
-          var trueValue = $parse(attrs.ngTrueValue)(scope);
+          if (attrs.type === 'radio') {
+            return attrs.value || $parse(attrs.ngValue)(scope) || true;
+          }
+          var trueValue = ($parse(attrs.ngTrueValue)(scope));
           if (!angular.isString(trueValue)) {
             trueValue = true;
           }
@@ -127,7 +130,11 @@ angular.module('frapontillo.bootstrap-switch')
               inverse: getSwitchAttrValue('switchInverse'),
               readonly: getSwitchAttrValue('switchReadonly')
             });
-            controller.$setViewValue(viewValue);
+            if (attrs.type === 'radio') {
+              controller.$setViewValue(controller.$modelValue);
+            } else {
+              controller.$setViewValue(viewValue);
+            }
           }
         };
 
@@ -157,7 +164,7 @@ angular.module('frapontillo.bootstrap-switch')
           scope.$watch(modelValue, function(newValue) {
             initMaybe();
             if (newValue !== undefined) {
-              element.bootstrapSwitch('state', newValue === getTrueValue(), true);
+              element.bootstrapSwitch('state', newValue === getTrueValue(), false);
             }
           }, true);
 
@@ -197,11 +204,29 @@ angular.module('frapontillo.bootstrap-switch')
          * Listen to view changes.
          */
         var listenToView = function () {
-          // When the switch is clicked, set its value into the ngModel
-          element.on('switchChange.bootstrapSwitch', function (e, data) {
-            // $setViewValue --> $viewValue --> $parsers --> $modelValue
-            controller.$setViewValue(data);
-          });
+          if (attrs.type === 'radio') {
+            // when the switch is clicked
+            element.on('change.bootstrapSwitch', function (e) {
+              // discard not real change events
+              if ((controller.$modelValue === controller.$viewValue) && (e.target.checked !== $(e.target).bootstrapSwitch('state'))) {
+                // $setViewValue --> $viewValue --> $parsers --> $modelValue
+                // if the switch is indeed selected
+                if (e.target.checked) {
+                  // set its value into the view
+                  controller.$setViewValue(getTrueValue());
+                } else if (getTrueValue() === controller.$viewValue) {
+                  // otherwise if it's been deselected, delete the view value
+                  controller.$setViewValue(undefined);
+                }
+              }
+            });
+          } else {
+            // When the checkbox switch is clicked, set its value into the ngModel
+            element.on('switchChange.bootstrapSwitch', function (e) {
+              // $setViewValue --> $viewValue --> $parsers --> $modelValue
+              controller.$setViewValue(e.target.checked);
+            });
+          }
         };
 
         // Listen and respond to view changes
