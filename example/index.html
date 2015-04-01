@@ -1,81 +1,91 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>AngularJS Bootstrap Switch example</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="../bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>AngularJS Bootstrap Switch example</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="../bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
 </head>
-  <body ng-app="bsSwitchApp">
+<body ng-app="bsSwitchApp">
 
-    <!--[if lt IE 9]>
-      <script src="../bower_components/es5-shim/es5-shim.js"></script>
-      <script src="../bower_components/json3/lib/json3.min.js"></script>
-    <![endif]-->
+<!--[if lt IE 9]>
+<script src="../bower_components/es5-shim/es5-shim.js"></script>
+<script src="../bower_components/json3/lib/json3.min.js"></script>
+<![endif]-->
 
-    <div class="container" ng-controller="MainCtrl" ng-hide="!isHidden">
+<form name="form" class="container" ng-controller="MainCtrl">
 
-        <input
-            bs-switch
-            ng-model="isSelected"
-            type="checkbox"
-            switch-active="{{ isActive }}"
-            switch-on-text="{{ onText }}"
-            switch-off-text="{{ offText }}"
-            switch-on-color="{{ onColor }}"
-            switch-off-color="{{ offColor }}"
-            switch-animate="{{ animate }}"
-            switch-size="{{ size }}"
-            switch-label="{{ label }}"
-            switch-icon="{{ icon }}"
-            switch-radio-off="{{ radioOff }}"
-            switch-label-width="{{ labelWidth }}"
-            switch-handle-width="{{ handleWidth }}"
-            switch-wrapper="{{ wrapper }}"
-            ng-true-value="'yep'"
-            ng-false-value="'nope'">
+  <input
+    bs-switch
+    ng-model="isSelected"
+    type="radio"
+    switch-active="{{ isActive }}"
+    switch-on-text="{{ onText }}"
+    switch-off-text="{{ offText }}"
+    switch-on-color="{{ onColor }}"
+    switch-off-color="{{ 'danger' }}"
+    switch-animate="{{ animate }}"
+    switch-size="{{ size }}"
+    switch-label="{{ label }}"
+    switch-icon="{{ icon }}"
+    switch-radio-off="{{ radioOff }}"
+    switch-label-width="{{ labelWidth }}"
+    switch-handle-width="{{ handleWidth }}"
+    switch-wrapper="{{ wrapper }}"
+    ng-value="'uno'"
+    ng-true-value="'yep'"
+    ng-false-value="'nope'"
+    switch-inverse="{{ !inverse }}"
+    switch-readonly="{{ readonly }}">
 
-        <bs-switch
-            ng-model="isSelected"
-            type="checkbox"
-            switch-active="{{ isActive }}"
-            switch-on-text="{{ onText }}"
-            switch-off-text="{{ offText }}"
-            switch-on-color="{{ onColor }}"
-            switch-off-color="{{ offColor }}"
-            switch-animate="{{ animate }}"
-            switch-size="{{ size }}"
-            switch-label="{{ label }}"
-            switch-icon="{{ icon }}"
-            switch-radio-off="{{ radioOff }}"
-            switch-label-width="{{ labelWidth }}"
-            switch-handle-width="{{ handleWidth }}"
-            switch-wrapper="{{ wrapper }}"
-            ng-true-value="'yep'"
-            ng-false-value="'nope'"></bs-switch>
+  <input
+    bs-switch
+    ng-model="isSelected"
+    type="radio"
+    switch-active="{{ isActive }}"
+    switch-on-text="{{ onText }}"
+    switch-off-text="{{ offText }}"
+    switch-on-color="{{ onColor }}"
+    switch-off-color="{{ offColor }}"
+    switch-animate="{{ animate }}"
+    switch-size="{{ size }}"
+    switch-label="{{ label }}"
+    switch-icon="{{ icon }}"
+    switch-radio-off="{{ radioOff }}"
+    switch-label-width="{{ labelWidth }}"
+    switch-handle-width="{{ handleWidth }}"
+    switch-wrapper="{{ wrapper }}"
+    ng-value="'dos'"
+    ng-true-value="'yep'"
+    ng-false-value="'nope'"
+    switch-inverse="{{ !inverse }}">
 
-        {{ isSelected }}
+  {{ isSelected }}
 
-        <input type="button" value="toggle value" ng-click="toggle()">
-      <input type="button" value="toggle value / activation" ng-click="toggle(); toggleActivation();">
-      </div>
-    </div>
+  <input type="button" value="toggle value" ng-click="toggle()">
+  <input type="button" value="toggle value / activation" ng-click="toggle(); toggleActivation();">
+</form>
+</div>
 
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="../bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
 
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../common/module.js"></script>
-    <script src="../src/directives/bsSwitch.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../common/module.js"></script>
+<script src="../src/directives/bsSwitch.js"></script>
 
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/main.js"></script>
 </body>
 </html>

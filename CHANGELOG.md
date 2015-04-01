@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+## 0.4.0-alpha.2 (2015-04-01)
+
+- Add new parameters
+  - `switch-inverse`
+  - `switch-readonly`
+- Fix for radio switches
+- Handle models using getterSetter option
+- `'use strict'` to module-level only
+- Update to `angular` 1.3.15
+
 ## 0.4.0-alpha.1 (2014-11-21)
 
 - Update to `bootstrap-switch` 3.2.2

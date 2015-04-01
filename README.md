@@ -1,5 +1,10 @@
-angular-bootstrap-switch [![Build Status](https://travis-ci.org/frapontillo/angular-bootstrap-switch.png)](https://travis-ci.org/frapontillo/angular-bootstrap-switch)
+angular-bootstrap-switch
 ========================
+
+[![Bower version][bower-version-image]][bower-url]
+[![NPM version][npm-version-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
+[![Apache License][license-image]][license-url]
 
 AngularJS directive for the [bootstrap-switch](https://github.com/nostalgiaz/bootstrap-switch) jQuery plugin.
 
@@ -8,6 +13,12 @@ AngularJS directive for the [bootstrap-switch](https://github.com/nostalgiaz/boo
 ###Installation
 ```shell
 $ bower install angular-bootstrap-switch
+```
+
+or
+
+```shell
+$ npm install angular-bootstrap-switch
 ```
 
 This will install AngularJS, jQuery, and the original bootstrap-switch.
@@ -31,6 +42,7 @@ The directive can work on both element and attribute levels. The following examp
     ng-model="isSelected"
     type="checkbox"
     switch-active="{{ isActive }}"
+    switch-readonly="{{ isReadonly }}"
     switch-size="{{ size }}"
     switch-animate="{{ animate }}"
     switch-label="{{ label }}"
@@ -42,15 +54,20 @@ The directive can work on both element and attribute levels. The following examp
     switch-radio-off="{{ radioOff }}"
     switch-label-width="{{ labelWidth }}"
     switch-handle-width="{{ handleWidth }}"
+    switch-inverse="{{ inverse }}"
     ng-true-value="'yep'"
-    ng-false-value="'nope'" >
+    ng-false-value="'nope'">
 ```
 
 Short doc for all of the attributes:
 
 * `ng-model`, the value to bind the switch to
-* `type`, has to be one of `checkbox` and `radio`. This value is mandatory and must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
-* `switch-active`, determines if the switch is enabled or not
+* `type`, has to be one of `checkbox` and `radio`. 
+This value is mandatory and must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
+If you choose `radio`, be sure to follow the [AngularJS radio specs](https://docs.angularjs.org/api/ng/input/input%5Bradio%5D), 
+meaning you have to specify the same `ngModel` and a different `value` or `ng-value` attribute for each radio
+* `switch-active`, determines if the switch is enabled or not (changes the inner input's `disabled` attribute)
+* `switch-readonly`, determines if the switch is read-only or not (changes the inner input's `readonly` attribute)
 * `switch-size`, can be the empty string as default, `mini`, `small`, `large`
 * `switch-animate`, determines if the switch animates when toggled
 * `switch-on-text`, sets the positive (checked) text
@@ -63,6 +80,7 @@ Short doc for all of the attributes:
 * `switch-radio-off`, allows a radio button to be unchecked by the user (from `true` to `false`)
 * `switch-label-width`, sets the width of the middle label
 * `switch-handle-width`, sets the width of both handles
+* `switch-inverse`, inverts the on/off handles
 
 ###Migrating from bootstrap-switch~2
 
@@ -101,7 +119,7 @@ Francesco Pontillo (<mailto:francescopontillo@gmail.com>)
 ##License
 
 ```
-   Copyright 2014 Francesco Pontillo
+   Copyright 2014-2015 Francesco Pontillo
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -116,3 +134,15 @@ Francesco Pontillo (<mailto:francescopontillo@gmail.com>)
    limitations under the License.
 
 ```
+
+[license-image]: http://img.shields.io/badge/license-Apache_2.0-blue.svg?style=flat
+[license-url]: LICENSE
+
+[bower-version-image]: http://img.shields.io/bower/v/angular-bootstrap-switch.svg?style=flat
+[bower-url]: http://bower.io/search/?q=angular-bootstrap-switch
+
+[npm-url]: https://npmjs.org/package/angular-bootstrap-switch
+[npm-version-image]: http://img.shields.io/npm/v/angular-bootstrap-switch.svg?style=flat
+
+[travis-image]: http://img.shields.io/travis/frapontillo/angular-bootstrap-switch/develop.svg?style=flat
+[travis-url]: https://travis-ci.org/frapontillo/angular-bootstrap-switch
