@@ -89,14 +89,18 @@ module.exports = function (grunt) {
     },
     concat: {
       options: {
-        banner: '<%= meta.banner %>\'use strict\';\n',
+        banner: '<%= meta.banner %>',
         process: function(src, filepath) {
+          // don't strip 'use strict' in the prefix
+          if (filepath === 'bsSwitch.prefix') {
+            return src;
+          }
           return '// Source: ' + filepath + '\n' +
             src.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
         }
       },
       dist: {
-        src: ['common/*.js', '<%= yeoman.dist %>/<%= yeoman.temp %>/**/*.js'],
+        src: ['bsSwitch.prefix', 'common/*.js', '<%= yeoman.dist %>/<%= yeoman.temp %>/**/*.js', 'bsSwitch.suffix'],
         dest: '<%= yeoman.dist %>/<%= pkg.name %>.js'
       }
     },
