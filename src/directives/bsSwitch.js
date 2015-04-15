@@ -218,6 +218,7 @@ angular.module('frapontillo.bootstrap-switch')
                   // otherwise if it's been deselected, delete the view value
                   controller.$setViewValue(undefined);
                 }
+                scope.$apply(attrs.switchChange || angular.noop);
               }
             });
           } else {
@@ -225,6 +226,7 @@ angular.module('frapontillo.bootstrap-switch')
             element.on('switchChange.bootstrapSwitch', function (e) {
               // $setViewValue --> $viewValue --> $parsers --> $modelValue
               controller.$setViewValue(e.target.checked);
+              scope.$apply(attrs.switchChange || angular.noop);
             });
           }
         };
