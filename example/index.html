@@ -25,7 +25,7 @@
 
 <form name="form" class="container" ng-controller="MainCtrl">
 
-  <input
+  <!--<input
     bs-switch
     ng-model="isSelected"
     type="radio"
@@ -68,12 +68,36 @@
     ng-value="'dos'"
     ng-true-value="'yep'"
     ng-false-value="'nope'"
-    switch-inverse="{{ !inverse }}">
+    switch-inverse="{{ !inverse }}">-->
 
   {{ isSelected }}
 
+  <br>
+
+  <input
+    bs-switch
+    ng-model="isSelected"
+    type="checkbox"
+    switch-active="{{ isActive }}"
+    switch-on-text="{{ onText }}"
+    switch-off-text="{{ offText }}"
+    switch-on-color="{{ onColor }}"
+    switch-off-color="{{ offColor }}"
+    switch-animate="{{ animate }}"
+    switch-size="{{ size }}"
+    switch-label="{{ label }}"
+    switch-icon="{{ icon }}"
+    switch-radio-off="{{ radioOff }}"
+    switch-label-width="{{ labelWidth }}"
+    switch-handle-width="{{ handleWidth }}"
+    switch-wrapper="{{ wrapper }}"
+    ng-true-value="'yep'"
+    ng-false-value="'nope'"
+    switch-inverse="{{ !inverse }}">
+
   <input type="button" value="toggle value" ng-click="toggle()">
   <input type="button" value="toggle value / activation" ng-click="toggle(); toggleActivation();">
+  <input type="button" value="set undefined value" ng-click="setUndefined()">
 </form>
 </div>
 

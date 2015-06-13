@@ -21,6 +21,10 @@ angular.module('bsSwitchApp')
       $scope.isSelected = $scope.isSelected === 'yep' ? 'nope' : 'yep';
     };
 
+    $scope.setUndefined = function() {
+      $scope.isSelected = undefined;
+    };
+
     $scope.toggleActivation = function() {
       $scope.isActive = !$scope.isActive;
     }

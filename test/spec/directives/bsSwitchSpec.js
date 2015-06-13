@@ -95,6 +95,7 @@ describe('Directive: bsSwitch', function () {
     SWITCH_WRAPPER_CLASS: 'bootstrap-switch-wrapper',
     SWITCH_CONTAINER_CLASS: 'bootstrap-switch-container',
     SWITCH_INVERSE_CLASS: 'bootstrap-switch-inverse',
+    SWITCH_INDETERMINATE_CLASS: 'bootstrap-switch-indeterminate',
     SWITCH_ON_CLASS: 'bootstrap-switch-on',
     SWITCH_OFF_CLASS: 'bootstrap-switch-off',
     SWITCH_DISABLED_CLASS: 'bootstrap-switch-disabled',
@@ -287,6 +288,22 @@ describe('Directive: bsSwitch', function () {
   }
   it('should move the switch when the model changes', inject(makeTestChangeModel()));
   it('should move the switch when the model changes (input)', inject(makeTestChangeModel(true)));
+
+  // Test the undefined model (the on/off class is untouched when the indeterminate class is added)
+  function makeTestIndeterminateModel(input) {
+    return function () {
+      var element = compileDirective(undefined, input);
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      scope.model = undefined;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+    };
+  }
+  it('should set the indeterminate state when the model is undefined', inject(makeTestIndeterminateModel()));
+  it('should set the indeterminate state when the model is undefined (input)', inject(makeTestIndeterminateModel(true)));
 
   // Test the view change
   function makeTestChangeView(input) {
