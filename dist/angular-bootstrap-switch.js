@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-switch
- * @version v0.4.0 - 2015-04-13
+ * @version v0.4.1 - 2015-06-15
  * @author Francesco Pontillo (francescopontillo@gmail.com)
  * @link https://github.com/frapontillo/angular-bootstrap-switch
  * @license Apache License 2.0(http://www.apache.org/licenses/LICENSE-2.0.html)
@@ -31,7 +31,7 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
             return attrs.value || $parse(attrs.ngValue)(scope) || true;
           }
           var trueValue = $parse(attrs.ngTrueValue)(scope);
-          if (!angular.isString(trueValue)) {
+          if (angular.isUndefined(trueValue)) {
             trueValue = true;
           }
           return trueValue;
@@ -168,6 +168,8 @@ angular.module('frapontillo.bootstrap-switch').directive('bsSwitch', [
             initMaybe();
             if (newValue !== undefined) {
               element.bootstrapSwitch('state', newValue === getTrueValue(), false);
+            } else {
+              element.bootstrapSwitch('toggleIndeterminate', true, false);
             }
           }, true);
           // angular attribute to switch property bindings

@@ -1,6 +1,17 @@
 CHANGELOG
 =========
 
+## 0.4.1 (2015-06-15)
+
+- Update to `angular` 1.4.0
+- Add test support for IE
+- Enable indeterminate state
+- Enable generic true value (not just strings)
+
+## 0.4.0 (2015-04-13)
+
+- Alpha to stable with no changes
+
 ## 0.4.0-alpha.2 (2015-04-01)
 
 - Add new parameters
