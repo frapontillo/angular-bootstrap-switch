@@ -17,7 +17,7 @@ angular.module('frapontillo.bootstrap-switch')
             return attrs.value || $parse(attrs.ngValue)(scope) || true;
           }
           var trueValue = ($parse(attrs.ngTrueValue)(scope));
-          if (!angular.isString(trueValue)) {
+          if (angular.isUndefined(trueValue)) {
             trueValue = true;
           }
           return trueValue;
@@ -165,6 +165,8 @@ angular.module('frapontillo.bootstrap-switch')
             initMaybe();
             if (newValue !== undefined) {
               element.bootstrapSwitch('state', newValue === getTrueValue(), false);
+            } else {
+              element.bootstrapSwitch('toggleIndeterminate', true, false);
             }
           }, true);
 
