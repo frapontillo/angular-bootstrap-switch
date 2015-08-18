@@ -77,7 +77,21 @@ angular.module('frapontillo.bootstrap-switch')
               return value || 'wrapper';
             },
             'switchInverse': getBooleanFromString,
-            'switchReadonly': getBooleanFromString
+            'switchReadonly': getBooleanFromString,
+            'switchOnText': function (value) {
+                  if (value === undefined || value === null) {
+                      return undefined;
+                  } else {
+                      return value ? value : '&nbsp;';
+                  }
+              },
+              'switchOffText': function (value) {
+                  if (value === undefined || value === null) {
+                      return undefined;
+                  } else {
+                      return value ? value : '&nbsp;';
+                  }
+              }
           };
           var transFn = map[attrName] || getValueOrUndefined;
           return transFn(attrs[attrName]);
