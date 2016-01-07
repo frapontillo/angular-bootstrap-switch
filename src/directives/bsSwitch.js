@@ -52,6 +52,20 @@ angular.module('frapontillo.bootstrap-switch')
         };
 
         /**
+         * Returns a function that executes the provided expression
+         *
+         * @param value The string expression
+         * @return a function that evaluates the expression
+         */
+        var getExprFromString = function (value) {
+          if (angular.isUndefined(value)) {
+            return angular.noop;
+          }
+          var fn = $parse(value);
+          return angular.bind(null, fn, scope);
+        };
+
+        /**
          * Get the value of the angular-bound attribute, given its name.
          * The returned value may or may not equal the attribute value, as it may be transformed by a function.
          *
@@ -77,7 +91,8 @@ angular.module('frapontillo.bootstrap-switch')
               return value || 'wrapper';
             },
             'switchInverse': getBooleanFromString,
-            'switchReadonly': getBooleanFromString
+            'switchReadonly': getBooleanFromString,
+            'switchChange': getExprFromString
           };
           var transFn = map[attrName] || getValueOrUndefined;
           return transFn(attrs[attrName]);
@@ -206,6 +221,9 @@ angular.module('frapontillo.bootstrap-switch')
          * Listen to view changes.
          */
         var listenToView = function () {
+
+          var switchChangeFn = getSwitchAttrValue('switchChange');
+
           if (attrs.type === 'radio') {
             // when the switch is clicked
             element.on('change.bootstrapSwitch', function (e) {
@@ -220,6 +238,7 @@ angular.module('frapontillo.bootstrap-switch')
                   // otherwise if it's been deselected, delete the view value
                   controller.$setViewValue(undefined);
                 }
+                switchChangeFn();
               }
             });
           } else {
@@ -227,6 +246,7 @@ angular.module('frapontillo.bootstrap-switch')
             element.on('switchChange.bootstrapSwitch', function (e) {
               // $setViewValue --> $viewValue --> $parsers --> $modelValue
               controller.$setViewValue(e.target.checked);
+              switchChangeFn();
             });
           }
         };
