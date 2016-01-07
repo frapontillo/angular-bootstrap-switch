@@ -55,6 +55,7 @@ The directive can work on both element and attribute levels. The following examp
     switch-label-width="{{ labelWidth }}"
     switch-handle-width="{{ handleWidth }}"
     switch-inverse="{{ inverse }}"
+    switch-change="onChange()"
     ng-true-value="'yep'"
     ng-false-value="'nope'">
 ```
@@ -81,6 +82,7 @@ meaning you have to specify the same `ngModel` and a different `value` or `ng-va
 * `switch-label-width`, sets the width of the middle label
 * `switch-handle-width`, sets the width of both handles
 * `switch-inverse`, inverts the on/off handles
+* `switch-change`, evaluates an expression when the model value changes
 
 ###Migrating from bootstrap-switch~2
 
