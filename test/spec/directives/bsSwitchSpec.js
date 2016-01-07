@@ -91,6 +91,10 @@ describe('Directive: bsSwitch', function () {
     'getterSetter': {
       scope: {},
       element: 'ng-model="modelGetterSetter" ng-model-options="{getterSetter: true}" type="checkbox"'
+    },
+    'change': {
+      scope: {},
+      element: 'ng-model="model" type="checkbox" switch-change="change()"'
     }
   };
 
@@ -651,5 +655,24 @@ describe('Directive: bsSwitch', function () {
   }
   it('should watch updates in getterSetter', inject(makeTestGetterSetter()));
   it('should watch updates in getterSetter', inject(makeTestGetterSetter(true)));
+
+  function makeTestChange(input) {
+    return function () {
+      compileDirective('change', input);
+
+      scope.change = function() {};
+      spyOn(scope, 'change');
+
+      scope.model = false;
+      scope.$apply();
+      expect(scope.change).not.toHaveBeenCalled();
+
+      scope.model = true;
+      scope.$apply();
+      expect(scope.change).toHaveBeenCalled();
+    };
+  }
+  it('should evaluate change expression', inject(makeTestChange()));
+  it('should evaluate change expression', inject(makeTestChange(true)));
 
 });
