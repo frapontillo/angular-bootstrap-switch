@@ -61,8 +61,9 @@ angular.module('frapontillo.bootstrap-switch')
           if (angular.isUndefined(value)) {
             return angular.noop;
           }
-          var fn = $parse(value);
-          return angular.bind(null, fn, scope);
+          return function () {
+            scope.$evalAsync(value);
+          };
         };
 
         /**
