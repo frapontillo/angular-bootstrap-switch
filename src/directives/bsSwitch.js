@@ -62,9 +62,7 @@ angular.module('frapontillo.bootstrap-switch')
             return angular.noop;
           }
           return function () {
-            $timeout(function () {
-              scope.$eval(value);
-            });
+            scope.$evalAsync(value);
           };
         };
 

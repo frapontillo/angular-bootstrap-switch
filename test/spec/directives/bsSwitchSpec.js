@@ -657,7 +657,7 @@ describe('Directive: bsSwitch', function () {
   it('should watch updates in getterSetter', inject(makeTestGetterSetter(true)));
 
   function makeTestChange(input) {
-    return function ($timeout) {
+    return function () {
       compileDirective('change', input);
 
       scope.change = function() {};
@@ -665,12 +665,10 @@ describe('Directive: bsSwitch', function () {
 
       scope.model = false;
       scope.$apply();
-      $timeout.flush();
       expect(scope.change).not.toHaveBeenCalled();
 
       scope.model = true;
       scope.$apply();
-      $timeout.flush();
       expect(scope.change).toHaveBeenCalled();
     };
   }
