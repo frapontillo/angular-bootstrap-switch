@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+## 0.5.0-alpha.1 (2016-02-17)
+
+- Update dependencies
+- **bsSwitch**: add `switch-change` property
+
 ## 0.4.1 (2015-06-15)
 
 - Update to `angular` 1.4.0
