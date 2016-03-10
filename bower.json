@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-switch",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "author": {
     "name": "Francesco Pontillo",
     "email": "francescopontillo@gmail.com",
@@ -19,13 +19,13 @@
   ],
   "main": "./dist/angular-bootstrap-switch.js",
   "dependencies": {
-    "angular": "~1.4",
+    "angular": ">=1.4.0",
     "jquery": ">=1.9.0",
     "bootstrap": ">=2.3.2",
     "bootstrap-switch": "3.3.2"
   },
   "devDependencies": {
-    "angular-mocks": "~1.4.0",
-    "angular-scenario": "~1.4.0"
+    "angular-mocks": ">=1.4.0",
+    "angular-scenario": ">=1.4.0"
   }
 }

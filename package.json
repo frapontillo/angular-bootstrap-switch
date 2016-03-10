@@ -1,6 +1,6 @@
 {
   "name": "angular-bootstrap-switch",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "main": "dist/angular-bootstrap-switch.js",
   "author": {
     "name": "Francesco Pontillo",
@@ -26,7 +26,6 @@
     "karma": "^0.13.19",
     "karma-chrome-launcher": "~0.2.2",
     "karma-firefox-launcher": "~0.1.7",
-    "karma-ie-launcher": "~0.2.0",
     "karma-jasmine": "~0.3.6",
     "karma-phantomjs-launcher": "~1.0.0",
     "matchdep": "~1.0.0",
