@@ -179,6 +179,7 @@ angular.module('frapontillo.bootstrap-switch')
               element.bootstrapSwitch('state', newValue === getTrueValue(), true);
             } else {
               element.bootstrapSwitch('indeterminate', true, true);
+              controller.$setViewValue(undefined);
             }
           };
 
