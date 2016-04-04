@@ -177,7 +177,7 @@ angular.module('frapontillo.bootstrap-switch')
             if (newValue !== undefined && newValue !== null) {
               element.bootstrapSwitch('state', newValue === getTrueValue(), false);
             } else {
-              element.bootstrapSwitch('toggleIndeterminate', true, false);
+              element.bootstrapSwitch('indeterminate', true, false);
             }
           };
 
