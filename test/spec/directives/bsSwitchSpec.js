@@ -675,17 +675,16 @@ describe('Directive: bsSwitch', function () {
 
   function makeTestChange(input) {
     return function () {
-      compileDirective('change', input);
+      var element = compileDirective('change', input);
 
       scope.change = function() {};
       spyOn(scope, 'change');
 
-      scope.model = false;
-      scope.$apply();
-      expect(scope.change).not.toHaveBeenCalled();
+      element.find('input').click();
+      expect(scope.change).toHaveBeenCalled();
 
-      scope.model = true;
-      scope.$apply();
+      scope.change.calls.reset();
+      element.find('input').click();
       expect(scope.change).toHaveBeenCalled();
     };
   }
