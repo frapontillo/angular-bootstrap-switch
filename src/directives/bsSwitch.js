@@ -144,7 +144,8 @@ angular.module('frapontillo.bootstrap-switch')
               handleWidth: getSwitchAttrValue('switchHandleWidth'),
               labelWidth: getSwitchAttrValue('switchLabelWidth'),
               inverse: getSwitchAttrValue('switchInverse'),
-              readonly: getSwitchAttrValue('switchReadonly')
+              readonly: getSwitchAttrValue('switchReadonly'),
+              onSwitchChange: getSwitchAttrValue('switchChange')
             });
             if (attrs.type === 'radio') {
               controller.$setViewValue(controller.$modelValue);
@@ -218,8 +219,6 @@ angular.module('frapontillo.bootstrap-switch')
          */
         var listenToView = function () {
 
-          var switchChangeFn = getSwitchAttrValue('switchChange');
-
           if (attrs.type === 'radio') {
             // when the switch is clicked
             element.on('change.bootstrapSwitch', function (e) {
@@ -234,7 +233,6 @@ angular.module('frapontillo.bootstrap-switch')
                   // otherwise if it's been deselected, delete the view value
                   controller.$setViewValue(undefined);
                 }
-                switchChangeFn();
               }
             });
           } else {
@@ -242,7 +240,6 @@ angular.module('frapontillo.bootstrap-switch')
             element.on('switchChange.bootstrapSwitch', function (e) {
               // $setViewValue --> $viewValue --> $parsers --> $modelValue
               controller.$setViewValue(e.target.checked);
-              switchChangeFn();
             });
           }
         };
