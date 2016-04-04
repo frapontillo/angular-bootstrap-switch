@@ -163,12 +163,10 @@ angular.module('frapontillo.bootstrap-switch')
             var active = getBooleanFromStringDefTrue(newValue);
             // if we are disabling the switch, delay the deactivation so that the toggle can be switched
             if (!active) {
-              $timeout(function() {
-                setActive(active);
-              });
+              $timeout(setActive);
             } else {
               // if we are enabling the switch, set active right away
-              setActive(active);
+              setActive();
             }
           });
 
