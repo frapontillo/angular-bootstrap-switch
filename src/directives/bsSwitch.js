@@ -172,10 +172,6 @@ angular.module('frapontillo.bootstrap-switch')
             }
           });
 
-          function modelValue() {
-            return controller.$modelValue;
-          }
-
           // When the model changes
           controller.$render = function () {
             initMaybe();
