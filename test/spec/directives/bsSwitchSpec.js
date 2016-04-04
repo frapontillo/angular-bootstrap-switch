@@ -217,6 +217,7 @@ describe('Directive: bsSwitch', function () {
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
       scope.radioOff = true;
+      scope.$apply();
       scope.model = false;
       scope.$apply();
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();

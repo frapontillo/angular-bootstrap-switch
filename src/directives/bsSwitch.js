@@ -177,14 +177,15 @@ angular.module('frapontillo.bootstrap-switch')
           }
 
           // When the model changes
-          scope.$watch(modelValue, function(newValue) {
+          controller.$render = function () {
             initMaybe();
+            var newValue = controller.$modelValue;
             if (newValue !== undefined && newValue !== null) {
               element.bootstrapSwitch('state', newValue === getTrueValue(), false);
             } else {
               element.bootstrapSwitch('toggleIndeterminate', true, false);
             }
-          }, true);
+          };
 
           // angular attribute to switch property bindings
           var bindings = {
