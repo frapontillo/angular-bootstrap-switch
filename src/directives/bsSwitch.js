@@ -175,9 +175,9 @@ angular.module('frapontillo.bootstrap-switch')
             initMaybe();
             var newValue = controller.$modelValue;
             if (newValue !== undefined && newValue !== null) {
-              element.bootstrapSwitch('state', newValue === getTrueValue(), false);
+              element.bootstrapSwitch('state', newValue === getTrueValue(), true);
             } else {
-              element.bootstrapSwitch('indeterminate', true, false);
+              element.bootstrapSwitch('indeterminate', true, true);
             }
           };
 
