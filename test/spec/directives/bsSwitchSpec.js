@@ -94,7 +94,7 @@ describe('Directive: bsSwitch', function () {
     },
     'change': {
       scope: {},
-      element: 'ng-model="model" type="checkbox" switch-change="change()" ng-change="change()"'
+      element: 'ng-model="model" type="checkbox" switch-change="switchChange()" ng-change="ngChange()"'
     }
   };
 
@@ -676,7 +676,8 @@ describe('Directive: bsSwitch', function () {
   function makeTestViewSwitchChange(input) {
     return function () {
       var element = compileDirective('change', input);
-      scope.change = jasmine.createSpy();
+      scope.switchChange = jasmine.createSpy();
+      scope.ngChange = jasmine.createSpy();
 
       // On
       scope.model = true;
@@ -687,14 +688,18 @@ describe('Directive: bsSwitch', function () {
       scope.$apply();
 
       // Off
-      scope.change.calls.reset();
+      scope.switchChange.calls.reset();
+      scope.ngChange.calls.reset();
       element.find('input').click();
-      expect(scope.change).toHaveBeenCalledTimes(2);
+      expect(scope.switchChange).toHaveBeenCalled();
+      expect(scope.ngChange).toHaveBeenCalled();
 
       // On
-      scope.change.calls.reset();
+      scope.switchChange.calls.reset();
+      scope.ngChange.calls.reset();
       element.find('input').click();
-      expect(scope.change).toHaveBeenCalledTimes(2);
+      expect(scope.switchChange).toHaveBeenCalled();
+      expect(scope.ngChange).toHaveBeenCalled();
     };
   }
   it('should evaluate change expression when view changes', inject(makeTestViewSwitchChange()));
@@ -703,16 +708,20 @@ describe('Directive: bsSwitch', function () {
   function makeTestModelSwitchChange(input) {
     return function () {
       compileDirective('change', input);
-      scope.change = jasmine.createSpy();
+      scope.switchChange = jasmine.createSpy();
+      scope.ngChange = jasmine.createSpy();
 
       scope.model = true;
       scope.$apply();
-      expect(scope.change).not.toHaveBeenCalled();
+      expect(scope.switchChange).not.toHaveBeenCalled();
+      expect(scope.ngChange).not.toHaveBeenCalled();
 
-      scope.change.calls.reset();
+      scope.switchChange.calls.reset();
+      scope.ngChange.calls.reset();
       scope.model = false;
       scope.$apply();
-      expect(scope.change).not.toHaveBeenCalled();
+      expect(scope.switchChange).not.toHaveBeenCalled();
+      expect(scope.ngChange).not.toHaveBeenCalled();
     };
   }
   it('should not evaluate change expression when model changes', inject(makeTestModelSwitchChange()));
