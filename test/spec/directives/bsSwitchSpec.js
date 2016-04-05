@@ -94,7 +94,7 @@ describe('Directive: bsSwitch', function () {
     },
     'change': {
       scope: {},
-      element: 'ng-model="model" type="checkbox" switch-change="switchChange()"'
+      element: 'ng-model="model" type="checkbox" switch-change="switchChange()" ng-change="ngChange()"'
     }
   };
 
@@ -677,6 +677,7 @@ describe('Directive: bsSwitch', function () {
     return function () {
       var element = compileDirective('change', input);
       scope.switchChange = jasmine.createSpy();
+      scope.ngChange = jasmine.createSpy();
 
       // On
       scope.model = true;
@@ -688,13 +689,17 @@ describe('Directive: bsSwitch', function () {
 
       // Off
       scope.switchChange.calls.reset();
+      scope.ngChange.calls.reset();
       element.find('input').click();
       expect(scope.switchChange).toHaveBeenCalled();
+      expect(scope.ngChange).toHaveBeenCalled();
 
       // On
       scope.switchChange.calls.reset();
+      scope.ngChange.calls.reset();
       element.find('input').click();
       expect(scope.switchChange).toHaveBeenCalled();
+      expect(scope.ngChange).toHaveBeenCalled();
     };
   }
   it('should evaluate change expression when view changes', inject(makeTestViewSwitchChange()));
@@ -704,15 +709,19 @@ describe('Directive: bsSwitch', function () {
     return function () {
       var element = compileDirective('change', input);
       scope.switchChange = jasmine.createSpy();
+      scope.ngChange = jasmine.createSpy();
 
       scope.model = true;
       scope.$apply();
       expect(scope.switchChange).not.toHaveBeenCalled();
+      expect(scope.ngChange).not.toHaveBeenCalled();
 
       scope.switchChange.calls.reset();
+      scope.ngChange.calls.reset();
       scope.model = false;
       scope.$apply()
       expect(scope.switchChange).not.toHaveBeenCalled();
+      expect(scope.ngChange).not.toHaveBeenCalled();
     };
   }
   it('should not evaluate change expression when model changes', inject(makeTestModelSwitchChange()));
