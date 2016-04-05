@@ -673,7 +673,7 @@ describe('Directive: bsSwitch', function () {
   it('should watch updates in getterSetter', inject(makeTestGetterSetter()));
   it('should watch updates in getterSetter', inject(makeTestGetterSetter(true)));
 
-  function makeTestChange(input) {
+  function makeTestViewSwitchChange(input) {
     return function () {
       var element = compileDirective('change', input);
       scope.change = jasmine.createSpy();
@@ -686,7 +686,24 @@ describe('Directive: bsSwitch', function () {
       expect(scope.change).toHaveBeenCalled();
     };
   }
-  it('should evaluate change expression', inject(makeTestChange()));
-  it('should evaluate change expression', inject(makeTestChange(true)));
+  it('should evaluate change expression when view changes', inject(makeTestViewSwitchChange()));
+  it('should evaluate change expression when view changes', inject(makeTestViewSwitchChange(true)));
 
+  function makeTestModelSwitchChange(input) {
+    return function () {
+      var element = compileDirective('change', input);
+      scope.change = jasmine.createSpy();
+
+      scope.model = true;
+      scope.$apply();
+      expect(scope.change).not.toHaveBeenCalled();
+
+      scope.change.calls.reset();
+      scope.model = false;
+      scope.$apply()
+      expect(scope.change).not.toHaveBeenCalled();
+    };
+  }
+  it('should not evaluate change expression when model changes', inject(makeTestModelSwitchChange()));
+  it('should not evaluate change expression when model changes', inject(makeTestModelSwitchChange(true)));
 });
