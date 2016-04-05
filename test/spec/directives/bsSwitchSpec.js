@@ -676,9 +676,7 @@ describe('Directive: bsSwitch', function () {
   function makeTestChange(input) {
     return function () {
       var element = compileDirective('change', input);
-
-      scope.change = function() {};
-      spyOn(scope, 'change');
+      scope.change = jasmine.createSpy();
 
       element.find('input').click();
       expect(scope.change).toHaveBeenCalled();
