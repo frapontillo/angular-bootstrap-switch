@@ -678,9 +678,20 @@ describe('Directive: bsSwitch', function () {
       var element = compileDirective('change', input);
       scope.change = jasmine.createSpy();
 
+      // On
+      scope.model = true;
+      scope.$apply();
+
+      // Indeterminate
+      scope.model = undefined;
+      scope.$apply();
+
+      // Off
+      scope.change.calls.reset();
       element.find('input').click();
       expect(scope.change).toHaveBeenCalled();
 
+      // On
       scope.change.calls.reset();
       element.find('input').click();
       expect(scope.change).toHaveBeenCalled();
