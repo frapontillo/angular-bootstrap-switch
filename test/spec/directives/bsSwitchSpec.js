@@ -719,7 +719,7 @@ describe('Directive: bsSwitch', function () {
       scope.switchChange.calls.reset();
       scope.ngChange.calls.reset();
       scope.model = false;
-      scope.$apply()
+      scope.$apply();
       expect(scope.switchChange).not.toHaveBeenCalled();
       expect(scope.ngChange).not.toHaveBeenCalled();
     };
