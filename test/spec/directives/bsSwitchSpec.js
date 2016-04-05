@@ -707,7 +707,7 @@ describe('Directive: bsSwitch', function () {
 
   function makeTestModelSwitchChange(input) {
     return function () {
-      var element = compileDirective('change', input);
+      compileDirective('change', input);
       scope.switchChange = jasmine.createSpy();
       scope.ngChange = jasmine.createSpy();
 
