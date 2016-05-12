@@ -144,8 +144,7 @@ angular.module('frapontillo.bootstrap-switch')
               handleWidth: getSwitchAttrValue('switchHandleWidth'),
               labelWidth: getSwitchAttrValue('switchLabelWidth'),
               inverse: getSwitchAttrValue('switchInverse'),
-              readonly: getSwitchAttrValue('switchReadonly'),
-              onSwitchChange: getSwitchAttrValue('switchChange')
+              readonly: getSwitchAttrValue('switchReadonly')
             });
             if (attrs.type === 'radio') {
               controller.$setViewValue(controller.$modelValue);
@@ -155,12 +154,15 @@ angular.module('frapontillo.bootstrap-switch')
           }
         };
 
+        var switchChange = getSwitchAttrValue('switchChange');
+
         /**
          * Listen to model changes.
          */
         var listenToModel = function () {
 
           attrs.$observe('switchActive', function (newValue) {
+
             var active = getBooleanFromStringDefTrue(newValue);
             // if we are disabling the switch, delay the deactivation so that the toggle can be switched
             if (!active) {
@@ -181,6 +183,7 @@ angular.module('frapontillo.bootstrap-switch')
               element.bootstrapSwitch('indeterminate', true, true);
               controller.$setViewValue(undefined);
             }
+            switchChange();
           };
 
           // angular attribute to switch property bindings
@@ -234,6 +237,7 @@ angular.module('frapontillo.bootstrap-switch')
                   // otherwise if it's been deselected, delete the view value
                   controller.$setViewValue(undefined);
                 }
+                switchChange();
               }
             });
           } else {
@@ -241,6 +245,7 @@ angular.module('frapontillo.bootstrap-switch')
             element.on('switchChange.bootstrapSwitch', function (e) {
               // $setViewValue --> $viewValue --> $parsers --> $modelValue
               controller.$setViewValue(e.target.checked);
+              switchChange();
             });
           }
         };
