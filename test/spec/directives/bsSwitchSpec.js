@@ -683,24 +683,21 @@ describe('Directive: bsSwitch', function () {
       scope.ngChange = jasmine.createSpy();
 
       // On - model change
-      scope.ngChange.calls.reset();
       scope.model = true;
       scope.$apply();
       expect(scope.ngChange).not.toHaveBeenCalled();
 
       // Indeterminate - model change
-      scope.ngChange.calls.reset();
       scope.model = undefined;
       scope.$apply();
       expect(scope.ngChange).not.toHaveBeenCalled();
 
       // Off - view change
-      scope.ngChange.calls.reset();
       element.find('input').click();
       expect(scope.ngChange).toHaveBeenCalled();
+      scope.ngChange.calls.reset();
 
       // On - view change
-      scope.ngChange.calls.reset();
       element.find('input').click();
       expect(scope.ngChange).toHaveBeenCalled();
     };
@@ -717,9 +714,9 @@ describe('Directive: bsSwitch', function () {
       scope.model = true;
       scope.$apply();
       expect(scope.switchChange).toHaveBeenCalled();
+      scope.switchChange.calls.reset();
 
       // Off - view change
-      scope.switchChange.calls.reset();
       element.find('input').click();
       expect(scope.switchChange).toHaveBeenCalled();
     };
