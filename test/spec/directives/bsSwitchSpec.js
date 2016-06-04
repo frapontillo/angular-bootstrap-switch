@@ -94,7 +94,11 @@ describe('Directive: bsSwitch', function () {
     },
     'change': {
       scope: {},
-      element: 'ng-model="model" type="checkbox" switch-change="change()"'
+      element: 'ng-model="model" type="checkbox" switch-change="switchChange()"'
+    },
+    'ngChange': {
+      scope: {},
+      element: 'ng-model="model" type="checkbox" ng-change="ngChange()"'
     }
   };
 
@@ -217,6 +221,7 @@ describe('Directive: bsSwitch', function () {
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
       scope.radioOff = true;
+      scope.$apply();
       scope.model = false;
       scope.$apply();
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
@@ -672,23 +677,50 @@ describe('Directive: bsSwitch', function () {
   it('should watch updates in getterSetter', inject(makeTestGetterSetter()));
   it('should watch updates in getterSetter', inject(makeTestGetterSetter(true)));
 
-  function makeTestChange(input) {
+  function makeTestViewNgChange(input) {
     return function () {
-      compileDirective('change', input);
+      var element = compileDirective('ngChange', input);
+      scope.ngChange = jasmine.createSpy();
 
-      scope.change = function() {};
-      spyOn(scope, 'change');
-
-      scope.model = false;
-      scope.$apply();
-      expect(scope.change).not.toHaveBeenCalled();
-
+      // On - model change
       scope.model = true;
       scope.$apply();
-      expect(scope.change).toHaveBeenCalled();
+      expect(scope.ngChange).not.toHaveBeenCalled();
+
+      // Indeterminate - model change
+      scope.model = undefined;
+      scope.$apply();
+      expect(scope.ngChange).not.toHaveBeenCalled();
+
+      // Off - view change
+      element.find('input').click();
+      expect(scope.ngChange).toHaveBeenCalled();
+      scope.ngChange.calls.reset();
+
+      // On - view change
+      element.find('input').click();
+      expect(scope.ngChange).toHaveBeenCalled();
     };
   }
-  it('should evaluate change expression', inject(makeTestChange()));
-  it('should evaluate change expression', inject(makeTestChange(true)));
+  it('should evaluate ngChange expression only when view changes', inject(makeTestViewNgChange()));
+  it('should evaluate ngChange expression only when view changes', inject(makeTestViewNgChange(true)));
 
+  function makeTestModelSwitchChange(input) {
+    return function () {
+      var element = compileDirective('change', input);
+      scope.switchChange = jasmine.createSpy();
+
+      // On - model change
+      scope.model = true;
+      scope.$apply();
+      expect(scope.switchChange).toHaveBeenCalled();
+      scope.switchChange.calls.reset();
+
+      // Off - view change
+      element.find('input').click();
+      expect(scope.switchChange).toHaveBeenCalled();
+    };
+  }
+  it('should evaluate change expression when model changes', inject(makeTestModelSwitchChange()));
+  it('should evaluate change expression when model changes', inject(makeTestModelSwitchChange(true)));
 });

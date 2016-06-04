@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+## 0.5.1 (2016-06-04)
+
+- Make `switch-change` trigger when model changes
+- Use `ng-change` for triggers only on view changes
+- Test `ng-change` and `switch-change` behaviors
+
 ## 0.5.0 (2016-03-10)
 
 - Use `ngAnnotate` instead of `ngMin`

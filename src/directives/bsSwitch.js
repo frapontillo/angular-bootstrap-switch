@@ -154,37 +154,37 @@ angular.module('frapontillo.bootstrap-switch')
           }
         };
 
+        var switchChange = getSwitchAttrValue('switchChange');
+
         /**
          * Listen to model changes.
          */
         var listenToModel = function () {
 
           attrs.$observe('switchActive', function (newValue) {
+
             var active = getBooleanFromStringDefTrue(newValue);
             // if we are disabling the switch, delay the deactivation so that the toggle can be switched
             if (!active) {
-              $timeout(function() {
-                setActive(active);
-              });
+              $timeout(setActive);
             } else {
               // if we are enabling the switch, set active right away
-              setActive(active);
+              setActive();
             }
           });
 
-          function modelValue() {
-            return controller.$modelValue;
-          }
-
           // When the model changes
-          scope.$watch(modelValue, function(newValue) {
+          controller.$render = function () {
             initMaybe();
+            var newValue = controller.$modelValue;
             if (newValue !== undefined && newValue !== null) {
-              element.bootstrapSwitch('state', newValue === getTrueValue(), false);
+              element.bootstrapSwitch('state', newValue === getTrueValue(), true);
             } else {
-              element.bootstrapSwitch('toggleIndeterminate', true, false);
+              element.bootstrapSwitch('indeterminate', true, true);
+              controller.$setViewValue(undefined);
             }
-          }, true);
+            switchChange();
+          };
 
           // angular attribute to switch property bindings
           var bindings = {
@@ -223,8 +223,6 @@ angular.module('frapontillo.bootstrap-switch')
          */
         var listenToView = function () {
 
-          var switchChangeFn = getSwitchAttrValue('switchChange');
-
           if (attrs.type === 'radio') {
             // when the switch is clicked
             element.on('change.bootstrapSwitch', function (e) {
@@ -239,7 +237,7 @@ angular.module('frapontillo.bootstrap-switch')
                   // otherwise if it's been deselected, delete the view value
                   controller.$setViewValue(undefined);
                 }
-                switchChangeFn();
+                switchChange();
               }
             });
           } else {
@@ -247,7 +245,7 @@ angular.module('frapontillo.bootstrap-switch')
             element.on('switchChange.bootstrapSwitch', function (e) {
               // $setViewValue --> $viewValue --> $parsers --> $modelValue
               controller.$setViewValue(e.target.checked);
-              switchChangeFn();
+              switchChange();
             });
           }
         };

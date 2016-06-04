@@ -82,7 +82,7 @@ meaning you have to specify the same `ngModel` and a different `value` or `ng-va
 * `switch-label-width`, sets the width of the middle label
 * `switch-handle-width`, sets the width of both handles
 * `switch-inverse`, inverts the on/off handles
-* `switch-change`, evaluates an expression when the model value changes
+* `switch-change`, evaluates an expression whenever the model value changes. Instead, `ng-change` will fire when view value changes (e.g from a click)
 
 ###Migrating from bootstrap-switch~2
 
