@@ -723,4 +723,140 @@ describe('Directive: bsSwitch', function () {
   }
   it('should evaluate change expression when model changes', inject(makeTestModelSwitchChange()));
   it('should evaluate change expression when model changes', inject(makeTestModelSwitchChange(true)));
+
+  // Test the null model from true state
+  function makeTestToIndeterminateNullFromTrue(input) {
+    return function () {
+      var element = compileDirective(undefined, input);
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      scope.model = true;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      scope.model = null;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+    };
+  }
+  it('should change from true to the indeterminate state when the model is null', inject(makeTestToIndeterminateNullFromTrue()));
+  it('should change from true to the indeterminate state when the model is null (input)', inject(makeTestToIndeterminateNullFromTrue(true)));
+
+  // Test the null model from false state
+  function makeTestToIndeterminateNullFromFalse(input) {
+    return function () {
+      var element = compileDirective(undefined, input);
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      scope.model = false;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      scope.model = null;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+    };
+  }
+  it('should change from false to the indeterminate state when the model is null', inject(makeTestToIndeterminateNullFromFalse()));
+  it('should change from false to the indeterminate state when the model is null (input)', inject(makeTestToIndeterminateNullFromFalse(true)));
+
+  // Test the undefined model from true state
+  function makeTestToIndeterminateUndefinedFromTrue(input) {
+    return function () {
+      var element = compileDirective(undefined, input);
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      scope.model = true;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      scope.model = undefined;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+    };
+  }
+  it('should change from true to the indeterminate state when the model is null', inject(makeTestToIndeterminateUndefinedFromTrue()));
+  it('should change from true to the indeterminate state when the model is null (input)', inject(makeTestToIndeterminateUndefinedFromTrue(true)));
+
+  // Test the undefined model from false state
+  function makeTestToIndeterminateUndefinedFromFalse(input) {
+    return function () {
+      var element = compileDirective(undefined, input);
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      scope.model = false;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      scope.model = undefined;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+    };
+  }
+  it('should change from false to the indeterminate state when the model is null', inject(makeTestToIndeterminateUndefinedFromFalse()));
+  it('should change from false to the indeterminate state when the model is null (input)', inject(makeTestToIndeterminateUndefinedFromFalse(true)));
+
+  // Test the changing multiple state
+  function makeTestMultipleChangeOfStateIndeterminate(input) {
+    return function () {
+      var element = compileDirective(undefined, input);
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      scope.model = false;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      scope.model = undefined;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+      scope.model = true;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+    };
+  }
+  it('should change from false to the indeterminate state when the model is null', inject(makeTestMultipleChangeOfStateIndeterminate()));
+  it('should change from false to the indeterminate state when the model is null (input)', inject(makeTestMultipleChangeOfStateIndeterminate(true)));
+
+  // Test the changing multiple state other way round
+  function makeTestMultipleChangeOfStateIndeterminateReverse(input) {
+    return function () {
+      var element = compileDirective(undefined, input);
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      scope.model = true;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+      scope.model = undefined;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+      scope.model = false;
+      scope.$apply();
+      expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+    };
+  }
+  it('should change from false to the indeterminate state when the model is null', inject(makeTestMultipleChangeOfStateIndeterminate()));
+  it('should change from false to the indeterminate state when the model is null (input)', inject(makeTestMultipleChangeOfStateIndeterminate(true)));
 });
