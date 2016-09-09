@@ -155,7 +155,7 @@ angular.module('frapontillo.bootstrap-switch')
                   return value;
                 }
                 return angular.equals(value, getTrueValue());
-              }
+              };
             }
           }
         };
