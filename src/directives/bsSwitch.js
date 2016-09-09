@@ -151,7 +151,7 @@ angular.module('frapontillo.bootstrap-switch')
             } else {
               controller.$setViewValue(viewValue);
               controller.$formatters[0] = function(value) {
-                if (value === undefined) {
+                if (value === undefined || value === null) {
                   return value;
                 }
                 return angular.equals(value, getTrueValue());
