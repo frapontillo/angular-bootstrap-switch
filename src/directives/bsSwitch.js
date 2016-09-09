@@ -150,6 +150,12 @@ angular.module('frapontillo.bootstrap-switch')
               controller.$setViewValue(controller.$modelValue);
             } else {
               controller.$setViewValue(viewValue);
+              controller.$formatters[0] = function(value) {
+                if (value === undefined) {
+                  return value;
+                }
+                return angular.equals(value, getTrueValue());
+              }
             }
           }
         };
