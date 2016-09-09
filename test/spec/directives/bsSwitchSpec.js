@@ -831,8 +831,8 @@ describe('Directive: bsSwitch', function () {
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
     };
   }
-  it('should change from false to the indeterminate state when the model is null', inject(makeTestMultipleChangeOfStateIndeterminate()));
-  it('should change from false to the indeterminate state when the model is null (input)', inject(makeTestMultipleChangeOfStateIndeterminate(true)));
+  it('should change from false to the indeterminate state and to true', inject(makeTestMultipleChangeOfStateIndeterminate()));
+  it('should change from false to the indeterminate state and to true (input)', inject(makeTestMultipleChangeOfStateIndeterminate(true)));
 
   // Test the changing multiple state other way round
   function makeTestMultipleChangeOfStateIndeterminateReverse(input) {
@@ -848,8 +848,8 @@ describe('Directive: bsSwitch', function () {
       scope.model = undefined;
       scope.$apply();
       expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeTruthy();
-      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
-      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
       scope.model = false;
       scope.$apply();
       expect(element.hasClass(CONST.SWITCH_INDETERMINATE_CLASS)).toBeFalsy();
@@ -857,6 +857,6 @@ describe('Directive: bsSwitch', function () {
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
     };
   }
-  it('should change from false to the indeterminate state when the model is null', inject(makeTestMultipleChangeOfStateIndeterminate()));
-  it('should change from false to the indeterminate state when the model is null (input)', inject(makeTestMultipleChangeOfStateIndeterminate(true)));
+  it('should change from false to the indeterminate state and to false', inject(makeTestMultipleChangeOfStateIndeterminateReverse()));
+  it('should change from false to the indeterminate state and to false (input)', inject(makeTestMultipleChangeOfStateIndeterminateReverse(true)));
 });
