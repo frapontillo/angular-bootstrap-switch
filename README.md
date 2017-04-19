@@ -8,9 +8,9 @@ angular-bootstrap-switch
 
 AngularJS directive for the [bootstrap-switch](https://github.com/nostalgiaz/bootstrap-switch) jQuery plugin.
 
-##Usage
+## Usage
 
-###Installation
+### Installation
 ```shell
 $ bower install angular-bootstrap-switch
 ```
@@ -23,7 +23,7 @@ $ npm install angular-bootstrap-switch
 
 This will install AngularJS, jQuery, and the original bootstrap-switch.
 
-###Registration
+### Registration
 
 To be able to use the directive, you need to register the `angular-bootstrap-switch` module as a dependency:
 
@@ -33,7 +33,7 @@ angular.module('yourModule', ['frapontillo.bootstrap-switch'
 ]);
 ```
 
-###Directive
+### Directive
 The directive can work on both element and attribute levels. The following example contains all of the supported attributes:
 
 ```html
@@ -63,9 +63,9 @@ The directive can work on both element and attribute levels. The following examp
 Short doc for all of the attributes:
 
 * `ng-model`, the value to bind the switch to
-* `type`, has to be one of `checkbox` and `radio`. 
+* `type`, has to be one of `checkbox` and `radio`.
 This value is mandatory and must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
-If you choose `radio`, be sure to follow the [AngularJS radio specs](https://docs.angularjs.org/api/ng/input/input%5Bradio%5D), 
+If you choose `radio`, be sure to follow the [AngularJS radio specs](https://docs.angularjs.org/api/ng/input/input%5Bradio%5D),
 meaning you have to specify the same `ngModel` and a different `value` or `ng-value` attribute for each radio
 * `switch-active`, determines if the switch is enabled or not (changes the inner input's `disabled` attribute)
 * `switch-readonly`, determines if the switch is read-only or not (changes the inner input's `readonly` attribute)
@@ -84,21 +84,21 @@ meaning you have to specify the same `ngModel` and a different `value` or `ng-va
 * `switch-inverse`, inverts the on/off handles
 * `switch-change`, evaluates an expression whenever the model value changes. Instead, `ng-change` will fire when view value changes (e.g from a click)
 
-###Migrating from bootstrap-switch~2
+### Migrating from bootstrap-switch~2
 
 Read the [CHANGELOG](CHANGELOG.md#030-alpha1-2014-02-22) information to learn what's different in `0.3.0`.
 
-###Examples
+### Examples
 
 The `example` folder shows a simple working demo of the switch.
 
-###Compatibility
+### Compatibility
 
 IE8 requires you to attach the directive to an `<input type="checkbox">` or `<input type="radio">`. Due to some incompatibilities it is not possible to use a custom tag or `div` instead.
 
-##Development
+## Development
 
-###Test and build
+### Test and build
 
 To build the directive yourself you need to have NodeJS. Then do the following:
 
@@ -110,18 +110,18 @@ $ grunt test-travis
 $ grunt build
 ```
 
-###Contribute
+### Contribute
 
 To contribute, please follow the generic [AngularJS Contributing Guidelines](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md), with the only exception to send the PR to the `develop` branch instead of `master`.
 
-##Author
+## Author
 
 Francesco Pontillo (<mailto:francescopontillo@gmail.com>)
 
-##License
+## License
 
 ```
-   Copyright 2014-2015-2016 Francesco Pontillo
+   Copyright 2014-2017 Francesco Pontillo
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
