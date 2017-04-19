@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+## 0.5.2 (2017-04-19)
+
+- Update `bootstrap-switch` to `~3.3.4`
+- Fix `jquery` import in tests
+- Fix `npm` dependencies
+- Fix `README` headings
+
 ## 0.5.1 (2016-06-04)
 
 - Make `switch-change` trigger when model changes
@@ -19,7 +26,7 @@ CHANGELOG
 **BREAKING CHANGES:**
 
 - Applications relying on `undefined` as the only indeterminate state
-  may break if they consider `null` a falsy value. `null` is now an 
+  may break if they consider `null` a falsy value. `null` is now an
   indeterminate value.
 
 ## 0.4.1 (2015-06-15)
