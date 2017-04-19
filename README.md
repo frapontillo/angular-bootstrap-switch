@@ -63,9 +63,9 @@ The directive can work on both element and attribute levels. The following examp
 Short doc for all of the attributes:
 
 * `ng-model`, the value to bind the switch to
-* `type`, has to be one of `checkbox` and `radio`. 
+* `type`, has to be one of `checkbox` and `radio`.
 This value is mandatory and must be a string, as it cannot be changed once set (see [this answer on StackOverflow](http://stackoverflow.com/a/15155407/801065)).
-If you choose `radio`, be sure to follow the [AngularJS radio specs](https://docs.angularjs.org/api/ng/input/input%5Bradio%5D), 
+If you choose `radio`, be sure to follow the [AngularJS radio specs](https://docs.angularjs.org/api/ng/input/input%5Bradio%5D),
 meaning you have to specify the same `ngModel` and a different `value` or `ng-value` attribute for each radio
 * `switch-active`, determines if the switch is enabled or not (changes the inner input's `disabled` attribute)
 * `switch-readonly`, determines if the switch is read-only or not (changes the inner input's `readonly` attribute)
@@ -121,7 +121,7 @@ Francesco Pontillo (<mailto:francescopontillo@gmail.com>)
 ## License
 
 ```
-   Copyright 2014-2015-2016 Francesco Pontillo
+   Copyright 2014-2017 Francesco Pontillo
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
