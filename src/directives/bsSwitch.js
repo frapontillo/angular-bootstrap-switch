@@ -93,7 +93,13 @@ angular.module('frapontillo.bootstrap-switch')
             },
             'switchInverse': getBooleanFromString,
             'switchReadonly': getBooleanFromString,
-            'switchChange': getExprFromString
+            'switchChange': getExprFromString,
+            'switchOffText': function (value) {
+              return (value && value.length === 0) ? '' : value;
+            },
+            'switchOnText': function (value) {
+              return (value && value.length === 0) ? '' : value;
+            }
           };
           var transFn = map[attrName] || getValueOrUndefined;
           return transFn(attrs[attrName]);
