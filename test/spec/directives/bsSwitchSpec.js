@@ -406,13 +406,13 @@ describe('Directive: bsSwitch', function () {
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
 
-	  scope.model = true;
-	  scope.$apply();
+      scope.model = true;
+      scope.$apply();
 
-	  // test the active state, should be false
+      // test the active state, should be false
       expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeTruthy();
       expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeTruthy();
-	  // test the model, should be true
+      // test the model, should be true
       expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
       expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
     };
