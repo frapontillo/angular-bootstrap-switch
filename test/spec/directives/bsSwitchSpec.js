@@ -391,6 +391,34 @@ describe('Directive: bsSwitch', function () {
   it('should change the model, then deactivate the switch', inject(makeTestChangeModelThenDeactivate()));
   it('should change the model, deactivate the switch (input)', inject(makeTestChangeModelThenDeactivate(true)));
 
+  // Test a model change when switch is deactivated
+  function makeTestChangeModelWhenSwitchIsDeactivated() {
+    return function () {
+      var element = compileDirective('active');
+      scope.model = false;
+      scope.isActive = false;
+      scope.$apply();
+      $timeout.flush();
+      // test the active state, should be false
+      expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeTruthy();
+      expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeTruthy();
+      // test the model, should be false
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeTruthy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeFalsy();
+
+      scope.model = true;
+      scope.$apply();
+
+      // test the active state, should be false
+      expect(element.hasClass(CONST.SWITCH_DISABLED_CLASS)).toBeTruthy();
+      expect(element.find(CONST.INPUT_SELECTOR).attr('disabled')).toBeTruthy();
+      // test the model, should be true
+      expect(element.hasClass(CONST.SWITCH_OFF_CLASS)).toBeFalsy();
+      expect(element.hasClass(CONST.SWITCH_ON_CLASS)).toBeTruthy();
+    };
+  }
+  it('should deactivate the switch, then change the model', inject(makeTestChangeModelWhenSwitchIsDeactivated()));
+
   // Test the activation
   function makeTestActivate(input) {
     return function () {
