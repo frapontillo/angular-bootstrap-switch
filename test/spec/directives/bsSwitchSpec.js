@@ -391,7 +391,7 @@ describe('Directive: bsSwitch', function () {
   it('should change the model, then deactivate the switch', inject(makeTestChangeModelThenDeactivate()));
   it('should change the model, deactivate the switch (input)', inject(makeTestChangeModelThenDeactivate(true)));
 
-   // Test a model change when switch is deactivated
+  // Test a model change when switch is deactivated
   function makeTestChangeModelWhenSwitchIsDeactivated() {
     return function () {
       var element = compileDirective('active');
