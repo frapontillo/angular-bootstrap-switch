@@ -182,6 +182,12 @@ angular.module('frapontillo.bootstrap-switch')
           // When the model changes
           controller.$render = function () {
             initMaybe();
+
+            // WORKAROUND for https://github.com/Bttstrp/bootstrap-switch/issues/540
+            // to update model value when bootstrapSwitch is disabled we should
+            // re-enable it and only then update 'state'
+            element.bootstrapSwitch('disabled', '');
+
             var newValue = controller.$modelValue;
             if (newValue !== undefined && newValue !== null) {
               element.bootstrapSwitch('state', newValue === getTrueValue(), true);
@@ -189,6 +195,10 @@ angular.module('frapontillo.bootstrap-switch')
               element.bootstrapSwitch('indeterminate', true, true);
               controller.$setViewValue(undefined);
             }
+
+            // return initial value for "disabled"
+            setActive();
+
             switchChange();
           };
 
