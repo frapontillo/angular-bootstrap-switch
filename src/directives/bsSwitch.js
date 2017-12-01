@@ -287,3 +287,5 @@ angular.module('frapontillo.bootstrap-switch')
       replace: true
     };
   });
+
+module.exports = 'frapontillo.bootstrap-switch';

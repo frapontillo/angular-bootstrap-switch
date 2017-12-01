@@ -1,6 +1,6 @@
 /**
  * angular-bootstrap-switch
- * @version v0.5.2 - 2017-04-19
+ * @version v0.5.2 - 2017-05-12
  * @author Francesco Pontillo (francescopontillo@gmail.com)
  * @link https://github.com/frapontillo/angular-bootstrap-switch
  * @license Apache License 2.0(http://www.apache.org/licenses/LICENSE-2.0.html)
@@ -163,6 +163,12 @@ angular.module('frapontillo.bootstrap-switch')
               controller.$setViewValue(controller.$modelValue);
             } else {
               controller.$setViewValue(viewValue);
+              controller.$formatters[0] = function(value) {
+                if (value === undefined || value === null) {
+                  return value;
+                }
+                return angular.equals(value, getTrueValue());
+              };
             }
           }
         };
@@ -284,6 +290,8 @@ angular.module('frapontillo.bootstrap-switch')
       replace: true
     };
   });
+
+module.exports = 'frapontillo.bootstrap-switch';
 
 // Source: bsSwitch.suffix
 })();
